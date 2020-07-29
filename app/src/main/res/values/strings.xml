@@ -16,4 +16,5 @@
     <string name="delete">Delete</string>
     <string name="retrieve_by">Retrieve By</string>
     <string name="retrive_all">Retrive All</string>
+    <string name="elder_id">Elder ID:</string>
 </resources>

@@ -19,10 +19,22 @@
         android:id="@+id/SecondFragment"
         android:name="com.example.idata_android.Fragment_2_crudSelect"
         android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_2_crudSelect">
+        tools:layout="@layout/fragment_crud_retrive">
 
         <action
             android:id="@+id/action_SecondFragment_to_FirstFragment"
             app:destination="@id/FirstFragment" />
+        <action
+            android:id="@+id/action_SecondFragment_to_fragment_crud_retrieve"
+            app:destination="@id/fragment_crud_retrieve" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_crud_retrieve"
+        android:name="com.example.idata_android.Fragment_crud_retrieve"
+        android:label="fragment_crud_retrive"
+        tools:layout="@layout/fragment_crud_retrive" >
+        <action
+            android:id="@+id/action_fragment_crud_retrieve_to_SecondFragment"
+            app:destination="@id/SecondFragment" />
     </fragment>
 </navigation>
