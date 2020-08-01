@@ -17,4 +17,14 @@
     <string name="retrieve_by">Retrieve By</string>
     <string name="retrive_all">Retrive All</string>
     <string name="elder_id">Elder ID:</string>
+
+
+    <string name="spinnerList">spinnerList</string>
+
+    <string-array name="searchelders_array">
+        <item>id</item>
+        <item>name</item>
+        <item>bed_no</item>
+    </string-array>
+
 </resources>

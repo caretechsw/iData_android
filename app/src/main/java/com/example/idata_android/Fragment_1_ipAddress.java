@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentResultListener;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
@@ -31,7 +32,11 @@ import static android.widget.Toast.LENGTH_SHORT;
 
 public class Fragment_1_ipAddress extends Fragment {
 
-    EditText ed;
+    EditText editText;
+    String ipInput;
+    Button connectBttn;
+    OkHttpClient httpClient;
+    Bundle bundle = new Bundle();
 
     @Override
     public View onCreateView(
@@ -44,46 +49,70 @@ public class Fragment_1_ipAddress extends Fragment {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Button connectBttn = view.findViewById(R.id.Connect);
-         ed = view.findViewById(R.id.ip_address);
+        connectBttn = view.findViewById(R.id.Connect);
+        editText = view.findViewById(R.id.ip_address);
 
+        httpClient = new OkHttpClient();
         connectBttn.setOnClickListener(new View.OnClickListener() {
-                                           @Override
-                                           public void onClick(View view) {
-                                               String ipInput = ed.getText().toString().trim();
-                                               Log.i("ipEdittext", ipInput);
-
-                                               final String baseUrl = "http://"+ipInput+":7070/elder";
-                                               Log.i("baseUrl", baseUrl);
-                                               Request request = new Request.Builder().url(baseUrl).build();
-                                               OkHttpClient httpClient = new OkHttpClient();
-
-        httpClient.newCall(request).enqueue(new Callback() {
             @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                e.printStackTrace();
-                System.out.print("failed");
-            }
+            public void onClick(View view) {
+            ipInput = editText.getText().toString().trim();
+             Log.i("ipEdittext", ipInput);
 
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+             if(TextUtils.isEmpty(ipInput)){
+                 ipInput = "192.168.1.20";//default Ip - home
+                  }
+
+             String url = "http://"+ipInput+":7070/";
+
+             if(!ipInput.equals("192.168.1.20")){
+                bundle.putString("ipAddress", ipInput);
+                 }
+
+                  Log.i(TAG, "url : "+ url);
+                  Request request = new Request.Builder().url(url).build();
+
+                  httpClient.newCall(request).enqueue(new Callback() {
+                      @Override
+                      public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                          e.printStackTrace();
+                          System.out.print("failed");
+                      }
+                      @Override public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 if(response.isSuccessful()){
-                    Bundle result = new Bundle();
-                    String baseUrlforTransfer = baseUrl;
-                    result.putString("baseUrl", baseUrlforTransfer);
-                    getParentFragmentManager().setFragmentResult("requestKey", result);
 
+                    bundle.putString("url", url);
 
-                    NavHostFragment.findNavController(Fragment_1_ipAddress.this)
-                            .navigate(R.id.action_FirstFragment_to_SecondFragment);
-
-                    String myResponse = response.body().string();
-
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            NavHostFragment.findNavController(Fragment_1_ipAddress.this).navigate(R.id.action_FirstFragmentIpAddress_to_SecondFragmentCrudSelect);
+                        }
+                    });
                 }
             }
         });
-                                          }
-
-});
+            }
+        });
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        getParentFragmentManager().setFragmentResultListener("requestKey", this, new FragmentResultListener() {
+            @Override
+            public void onFragmentResult(@NonNull String key, @NonNull Bundle bundle) {
+                ipInput = bundle.getString("ipAddress");
+            }
+        });
+        editText.setText(ipInput);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        getParentFragmentManager().setFragmentResult("requestKey", bundle);
+    }
+
+    static String TAG = "Fragment_1_ipAddress";
 }

@@ -3,38 +3,52 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
+    app:startDestination="@id/FirstFragmentIpAddress">
 
     <fragment
-        android:id="@+id/FirstFragment"
+        android:id="@+id/FirstFragmentIpAddress"
         android:name="com.example.idata_android.Fragment_1_ipAddress"
         android:label="@string/first_fragment_label"
         tools:layout="@layout/fragment_1_ip_address">
 
         <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
+            android:id="@+id/action_FirstFragmentIpAddress_to_SecondFragmentCrudSelect"
+            app:destination="@id/SecondFragmentCrudSelect" />
     </fragment>
+
     <fragment
-        android:id="@+id/SecondFragment"
+        android:id="@+id/SecondFragmentCrudSelect"
         android:name="com.example.idata_android.Fragment_2_crudSelect"
-        android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_crud_retrive">
+        android:label="Second Fragment"
+        tools:layout="@layout/fragment_2_crudselect">
 
         <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
+            android:id="@+id/action_SecondFragmentCrudSelect_to_FirstFragmentIpAddress"
+            app:destination="@id/FirstFragmentIpAddress" />
         <action
-            android:id="@+id/action_SecondFragment_to_fragment_crud_retrieve"
-            app:destination="@id/fragment_crud_retrieve" />
+            android:id="@+id/action_SecondFragmentCrudSelect_to_ThirdfragmentCrudRetrieve"
+            app:destination="@id/ThirdfragmentCrudRetrieve" />
     </fragment>
+
     <fragment
-        android:id="@+id/fragment_crud_retrieve"
+        android:id="@+id/ThirdfragmentCrudRetrieve"
         android:name="com.example.idata_android.Fragment_crud_retrieve"
-        android:label="fragment_crud_retrive"
+        android:label="Third Fragment"
         tools:layout="@layout/fragment_crud_retrive" >
         <action
-            android:id="@+id/action_fragment_crud_retrieve_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
+            android:id="@+id/action_ThirdfragmentCrudRetriev_to_SecondFragmentCrudSelect"
+            app:destination="@id/SecondFragmentCrudSelect" />
+        <action
+            android:id="@+id/action_ThirdfragmentCrudRetrieve_to_FourthfragmentfragmentCrudRetrieveRecyclerview"
+            app:destination="@id/FourthfragmentfragmentCrudRetrieveRecyclerview" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/FourthfragmentfragmentCrudRetrieveRecyclerview"
+        android:name="com.example.idata_android.Fragment_crud_retrieve_recyclerview"
+        android:label="Fragment_crud_retrieve_recyclerview" >
+        <action
+            android:id="@+id/action_FourthfragmentfragmentCrudRetrieveRecyclerview_to_ThirdfragmentCrudRetrieve"
+            app:destination="@id/ThirdfragmentCrudRetrieve" />
     </fragment>
 </navigation>
