@@ -3,25 +3,27 @@ package com.example.idata_android.Model;
 import java.sql.Timestamp;
 
 public class Temperature {
-    private int temperature_id;
+    public int getTemperatureID() {
+        return temperatureID;
+    }
+
+    public void setTemperatureID(int temperatureID) {
+        this.temperatureID = temperatureID;
+    }
+
+    private int temperatureID;
     private float temperature;
     private int elder_ID;
     private Timestamp timestamp;
 
-    public Temperature(int temperature_id, float temperature, int elder_ID, Timestamp timestamp) {
-        this.temperature_id = temperature_id;
+    public Temperature(int temperatureID, float temperature, int elder_ID, Timestamp timestamp) {
+        this.temperatureID = temperatureID;
         this.temperature = temperature;
         this.elder_ID = elder_ID;
         this.timestamp = timestamp;
     }
 
-    public int getTemperature_id() {
-        return temperature_id;
-    }
 
-    public void setTemperature_id(int temperature_id) {
-        this.temperature_id = temperature_id;
-    }
 
     public float getTemperature() {
         return temperature;

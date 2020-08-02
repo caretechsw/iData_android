@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragment_crud_create_elder">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp">
+
+
+    <Button
+        android:id="@+id/previous_crud_create_elder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/previous"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout_crud_create_elder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="@id/previous_crud_create_elder"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textview_crud_create_elder"
+            android:layout_width="wrap_content"
+            android:textSize="25sp"
+            android:layout_height="wrap_content"
+            android:text="@string/elder_name2" />
+
+        <EditText
+            android:id="@+id/editText_inputName_crud_create_elder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints="Name"
+            android:hint="@string/input_elder_name"
+            android:inputType="text"
+            android:textSize="25sp" />
+    </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout2_crud_create_elder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginVertical="15dp"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout_crud_create_elder"
+            app:layout_constraintStart_toStartOf="@id/previous_crud_create_elder">
+
+            <TextView
+                android:id="@+id/textView2_crud_create_elder"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:textSize="25sp"
+                android:text="@string/bed_no"
+                app:layout_constraintStart_toStartOf="@id/textview_crud_create_elder"
+                app:layout_constraintEnd_toEndOf="@id/textview_crud_create_elder" />
+
+            <EditText
+                android:id="@+id/editText_inputBedNo_crud_create_elder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="Bed No"
+                android:hint="@string/input_bed_no"
+                android:inputType="number"
+                android:textSize="25sp" />
+        </LinearLayout>
+
+    <Button
+        android:id="@+id/bttn_addElder_crud_create_elder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="@string/add_elder"
+        app:layout_constraintStart_toStartOf="@id/previous_crud_create_elder"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2_crud_create_elder" />
+
+        <TextView
+            android:id="@+id/textView_success_addElder_crud_create_elder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginLeft="15dp"
+            android:visibility="invisible"
+            android:text="@string/success_addelder"
+            android:textSize="30sp"
+            app:layout_constraintStart_toEndOf="@+id/bttn_addElder_crud_create_elder"
+            app:layout_constraintTop_toTopOf="@id/bttn_addElder_crud_create_elder" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

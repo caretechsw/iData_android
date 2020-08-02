@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.idata_android.Model.Elder;
+import com.example.idata_android.Model.Temperature;
 import com.google.gson.Gson;
 
 import org.jetbrains.annotations.NotNull;
@@ -24,7 +26,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class RetrieveElderActivity extends AppCompatActivity {
+public class RetrieveTemperatureActivity extends AppCompatActivity {
 
 
     Button previous_bttn;
@@ -32,23 +34,27 @@ public class RetrieveElderActivity extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
     OkHttpClient httpClient;
-    Intent intent;
-    String baseUrl;
+    TextView textView_elderID;
+    TextView textView_elderName;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_crud_retrive_recyclerview);
+        setContentView(R.layout.temperature_table_recyclerview);
         Bundle bundle;
         bundle = getIntent().getExtras();
-        String adapterUrl = bundle.getString("finalUrl");
-        baseUrl = bundle.getString("baseUrl");
-        Log.i(TAG, "baseUrl: " + baseUrl);
+        String url = bundle.getString("tempUrl");
+        String elder_id = bundle.getString("elder_id");
+        String elder_name = bundle.getString("elder_name");
 
-        recyclerView = findViewById(R.id.recyclerview_retrieveElderActivity);
-        previous_bttn = findViewById(R.id.previous_retrieveElderActivity);
+        recyclerView = findViewById(R.id.recyclerview_retrieveTemperatureActivity);
+        previous_bttn = findViewById(R.id.previous_retrieveTemperatureActivity);
+        textView_elderID = findViewById(R.id.textView_retrieveTemperatureActivity_showElderID);
+        textView_elderName = findViewById(R.id.textView_retrieveTemperatureActivity_showElderName);
+        textView_elderID.setText("Elder ID: "+ elder_id);
+        textView_elderName.setText("Name: "+ elder_name);
 
-        setHttpClient(adapterUrl);
+        setHttpClient(url);
 
 
 
@@ -61,10 +67,10 @@ public class RetrieveElderActivity extends AppCompatActivity {
 
     }
 
-    public void setHttpClient(String adapterUrl){
-        Log.i(TAG, "url:"+adapterUrl);
+    public void setHttpClient(String url){
+        Log.i(TAG, "url:"+url);
         httpClient = new OkHttpClient();
-        final Request request = new Request.Builder().url(adapterUrl).build();
+        final Request request = new Request.Builder().url(url).build();
 
         httpClient.newCall(request).enqueue(new Callback() {
             @Override
@@ -78,17 +84,17 @@ public class RetrieveElderActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     String jsonData = response.body().string();
 
-                    Elder[] elderList =  new Gson().fromJson(jsonData, Elder[].class);
+                    Temperature[] tempList =  new Gson().fromJson(jsonData, Temperature[].class);
 
-                    mAdapter = new RecyclerViewAdapter_retrieveElder(elderList, baseUrl);
+                    mAdapter = new RecyclerViewAdapter_retrieveTemperature(tempList);
 
                     //Must call UI thread to change layouts and views
-                    RetrieveElderActivity.this.runOnUiThread(new Runnable() {
+                    RetrieveTemperatureActivity.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             Log.d(TAG, "runOnUiThread");
                             recyclerView.setAdapter(mAdapter);
-                            layoutManager = new LinearLayoutManager(RetrieveElderActivity.this, LinearLayoutManager.VERTICAL, false);
+                            layoutManager = new LinearLayoutManager(RetrieveTemperatureActivity.this, LinearLayoutManager.VERTICAL, false);
                             recyclerView.setHasFixedSize(true);
                             recyclerView.setLayoutManager(layoutManager);
                         }
@@ -98,5 +104,5 @@ public class RetrieveElderActivity extends AppCompatActivity {
         });
     }
 
-    static String TAG ="RetrieveElderActivity";
+    static String TAG ="RetrieveTemperatureActivity";
 }

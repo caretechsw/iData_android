@@ -24,12 +24,10 @@ import okhttp3.HttpUrl;
 public class Fragment_crud_retrieve extends Fragment implements View.OnClickListener {
 
     String url_elder;
-    ArrayAdapter<String> adapter;
     Spinner spinner;
     EditText editText;
-    String url;
+    String baseUrl;
     Intent intent;
-    Bundle bundle = new Bundle();
 
     @Override
     public View onCreateView(
@@ -46,21 +44,14 @@ public class Fragment_crud_retrieve extends Fragment implements View.OnClickList
         getParentFragmentManager().setFragmentResultListener("requestKey", this, new FragmentResultListener() {
             @Override
             public void onFragmentResult(@NonNull String key, @NonNull Bundle bundle) {
-               url = bundle.getString("url");
-               if(url_elder==null&&url!=null){
-                url_elder = url+"elder";}
+                baseUrl = bundle.getString("baseUrl");
+               if(url_elder==null&&baseUrl!=null){
+                url_elder = baseUrl+"elder";}
                Log.i(TAG, "url_elder :"+ url_elder);
+                Log.i(TAG, "baseUrl :"+ baseUrl);
         }});
         }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        bundle.putString("url", url);
-        if(url_elder==null){
-        bundle.putString("url_elder", url_elder);}
-
-    }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         view.findViewById(R.id.previous_crud_retrieve).setOnClickListener(this);
@@ -71,8 +62,6 @@ public class Fragment_crud_retrieve extends Fragment implements View.OnClickList
         editText = view.findViewById(R.id.editText_crud_retrieve);
         intent = new Intent(getActivity(), RetrieveElderActivity.class);
     }
-
-
 
     @Override
     public void onClick(View view) {
@@ -96,9 +85,11 @@ public class Fragment_crud_retrieve extends Fragment implements View.OnClickList
                 if(!TextUtils.isEmpty(searchValue)) {
                     HttpUrl finalUrl = httpBuilder.addQueryParameter(searchBy, searchValue).build();
 
-                    Log.i(TAG, finalUrl.toString());
+
 
                     intent.putExtra("finalUrl", finalUrl.toString());
+                    Log.i(TAG, "finalUrl : " + finalUrl.toString());
+                    Log.i(TAG, "baseUrl : "+baseUrl);
                     startActivity(intent);
 
 //                    bundle.putString("finalUrl", finalUrl.toString());
@@ -110,7 +101,10 @@ public class Fragment_crud_retrieve extends Fragment implements View.OnClickList
 
 
             case R.id.retrieveAllsummit_bttn:
+
                 intent.putExtra("finalUrl", url_elder);
+                intent.putExtra("baseUrl", baseUrl);
+                Log.i(TAG, "baseUrl : "+baseUrl);
                 startActivity(intent);
 
 //                NavHostFragment.findNavController(Fragment_crud_retrieve.this)

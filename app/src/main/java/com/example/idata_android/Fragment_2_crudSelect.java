@@ -15,7 +15,7 @@ import androidx.navigation.fragment.NavHostFragment;
 public class Fragment_2_crudSelect extends Fragment implements View.OnClickListener {
 
 
-    String url;
+    String baseUrl;
     Bundle bundle = new Bundle();
 
     @Override
@@ -43,7 +43,7 @@ public class Fragment_2_crudSelect extends Fragment implements View.OnClickListe
         getParentFragmentManager().setFragmentResultListener("requestKey", this, new FragmentResultListener() {
             @Override
             public void onFragmentResult(@NonNull String key, @NonNull Bundle bundle) {
-                url = bundle.getString("url");
+                baseUrl = bundle.getString("baseUrl");
             }
         });
     }
@@ -51,26 +51,32 @@ public class Fragment_2_crudSelect extends Fragment implements View.OnClickListe
     @Override
     public void onPause() {
         super.onPause();
-        bundle.putString("url", url);
+        bundle.putString("baseUrl", baseUrl);
         getParentFragmentManager().setFragmentResult("requestKey", bundle);
     }
 
     @Override
     public void onClick(View v) {
         switch(v.getId()){
-            case R.id.retrive_bttn:
-
-                NavHostFragment.findNavController(Fragment_2_crudSelect.this)
-                .navigate(R.id.action_SecondFragmentCrudSelect_to_ThirdfragmentCrudRetrieve);
-        break;
-
             case R.id.previous_crudselect:
                 NavHostFragment.findNavController(Fragment_2_crudSelect.this)
                         .navigate(R.id.action_SecondFragmentCrudSelect_to_FirstFragmentIpAddress);
                 break;
 
+            case R.id.create_bttn:
+                NavHostFragment.findNavController(Fragment_2_crudSelect.this)
+                        .navigate(R.id.action_SecondFragmentCrudSelect_to_fragment_crud_create);
+                break;
+
+            case R.id.retrive_bttn:
+
+                NavHostFragment.findNavController(Fragment_2_crudSelect.this)
+                .navigate(R.id.action_SecondFragmentCrudSelect_to_ThirdfragmentCrudRetrieve);
+                break;
+
+
             case R.id.del_bttn:
-                Log.i(TAG, "bundle-outside 2 :"+url);
+                Log.i(TAG, "bundle-outside 2 :"+baseUrl);
                 break;
         }
     }

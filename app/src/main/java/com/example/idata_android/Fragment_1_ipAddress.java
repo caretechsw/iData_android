@@ -63,14 +63,14 @@ public class Fragment_1_ipAddress extends Fragment {
                  ipInput = "192.168.1.20";//default Ip - home
                   }
 
-             String url = "http://"+ipInput+":7070/";
+             String baseUrl = "http://"+ipInput+":7070/";
 
              if(!ipInput.equals("192.168.1.20")){
                 bundle.putString("ipAddress", ipInput);
                  }
 
-                  Log.i(TAG, "url : "+ url);
-                  Request request = new Request.Builder().url(url).build();
+                  Log.i(TAG, "baseUrl : "+ baseUrl);
+                  Request request = new Request.Builder().url(baseUrl).build();
 
                   httpClient.newCall(request).enqueue(new Callback() {
                       @Override
@@ -81,7 +81,7 @@ public class Fragment_1_ipAddress extends Fragment {
                       @Override public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 if(response.isSuccessful()){
 
-                    bundle.putString("url", url);
+                    bundle.putString("baseUrl", baseUrl);
 
                     getActivity().runOnUiThread(new Runnable() {
                         @Override

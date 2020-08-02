@@ -28,6 +28,9 @@
         <action
             android:id="@+id/action_SecondFragmentCrudSelect_to_ThirdfragmentCrudRetrieve"
             app:destination="@id/ThirdfragmentCrudRetrieve" />
+        <action
+            android:id="@+id/action_SecondFragmentCrudSelect_to_fragment_crud_create"
+            app:destination="@id/fragment_crud_create" />
     </fragment>
 
     <fragment
@@ -38,17 +41,27 @@
         <action
             android:id="@+id/action_ThirdfragmentCrudRetriev_to_SecondFragmentCrudSelect"
             app:destination="@id/SecondFragmentCrudSelect" />
-        <action
-            android:id="@+id/action_ThirdfragmentCrudRetrieve_to_FourthfragmentfragmentCrudRetrieveRecyclerview"
-            app:destination="@id/FourthfragmentfragmentCrudRetrieveRecyclerview" />
     </fragment>
 
     <fragment
-        android:id="@+id/FourthfragmentfragmentCrudRetrieveRecyclerview"
-        android:name="com.example.idata_android.Fragment_crud_retrieve_recyclerview"
-        android:label="Fragment_crud_retrieve_recyclerview" >
+        android:id="@+id/fragment_crud_create"
+        android:name="com.example.idata_android.Fragment_crud_create"
+        android:label="fragment_crud_create"
+        tools:layout="@layout/fragment_crud_create" >
+
         <action
-            android:id="@+id/action_FourthfragmentfragmentCrudRetrieveRecyclerview_to_ThirdfragmentCrudRetrieve"
-            app:destination="@id/ThirdfragmentCrudRetrieve" />
+            android:id="@+id/action_fragment_crud_create_to_SecondFragmentCrudSelect2"
+            app:destination="@id/SecondFragmentCrudSelect" />
+        <action
+            android:id="@+id/action_fragment_crud_create_to_fragment_crud_create_elder"
+            app:destination="@id/fragment_crud_create_elder" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_crud_create_elder"
+        android:name="com.example.idata_android.Fragment_crud_create_elder"
+        android:label="Fragment_crud_create_elder" >
+        <action
+            android:id="@+id/action_fragment_crud_create_elder_to_fragment_crud_create"
+            app:destination="@id/fragment_crud_create" />
     </fragment>
 </navigation>

@@ -16,10 +16,19 @@
     <string name="delete">Delete</string>
     <string name="retrieve_by">Retrieve By</string>
     <string name="retrive_all">Retrive All</string>
-    <string name="elder_id">Elder ID:</string>
+    <string name="elder_id">Elder ID</string>
 
 
     <string name="spinnerList">spinnerList</string>
+    <string name="elder_name">Name</string>
+    <string name="elder">Elder</string>
+    <string name="temperature">Temperature</string>
+    <string name="add_elder">Add Elder</string>
+    <string name="elder_name2">Elder Name :</string>
+    <string name="bed_no">Bed No :</string>
+    <string name="success_addelder">Success</string>
+    <string name="input_elder_name">Name</string>
+    <string name="input_bed_no">Bed No</string>
 
     <string-array name="searchelders_array">
         <item>id</item>
