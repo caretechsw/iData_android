@@ -56,24 +56,21 @@ public class Fragment_crud_create extends Fragment implements View.OnClickListen
     @Override
     public void onClick(View view) {
         switch(view.getId()){
-            case R.id.previous_crud_retrieve:
+            case R.id.previous_crud_create:
                 NavHostFragment.findNavController(Fragment_crud_create.this)
                         .navigate(R.id.action_fragment_crud_create_to_SecondFragmentCrudSelect2);
                 break;
 
             case R.id.bttn_addElder_fragment_crud_create:
-
-
                NavHostFragment.findNavController(Fragment_crud_create.this)
                         .navigate(R.id.action_fragment_crud_create_to_fragment_crud_create_elder);
                 break;
 
 
-
             case R.id.bttn_addTemp_fragment_crud_create:
 
-             //   NavHostFragment.findNavController(Fragment_crud_create.this)
-                 //       .navigate(R.id.action_ThirdfragmentCrudRetrieve_to_FourthfragmentfragmentCrudRetrieveRecyclerview);
+                NavHostFragment.findNavController(Fragment_crud_create.this)
+                        .navigate(R.id.action_fragment_crud_create_to_fragment_crud_create_temp);
                     break;
     }
 }

@@ -1,15 +1,12 @@
 package com.example.idata_android;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,18 +22,17 @@ import java.io.IOException;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
-import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class Fragment_crud_create_elder extends Fragment implements View.OnClickListener {
+public class Fragment_crud_create_temp extends Fragment implements View.OnClickListener {
 
-    String url_elder;
+    String url_temp;
     String baseUrl;
-    EditText inputName;
-    EditText inputBedNo;
+    EditText inputTemp;
+    EditText inputElderId;
 
     @Override
     public View onCreateView(
@@ -44,7 +40,7 @@ public class Fragment_crud_create_elder extends Fragment implements View.OnClick
             Bundle savedInstanceState
     ) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_crud_create_elder, container, false);
+        return inflater.inflate(R.layout.fragment_crud_create_temp, container, false);
     }
 
     @Override
@@ -54,9 +50,9 @@ public class Fragment_crud_create_elder extends Fragment implements View.OnClick
             @Override
             public void onFragmentResult(@NonNull String key, @NonNull Bundle bundle) {
                 baseUrl = bundle.getString("baseUrl");
-               if(url_elder==null&&baseUrl!=null){
-                url_elder = baseUrl+"elder";}
-               Log.i(TAG, "url_elder :"+ url_elder);
+               if(url_temp==null&&baseUrl!=null){
+                url_temp = baseUrl+"temp";}
+               Log.i(TAG, "url_temp :"+ url_temp);
                 Log.i(TAG, "baseUrl :"+ baseUrl);
         }});
         }
@@ -71,36 +67,36 @@ public class Fragment_crud_create_elder extends Fragment implements View.OnClick
 
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        view.findViewById(R.id.previous_crud_create_elder).setOnClickListener(this);
-        inputName = view.findViewById(R.id.editText_inputName_crud_create_elder);
-        inputBedNo = view.findViewById(R.id.editText_inputBedNo_crud_create_elder);
-        view.findViewById(R.id.bttn_addElder_crud_create_elder).setOnClickListener(this);
+        view.findViewById(R.id.previous_crud_create_temp).setOnClickListener(this);
+        inputTemp = view.findViewById(R.id.editText_inputTemp_crud_create_temp);
+        inputElderId = view.findViewById(R.id.editText_inputElderId_crud_create_temp);
+        view.findViewById(R.id.bttn_addTemp_crud_create_temp).setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.previous_crud_create_elder:
-                NavHostFragment.findNavController(Fragment_crud_create_elder.this)
-                        .navigate(R.id.action_fragment_crud_create_elder_to_fragment_crud_create);
+            case R.id.previous_crud_create_temp:
+                NavHostFragment.findNavController(Fragment_crud_create_temp.this)
+                        .navigate(R.id.action_fragment_crud_create_temp_to_fragment_crud_create);
                 break;
 
-            case R.id.bttn_addElder_crud_create_elder:
+            case R.id.bttn_addTemp_crud_create_temp:
 
-                String elderName = inputName.getText().toString();
-                String bedNo = inputBedNo.getText().toString();
+                String temp = inputTemp.getText().toString();
+                String elderId = inputElderId.getText().toString();
 
                 OkHttpClient client = new OkHttpClient();
 
-                if (!TextUtils.isEmpty(elderName) && !TextUtils.isEmpty(bedNo)) {
+                if (!TextUtils.isEmpty(temp) && !TextUtils.isEmpty(elderId)) {
                     Log.i(TAG, "1 :"+ baseUrl);
                     RequestBody formBody = new FormBody.Builder()
-                            .add("name", elderName)
-                            .add("bed_no", bedNo).build();// dynamically add more parameter like this:
+                            .add("temperature", temp)
+                            .add("elder_id", elderId).build();// dynamically add more parameter like this:
 
                     Log.i(TAG, "2:"+ baseUrl);
                     Request request = new Request.Builder()
-                            .url(url_elder + "/add")
+                            .url(url_temp + "/add")
                             .post(formBody)
                             .build();
                     Log.i(TAG, "3:"+ baseUrl);
@@ -152,5 +148,5 @@ public class Fragment_crud_create_elder extends Fragment implements View.OnClick
         }
     }
 
- static String TAG = "Fragment_crud_create_elder";
+ static String TAG = "Fragment_crud_create_temp";
 }

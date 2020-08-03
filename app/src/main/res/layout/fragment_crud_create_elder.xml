@@ -92,17 +92,6 @@
         app:layout_constraintStart_toStartOf="@id/previous_crud_create_elder"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2_crud_create_elder" />
 
-        <TextView
-            android:id="@+id/textView_success_addElder_crud_create_elder"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginLeft="15dp"
-            android:visibility="invisible"
-            android:text="@string/success_addelder"
-            android:textSize="30sp"
-            app:layout_constraintStart_toEndOf="@+id/bttn_addElder_crud_create_elder"
-            app:layout_constraintTop_toTopOf="@id/bttn_addElder_crud_create_elder" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

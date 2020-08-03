@@ -29,6 +29,9 @@
     <string name="success_addelder">Success</string>
     <string name="input_elder_name">Name</string>
     <string name="input_bed_no">Bed No</string>
+    <string name="input_temperature">Temperature :</string>
+    <string name="input_elder_id">Elder ID :</string>
+    <string name="bttn_add_temperature">Add Temperature</string>
 
     <string-array name="searchelders_array">
         <item>id</item>

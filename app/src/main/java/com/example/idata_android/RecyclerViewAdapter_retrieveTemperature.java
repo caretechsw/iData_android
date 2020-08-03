@@ -65,7 +65,6 @@ class RecyclerViewAdapter_retrieveTemperature extends RecyclerView.Adapter<Recyc
 
         }
         public void bindItemList(int position) {
-            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             if(position==0){
                 textView_temperatureId.setText("Temp ID");
                 textView_temperature.setText("Temp(°C)");
