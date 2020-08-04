@@ -44,18 +44,18 @@ public class Fragment_crud_create_temp extends Fragment implements View.OnClickL
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onResume() {
+        super.onResume();
         getParentFragmentManager().setFragmentResultListener("requestKey", this, new FragmentResultListener() {
             @Override
             public void onFragmentResult(@NonNull String key, @NonNull Bundle bundle) {
                 baseUrl = bundle.getString("baseUrl");
-               if(url_temp==null&&baseUrl!=null){
-                url_temp = baseUrl+"temp";}
-               Log.i(TAG, "url_temp :"+ url_temp);
+                if(url_temp==null&&baseUrl!=null){
+                    url_temp = baseUrl+"temp";}
+                Log.i(TAG, "url_temp :"+ url_temp);
                 Log.i(TAG, "baseUrl :"+ baseUrl);
-        }});
-        }
+            }});
+    }
 
     @Override
     public void onPause() {
@@ -124,25 +124,6 @@ public class Fragment_crud_create_temp extends Fragment implements View.OnClickL
 
                         }
                     });
-//                    try {
-//                        call.execute();
-//                        Log.i(TAG, "4:"+ baseUrl);
-//                        successText.setVisibility(View.VISIBLE);
-//                        Log.i(TAG, "5:"+ baseUrl);
-//                    } catch (IOException e) {
-//                        successText.setVisibility(View.INVISIBLE);
-//                        e.printStackTrace();
-//                        Log.i(TAG, "5:"+ baseUrl);
-//                    }
-
-
-
-
-//                    bundle.putString("finalUrl", finalUrl.toString());
-//                    getParentFragmentManager().setFragmentResult("requestKey", bundle);
-//                NavHostFragment.findNavController(Fragment_crud_retrieve.this)
-//                        .navigate(R.id.action_ThirdfragmentCrudRetrieve_to_FourthfragmentfragmentCrudRetrieveRecyclerview);
-
                     break;
                 }
         }

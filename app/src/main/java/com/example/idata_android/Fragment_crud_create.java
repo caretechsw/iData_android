@@ -12,7 +12,6 @@ import androidx.navigation.fragment.NavHostFragment;
 
 public class Fragment_crud_create extends Fragment implements View.OnClickListener {
 
-    String url_elder;
     String baseUrl;
 
     @Override
@@ -25,18 +24,15 @@ public class Fragment_crud_create extends Fragment implements View.OnClickListen
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onResume() {
+        super.onResume();
         getParentFragmentManager().setFragmentResultListener("requestKey", this, new FragmentResultListener() {
             @Override
             public void onFragmentResult(@NonNull String key, @NonNull Bundle bundle) {
                 baseUrl = bundle.getString("baseUrl");
-               if(url_elder==null&&baseUrl!=null){
-                url_elder = baseUrl+"elder";}
-               Log.i(TAG, "url_elder :"+ url_elder);
                 Log.i(TAG, "baseUrl :"+ baseUrl);
-        }});
-        }
+            }});
+    }
 
     @Override
     public void onPause() {

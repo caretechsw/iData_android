@@ -39,19 +39,26 @@ public class Fragment_crud_retrieve extends Fragment implements View.OnClickList
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onResume() {
+        super.onResume();
         getParentFragmentManager().setFragmentResultListener("requestKey", this, new FragmentResultListener() {
             @Override
             public void onFragmentResult(@NonNull String key, @NonNull Bundle bundle) {
                 baseUrl = bundle.getString("baseUrl");
-               if(url_elder==null&&baseUrl!=null){
-                url_elder = baseUrl+"elder";}
-               Log.i(TAG, "url_elder :"+ url_elder);
+                if(url_elder==null&&baseUrl!=null){
+                    url_elder = baseUrl+"elder";}
+                Log.i(TAG, "url_elder :"+ url_elder);
                 Log.i(TAG, "baseUrl :"+ baseUrl);
-        }});
-        }
+            }});
+    }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        Bundle bundle = new Bundle();
+        bundle.putString("baseUrl", baseUrl);
+        getParentFragmentManager().setFragmentResult("requestKey", bundle);
+    }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         view.findViewById(R.id.previous_crud_retrieve).setOnClickListener(this);
@@ -79,8 +86,8 @@ public class Fragment_crud_retrieve extends Fragment implements View.OnClickList
                 String searchValue = editText.getText().toString();
 
                 String searchByUrl = url_elder+"/"+searchBy;
+                 HttpUrl.Builder httpBuilder = HttpUrl.parse(searchByUrl).newBuilder();
 
-                HttpUrl.Builder httpBuilder = HttpUrl.parse(searchByUrl).newBuilder();
 
                 if(!TextUtils.isEmpty(searchValue)) {
                     HttpUrl finalUrl = httpBuilder.addQueryParameter(searchBy, searchValue).build();

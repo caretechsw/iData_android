@@ -61,6 +61,11 @@ public class RetrieveElderActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
     public void setHttpClient(String adapterUrl){
         Log.i(TAG, "url:"+adapterUrl);
         httpClient = new OkHttpClient();

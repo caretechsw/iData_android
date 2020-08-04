@@ -43,19 +43,20 @@ public class Fragment_crud_create_elder extends Fragment implements View.OnClick
         return inflater.inflate(R.layout.fragment_crud_create_elder, container, false);
     }
 
+
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onResume() {
+        super.onResume();
         getParentFragmentManager().setFragmentResultListener("requestKey", this, new FragmentResultListener() {
             @Override
             public void onFragmentResult(@NonNull String key, @NonNull Bundle bundle) {
                 baseUrl = bundle.getString("baseUrl");
-               if(url_elder==null&&baseUrl!=null){
-                url_elder = baseUrl+"elder";}
-               Log.i(TAG, "url_elder :"+ url_elder);
+                if(url_elder==null&&baseUrl!=null){
+                    url_elder = baseUrl+"elder";}
+                Log.i(TAG, "url_elder :"+ url_elder);
                 Log.i(TAG, "baseUrl :"+ baseUrl);
-        }});
-        }
+            }});
+    }
 
     @Override
     public void onPause() {
@@ -89,15 +90,16 @@ public class Fragment_crud_create_elder extends Fragment implements View.OnClick
                 OkHttpClient client = new OkHttpClient();
 
                 if (!TextUtils.isEmpty(elderName) && !TextUtils.isEmpty(bedNo)) {
+                    Log.i(TAG, "1 :"+ baseUrl);
                     RequestBody formBody = new FormBody.Builder()
                             .add("name", elderName)
                             .add("bed_no", bedNo).build();// dynamically add more parameter like this:
-
+                    Log.i(TAG, "2 :"+ baseUrl);
                     Request request = new Request.Builder()
                             .url(url_elder + "/add")
                             .post(formBody)
                             .build();
-
+                    Log.i(TAG, "3 :"+ baseUrl);
                     Call call = client.newCall(request);
                     call.enqueue(new Callback() {
                         @Override
@@ -107,7 +109,7 @@ public class Fragment_crud_create_elder extends Fragment implements View.OnClick
                         @Override
                         public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                             if(response.isSuccessful()) {
-
+                                Log.i(TAG, "4 :"+ baseUrl);
                                 getActivity().runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
