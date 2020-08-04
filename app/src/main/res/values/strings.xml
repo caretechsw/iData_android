@@ -33,6 +33,8 @@
     <string name="input_elder_id">Elder ID :</string>
     <string name="bttn_add_temperature">Add Temperature</string>
     <string name="in_put_ip_address_or_localhost">In put ip address or localhost</string>
+    <string name="input_ip_address_or_localhost">Input ip address or localhost</string>
+    <string name="input_ip_address">input ip address</string>
 
     <string-array name="searchelders_array">
         <item>id</item>

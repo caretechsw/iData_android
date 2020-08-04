@@ -12,11 +12,11 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="120dp"
-        android:hint="@string/in_put_ip_address_or_localhost"
+        android:hint="@string/input_ip_address"
+        android:importantForAutofill="no"
         android:inputType="text"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="20dp"
-        android:importantForAutofill="no" />
+        tools:layout_editor_absoluteX="20dp" />
 
 
     <Button
