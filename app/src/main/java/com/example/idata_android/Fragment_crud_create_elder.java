@@ -1,16 +1,12 @@
 package com.example.idata_android;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -93,23 +89,19 @@ public class Fragment_crud_create_elder extends Fragment implements View.OnClick
                 OkHttpClient client = new OkHttpClient();
 
                 if (!TextUtils.isEmpty(elderName) && !TextUtils.isEmpty(bedNo)) {
-                    Log.i(TAG, "1 :"+ baseUrl);
                     RequestBody formBody = new FormBody.Builder()
                             .add("name", elderName)
                             .add("bed_no", bedNo).build();// dynamically add more parameter like this:
 
-                    Log.i(TAG, "2:"+ baseUrl);
                     Request request = new Request.Builder()
                             .url(url_elder + "/add")
                             .post(formBody)
                             .build();
-                    Log.i(TAG, "3:"+ baseUrl);
 
                     Call call = client.newCall(request);
                     call.enqueue(new Callback() {
                         @Override
                         public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                            Log.i(TAG, "4:" + baseUrl);
                         }
 
                         @Override
@@ -128,25 +120,6 @@ public class Fragment_crud_create_elder extends Fragment implements View.OnClick
 
                         }
                     });
-//                    try {
-//                        call.execute();
-//                        Log.i(TAG, "4:"+ baseUrl);
-//                        successText.setVisibility(View.VISIBLE);
-//                        Log.i(TAG, "5:"+ baseUrl);
-//                    } catch (IOException e) {
-//                        successText.setVisibility(View.INVISIBLE);
-//                        e.printStackTrace();
-//                        Log.i(TAG, "5:"+ baseUrl);
-//                    }
-
-
-
-
-//                    bundle.putString("finalUrl", finalUrl.toString());
-//                    getParentFragmentManager().setFragmentResult("requestKey", bundle);
-//                NavHostFragment.findNavController(Fragment_crud_retrieve.this)
-//                        .navigate(R.id.action_ThirdfragmentCrudRetrieve_to_FourthfragmentfragmentCrudRetrieveRecyclerview);
-
                     break;
                 }
         }
