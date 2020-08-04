@@ -71,32 +71,32 @@ class RecyclerViewAdapter_retrieveElder extends RecyclerView.Adapter<RecyclerVie
             }
 
             int refIds[] = group.getReferencedIds();
-            for (int id : refIds) {
-                itemView.findViewById(id).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
+            if(position>0) {
+                for (int id : refIds) {
+                    itemView.findViewById(id).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
 
-                        Intent intent;
-                        intent = new Intent(itemView.getContext(), RetrieveTemperatureActivity.class);
+                            Intent intent;
+                            intent = new Intent(itemView.getContext(), RetrieveTemperatureActivity.class);
 
-                        String searchTemp = baseUrl+"temp/elder_id";
-                        Log.i(TAG, searchTemp);
-                        HttpUrl.Builder httpBuilder = HttpUrl.parse(searchTemp).newBuilder();
-                            HttpUrl tempUrl = httpBuilder.addQueryParameter("elder_id", Integer.toString(elderList[position-1].getId())).build();
+                            String searchTemp = baseUrl + "temp/elder_id";
+                            Log.i(TAG, searchTemp);
+                            HttpUrl.Builder httpBuilder = HttpUrl.parse(searchTemp).newBuilder();
+                            HttpUrl tempUrl = httpBuilder.addQueryParameter("elder_id", Integer.toString(elderList[position - 1].getId())).build();
 
-                        intent.putExtra("tempUrl", tempUrl.toString());
-                        intent.putExtra("elder_id", Integer.toString(elderList[position-1].getId()));
-                        intent.putExtra("elder_name", elderList[position-1].getName());
-                        Log.i(TAG, tempUrl.toString());
-                        itemView.getContext().startActivity(intent);
-                    }
-                });
+                            intent.putExtra("tempUrl", tempUrl.toString());
+                            intent.putExtra("elder_id", Integer.toString(elderList[position - 1].getId()));
+                            intent.putExtra("elder_name", elderList[position - 1].getName());
+                            Log.i(TAG, tempUrl.toString());
+                            itemView.getContext().startActivity(intent);
+                        }
+                    });
+                }
             }
-//                Glide.with(view.context).load(itemListModel.url_forRecyclerview)
-//                        .into(view.image_swipe)
+//                Glide.with(view.context).load(item)
+//                        .into(view.image)
             }
-
-
         }
         static String TAG="RecyclerViewAdapter_retrieveElder";
     }

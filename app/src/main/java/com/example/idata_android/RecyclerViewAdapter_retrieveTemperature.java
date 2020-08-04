@@ -27,7 +27,6 @@ class RecyclerViewAdapter_retrieveTemperature extends RecyclerView.Adapter<Recyc
     TextView textView_temperatureId;
     TextView textView_temperature;
     TextView textView_timestamp;
-    Group group;
 
 
     public RecyclerViewAdapter_retrieveTemperature(Temperature[] tempList) {
@@ -60,8 +59,6 @@ class RecyclerViewAdapter_retrieveTemperature extends RecyclerView.Adapter<Recyc
             textView_temperatureId = itemView.findViewById(R.id.textView_temperatureId);
             textView_temperature = itemView.findViewById(R.id.textView_temperature);
             textView_timestamp = itemView.findViewById(R.id.textView_timestamp);
-            group = itemView.findViewById(R.id.group);
-
 
         }
         public void bindItemList(int position) {
