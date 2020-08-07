@@ -1,5 +1,6 @@
 package com.example.idata_android;
 
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,8 @@ import com.example.idata_android.Model.Temperature;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
 import okhttp3.Callback;
 import okhttp3.Request;
@@ -54,11 +57,15 @@ class RecyclerViewAdapter_retrieveTemperature extends RecyclerView.Adapter<Recyc
     }
 
     class TheView extends RecyclerView.ViewHolder {
+
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
         public TheView(@NonNull View itemView) {
             super(itemView);
             textView_temperatureId = itemView.findViewById(R.id.textView_temperatureId);
             textView_temperature = itemView.findViewById(R.id.textView_temperature);
             textView_timestamp = itemView.findViewById(R.id.textView_timestamp);
+
 
         }
         public void bindItemList(int position) {
@@ -69,7 +76,7 @@ class RecyclerViewAdapter_retrieveTemperature extends RecyclerView.Adapter<Recyc
             }else if(position>0){
                 textView_temperatureId.setText(Integer.toString(tempList[position-1].getTemperatureID()));
                 textView_temperature.setText(Float.toString(tempList[position-1].getTemperature()));
-                textView_timestamp.setText(tempList[position-1].getTimestamp().toString());
+                textView_timestamp.setText(df.format(tempList[position-1].getTimestamp()));
             }
             }
         }
