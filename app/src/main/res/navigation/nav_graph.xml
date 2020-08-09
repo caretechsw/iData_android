@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/FirstFragmentIpAddress"
-        android:name="com.example.idata_android.Fragment_1_ipAddress"
+        android:name="com.example.idata_android.Fragment_first"
         android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_1_ip_address">
+        tools:layout="@layout/fragment_firstpage">
 
         <action
             android:id="@+id/action_FirstFragmentIpAddress_to_SecondFragmentCrudSelect"
@@ -18,9 +18,9 @@
 
     <fragment
         android:id="@+id/SecondFragmentCrudSelect"
-        android:name="com.example.idata_android.Fragment_2_crudSelect"
+        android:name="com.example.idata_android.Fragment_serverCrud"
         android:label="Second Fragment"
-        tools:layout="@layout/fragment_2_crudselect">
+        tools:layout="@layout/fragment_server_crud">
 
         <action
             android:id="@+id/action_SecondFragmentCrudSelect_to_FirstFragmentIpAddress"

@@ -14,7 +14,7 @@ import com.example.idata_android.Model.Elder;
 import okhttp3.HttpUrl;
 
 
-class RecyclerViewAdapter_retrieveElder extends RecyclerView.Adapter<RecyclerViewAdapter_retrieveElder.TheView> {
+class RecyclerviewAdapter_retrieveElder extends RecyclerView.Adapter<RecyclerviewAdapter_retrieveElder.TheView> {
 
 
     Elder[] elderList;
@@ -24,7 +24,7 @@ class RecyclerViewAdapter_retrieveElder extends RecyclerView.Adapter<RecyclerVie
     Group group;
     String baseUrl;
 
-    public RecyclerViewAdapter_retrieveElder(Elder[] elderList, String baseUrl) {
+    public RecyclerviewAdapter_retrieveElder(Elder[] elderList, String baseUrl) {
         this.elderList = elderList;
         this.baseUrl = baseUrl;
     }
@@ -32,14 +32,14 @@ class RecyclerViewAdapter_retrieveElder extends RecyclerView.Adapter<RecyclerVie
 
     @NonNull
     @Override
-    public RecyclerViewAdapter_retrieveElder.TheView onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new RecyclerViewAdapter_retrieveElder.TheView(
+    public RecyclerviewAdapter_retrieveElder.TheView onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new RecyclerviewAdapter_retrieveElder.TheView(
                 LayoutInflater.from(parent.getContext()).inflate(
                         R.layout.elder_table, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerViewAdapter_retrieveElder.TheView holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerviewAdapter_retrieveElder.TheView holder, int position) {
         holder.bindItemList(position);
     }
 

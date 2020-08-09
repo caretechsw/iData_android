@@ -23,6 +23,7 @@
         </activity>
         <activity android:name=".RetrieveElderActivity"></activity>
         <activity android:name=".RetrieveTemperatureActivity"></activity>
+        <activity android:name=".RetrieveLocalTemperatureActivity"></activity>
     </application>
 
 </manifest>

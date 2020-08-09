@@ -100,7 +100,9 @@ public class Fragment_crud_create_elder extends Fragment implements View.OnClick
                             .post(formBody)
                             .build();
                     Log.i(TAG, "3 :"+ baseUrl);
+
                     Call call = client.newCall(request);
+
                     call.enqueue(new Callback() {
                         @Override
                         public void onFailure(@NotNull Call call, @NotNull IOException e) {
@@ -117,9 +119,7 @@ public class Fragment_crud_create_elder extends Fragment implements View.OnClick
                                         Log.i(TAG, "5:" + baseUrl);
                                     }
                                 });
-
                             }
-
                         }
                     });
                     break;

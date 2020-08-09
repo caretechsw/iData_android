@@ -1,6 +1,5 @@
 package com.example.idata_android;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.idata_android.Model.Elder;
 import com.example.idata_android.Model.Temperature;
 import com.google.gson.Gson;
 
@@ -40,17 +38,17 @@ public class RetrieveTemperatureActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.temperature_table_recyclerview);
+        setContentView(R.layout.temp_table_server_recyclerview);
         Bundle bundle;
         bundle = getIntent().getExtras();
         String url = bundle.getString("tempUrl");
         String elder_id = bundle.getString("elder_id");
         String elder_name = bundle.getString("elder_name");
 
-        recyclerView = findViewById(R.id.recyclerview_retrieveTemperatureActivity);
-        previous_bttn = findViewById(R.id.previous_retrieveTemperatureActivity);
-        textView_elderID = findViewById(R.id.textView_retrieveTemperatureActivity_showElderID);
-        textView_elderName = findViewById(R.id.textView_retrieveTemperatureActivity_showElderName);
+        recyclerView = findViewById(R.id.recyclerview_temp_table_server_recyclerview);
+        previous_bttn = findViewById(R.id.previous_temp_table_server_recyclerview);
+        textView_elderID = findViewById(R.id.textView_showElderID_temp_table_server_recyclerview);
+        textView_elderName = findViewById(R.id.textView_showElderName_temp_table_server_recyclerview);
         textView_elderID.setText("Elder ID: "+ elder_id);
         textView_elderName.setText("Name: "+ elder_name);
 
@@ -86,7 +84,7 @@ public class RetrieveTemperatureActivity extends AppCompatActivity {
 
                     Temperature[] tempList =  new Gson().fromJson(jsonData, Temperature[].class);
 
-                    mAdapter = new RecyclerViewAdapter_retrieveTemperature(tempList);
+                    mAdapter = new RecyclerviewAdapter_retrieveTemperature(tempList);
 
                     //Must call UI thread to change layouts and views
                     RetrieveTemperatureActivity.this.runOnUiThread(new Runnable() {

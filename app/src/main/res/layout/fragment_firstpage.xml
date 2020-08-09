@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragment_first">
+
+    <EditText
+        android:id="@+id/ip_address_firstpage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="80dp"
+        android:hint="@string/input_ip_address"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="20dp" />
+
+
+    <Button
+        android:id="@+id/Connect_firstpage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/connect"
+        android:layout_marginVertical="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ip_address_firstpage" />
+
+    <View
+        android:id="@+id/view_firstPage"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="50dp"
+        android:background="@color/colorPrimaryDark"
+        app:layout_constraintTop_toBottomOf="@id/Connect_firstpage"
+        />
+
+    <TextView
+        android:id="@+id/textView_showToLocal_firstpage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="To local :"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@id/view_firstPage"
+        app:layout_constraintStart_toStartOf="parent"
+
+        />
+
+    <LinearLayout
+        android:id="@+id/linearLayout_firstpage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="30dp"
+        app:layout_constraintStart_toStartOf="@id/textView_showToLocal_firstpage"
+        app:layout_constraintTop_toBottomOf="@id/textView_showToLocal_firstpage"
+        >
+
+        <TextView
+            android:id="@+id/textView_showInputElderId_firstpage"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:text="@string/input_elder_id"
+            android:textSize="25sp"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <EditText
+            android:id="@+id/editText_inputElderId_firstpage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/elder_id"
+            android:inputType="number"
+            android:textSize="25sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:autofillHints="" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/bttn_summitElderid_firstpage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout_firstpage"
+        app:layout_constraintEnd_toEndOf="@id/linearLayout_firstpage"/>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2_firstpage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginVertical="15dp"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/bttn_summitElderid_firstpage"
+        app:layout_constraintStart_toStartOf="@id/bttn_summitElderid_firstpage">
+
+        <TextView
+            android:id="@+id/textview2_showInputTemp_firstpage"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:text="@string/input_temperature"
+            android:textSize="25sp"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <EditText
+            android:id="@+id/editText_inputTemp_firstpage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints="Name"
+            android:hint="@string/temperature"
+            android:inputType="text"
+            android:textSize="25sp"
+            app:layout_constraintEnd_toEndOf="parent"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/bttn2_summitTemp_firstpage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2_firstpage"
+        app:layout_constraintEnd_toEndOf="@id/linearLayout2_firstpage"/>
+
+    <Button
+        android:id="@+id/bttn3_readLocalData_firstpage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:text="@string/read_local_data"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@id/textView_showToLocal_firstpage" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

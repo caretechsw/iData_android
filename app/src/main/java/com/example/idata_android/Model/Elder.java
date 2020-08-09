@@ -30,10 +30,31 @@ public class Elder {
     private int id;
     private String name;
     private int bed_no;
+    private int status;
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+
 
     public Elder(int id, String name, int bed_no) {
         this.id = id;
         this.name = name;
         this.bed_no = bed_no;
+    }
+
+    @Override
+    public String toString() {
+        return "Elder{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", bed_no=" + bed_no +
+                ", status=" + status +
+                '}';
     }
 }

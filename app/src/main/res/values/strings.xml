@@ -35,6 +35,8 @@
     <string name="in_put_ip_address_or_localhost">In put ip address or localhost</string>
     <string name="input_ip_address_or_localhost">Input ip address or localhost</string>
     <string name="input_ip_address">input ip address</string>
+    <string name="read_local_data">Read Local Data</string>
+    <string name="local_data">Local Data</string>
 
     <string-array name="searchelders_array">
         <item>id</item>

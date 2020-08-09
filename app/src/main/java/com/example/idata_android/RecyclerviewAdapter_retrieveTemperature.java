@@ -1,29 +1,19 @@
 package com.example.idata_android;
 
-import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.Group;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.idata_android.Model.Elder;
 import com.example.idata_android.Model.Temperature;
 
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Locale;
-
-import okhttp3.Callback;
-import okhttp3.Request;
 
 
-class RecyclerViewAdapter_retrieveTemperature extends RecyclerView.Adapter<RecyclerViewAdapter_retrieveTemperature.TheView> {
+class RecyclerviewAdapter_retrieveTemperature extends RecyclerView.Adapter<RecyclerviewAdapter_retrieveTemperature.TheView> {
 
 
     Temperature[] tempList;
@@ -32,21 +22,21 @@ class RecyclerViewAdapter_retrieveTemperature extends RecyclerView.Adapter<Recyc
     TextView textView_timestamp;
 
 
-    public RecyclerViewAdapter_retrieveTemperature(Temperature[] tempList) {
+    public RecyclerviewAdapter_retrieveTemperature(Temperature[] tempList) {
         this.tempList = tempList;
     }
 
 
     @NonNull
     @Override
-    public RecyclerViewAdapter_retrieveTemperature.TheView onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new RecyclerViewAdapter_retrieveTemperature.TheView(
+    public RecyclerviewAdapter_retrieveTemperature.TheView onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new RecyclerviewAdapter_retrieveTemperature.TheView(
                 LayoutInflater.from(parent.getContext()).inflate(
-                        R.layout.temperature_table, parent, false));
+                        R.layout.temp_table_server, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerViewAdapter_retrieveTemperature.TheView holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerviewAdapter_retrieveTemperature.TheView holder, int position) {
         holder.bindItemList(position);
 
     }
@@ -62,9 +52,9 @@ class RecyclerViewAdapter_retrieveTemperature extends RecyclerView.Adapter<Recyc
 
         public TheView(@NonNull View itemView) {
             super(itemView);
-            textView_temperatureId = itemView.findViewById(R.id.textView_temperatureId);
-            textView_temperature = itemView.findViewById(R.id.textView_temperature);
-            textView_timestamp = itemView.findViewById(R.id.textView_timestamp);
+            textView_temperatureId = itemView.findViewById(R.id.textView_tempId_temp_table_server);
+            textView_temperature = itemView.findViewById(R.id.textView_temp_temp_table_server);
+            textView_timestamp = itemView.findViewById(R.id.textView_timestamp_temp_table_server);
 
 
         }
@@ -74,8 +64,8 @@ class RecyclerViewAdapter_retrieveTemperature extends RecyclerView.Adapter<Recyc
                 textView_temperature.setText("Temp(°C)");
                 textView_timestamp.setText("Date and Time");
             }else if(position>0){
-                textView_temperatureId.setText(Integer.toString(tempList[position-1].getTemperatureID()));
-                textView_temperature.setText(Float.toString(tempList[position-1].getTemperature()));
+                textView_temperatureId.setText(Integer.toString(tempList[position-1].getTemperature_id()));
+                textView_temperature.setText(Double.toString(tempList[position-1].getTemperature()));
                 textView_timestamp.setText(df.format(tempList[position-1].getTimestamp()));
             }
             }

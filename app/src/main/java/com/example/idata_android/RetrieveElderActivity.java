@@ -5,17 +5,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.idata_android.Model.Elder;
 import com.google.gson.Gson;
-
 import org.jetbrains.annotations.NotNull;
-
 import java.io.IOException;
 
 import okhttp3.Call;
@@ -32,7 +28,6 @@ public class RetrieveElderActivity extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
     OkHttpClient httpClient;
-    Intent intent;
     String baseUrl;
 
     @Override
@@ -45,12 +40,10 @@ public class RetrieveElderActivity extends AppCompatActivity {
         baseUrl = bundle.getString("baseUrl");
         Log.i(TAG, "baseUrl: " + baseUrl);
 
-        recyclerView = findViewById(R.id.recyclerview_retrieveElderActivity);
-        previous_bttn = findViewById(R.id.previous_retrieveElderActivity);
+        recyclerView = findViewById(R.id.recyclerview_crud_retrieve_recyclerview);
+        previous_bttn = findViewById(R.id.previous_crud_retrieve_recyclerview);
 
         setHttpClient(adapterUrl);
-
-
 
         previous_bttn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,7 +78,7 @@ public class RetrieveElderActivity extends AppCompatActivity {
 
                     Elder[] elderList =  new Gson().fromJson(jsonData, Elder[].class);
 
-                    mAdapter = new RecyclerViewAdapter_retrieveElder(elderList, baseUrl);
+                    mAdapter = new RecyclerviewAdapter_retrieveElder(elderList, baseUrl);
 
                     //Must call UI thread to change layouts and views
                     RetrieveElderActivity.this.runOnUiThread(new Runnable() {
