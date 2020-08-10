@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.idata_android">
+    package="hk.com.caretech.clive.idata_android">
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
@@ -12,7 +12,7 @@
         android:launchMode="singleTask"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name="hk.com.caretech.clive.idata_android.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -21,9 +21,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RetrieveElderActivity"></activity>
-        <activity android:name=".RetrieveTemperatureActivity"></activity>
-        <activity android:name=".RetrieveLocalTemperatureActivity"></activity>
+        <activity android:name="hk.com.caretech.clive.idata_android.Server.RetrieveElderActivity"></activity>
+        <activity android:name="hk.com.caretech.clive.idata_android.Server.RetrieveTemperatureActivity"></activity>
+        <activity android:name="hk.com.caretech.clive.idata_android.RetrieveLocalTemperatureActivity"></activity>
+        <activity android:name="hk.com.caretech.clive.idata_android.Server.ServerDataActivity"></activity>
     </application>
+
+
 
 </manifest>

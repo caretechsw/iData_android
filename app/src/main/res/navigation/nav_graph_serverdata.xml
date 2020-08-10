@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_serverdata"
+    app:startDestination="@id/FirstFragmentIpAddress">
+
+    <fragment
+        android:id="@+id/FirstFragmentIpAddress"
+        android:name="hk.com.caretech.clive.idata_android.Server.Fragment_server_first"
+        android:label="@string/first_fragment_label"
+        tools:layout="@layout/serverdata_first">
+
+        <action
+            android:id="@+id/action_FirstFragmentIpAddress_to_SecondFragmentCrudSelect"
+            app:destination="@id/SecondFragmentCrudSelect" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/SecondFragmentCrudSelect"
+        android:name="hk.com.caretech.clive.idata_android.Server.Fragment_serverCrud_second"
+        android:label="Second Fragment"
+        tools:layout="@layout/fragment_serverdata_crud">
+
+        <action
+            android:id="@+id/action_SecondFragmentCrudSelect_to_FirstFragmentIpAddress"
+            app:destination="@id/FirstFragmentIpAddress" />
+        <action
+            android:id="@+id/action_SecondFragmentCrudSelect_to_ThirdfragmentCrudRetrieve"
+            app:destination="@id/ThirdfragmentCrudRetrieve" />
+        <action
+            android:id="@+id/action_SecondFragmentCrudSelect_to_fragment_crud_create"
+            app:destination="@id/fragment_crud_create" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/ThirdfragmentCrudRetrieve"
+        android:name="hk.com.caretech.clive.idata_android.Server.Fragment_crud_retrieve"
+        android:label="Third Fragment"
+        tools:layout="@layout/fragment_crud_retrive" >
+        <action
+            android:id="@+id/action_ThirdfragmentCrudRetriev_to_SecondFragmentCrudSelect"
+            app:destination="@id/SecondFragmentCrudSelect" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_crud_create"
+        android:name="hk.com.caretech.clive.idata_android.Server.Fragment_crud_create"
+        android:label="fragment_crud_create"
+        tools:layout="@layout/fragment_crud_create" >
+
+        <action
+            android:id="@+id/action_fragment_crud_create_to_SecondFragmentCrudSelect2"
+            app:destination="@id/SecondFragmentCrudSelect" />
+        <action
+            android:id="@+id/action_fragment_crud_create_to_fragment_crud_create_elder"
+            app:destination="@id/fragment_crud_create_elder" />
+        <action
+            android:id="@+id/action_fragment_crud_create_to_fragment_crud_create_temp"
+            app:destination="@id/fragment_crud_create_temp" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_crud_create_elder"
+        android:name="hk.com.caretech.clive.idata_android.Server.Fragment_crud_create_elder"
+        android:label="Fragment_crud_create_elder" >
+        <action
+            android:id="@+id/action_fragment_crud_create_elder_to_fragment_crud_create"
+            app:destination="@id/fragment_crud_create" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_crud_create_temp"
+        android:name="hk.com.caretech.clive.idata_android.Server.Fragment_crud_create_temp"
+        android:label="fragment_crud_create_temp"
+        tools:layout="@layout/fragment_crud_create_temp" >
+        <action
+            android:id="@+id/action_fragment_crud_create_temp_to_fragment_crud_create"
+            app:destination="@id/fragment_crud_create" />
+    </fragment>
+</navigation>

@@ -7,8 +7,6 @@
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="connect">Connect</string>
     <string name="create">Create</string>
     <string name="retrive">Retrive</string>
@@ -32,11 +30,10 @@
     <string name="input_temperature">Temperature :</string>
     <string name="input_elder_id">Elder ID :</string>
     <string name="bttn_add_temperature">Add Temperature</string>
-    <string name="in_put_ip_address_or_localhost">In put ip address or localhost</string>
-    <string name="input_ip_address_or_localhost">Input ip address or localhost</string>
     <string name="input_ip_address">input ip address</string>
     <string name="read_local_data">Read Local Data</string>
     <string name="local_data">Local Data</string>
+    <string name="read_server_data">Read Server Data</string>
 
     <string-array name="searchelders_array">
         <item>id</item>

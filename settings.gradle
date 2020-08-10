@@ -1,2 +1,3 @@
+include ':IMeasureSDK'
 include ':app'
 rootProject.name = "iData_Android"
