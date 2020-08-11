@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="hk.com.caretech.clive.idata_android.Server.Fragment_serverCrud_second">
+    tools:context="hk.com.caretech.clive.idata_android.Server.Fragment_serverData_Crud_second">
 
     <Button
         android:id="@+id/previous_serverdata_crud"

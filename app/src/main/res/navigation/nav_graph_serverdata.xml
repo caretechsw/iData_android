@@ -9,28 +9,28 @@
         android:id="@+id/FirstFragmentIpAddress"
         android:name="hk.com.caretech.clive.idata_android.Server.Fragment_server_first"
         android:label="@string/first_fragment_label"
-        tools:layout="@layout/serverdata_first">
+        tools:layout="@layout/fragment_serverdata_first">
 
         <action
-            android:id="@+id/action_FirstFragmentIpAddress_to_SecondFragmentCrudSelect"
-            app:destination="@id/SecondFragmentCrudSelect" />
+            android:id="@+id/action_FirstFragmentIpAddress_to_SecondFragment_serverData_Crud"
+            app:destination="@id/SecondFragment_serverData_Crud" />
     </fragment>
 
     <fragment
-        android:id="@+id/SecondFragmentCrudSelect"
-        android:name="hk.com.caretech.clive.idata_android.Server.Fragment_serverCrud_second"
+        android:id="@+id/SecondFragment_serverData_Crud"
+        android:name="hk.com.caretech.clive.idata_android.Server.Fragment_serverData_Crud_second"
         android:label="Second Fragment"
-        tools:layout="@layout/fragment_serverdata_crud">
+        tools:layout="@layout/fragment_serverdata_second_crud">
 
         <action
-            android:id="@+id/action_SecondFragmentCrudSelect_to_FirstFragmentIpAddress"
+            android:id="@+id/action_SecondFragment_serverData_Crud_to_FirstFragmentIpAddress"
             app:destination="@id/FirstFragmentIpAddress" />
         <action
-            android:id="@+id/action_SecondFragmentCrudSelect_to_ThirdfragmentCrudRetrieve"
+            android:id="@+id/action_SecondFragment_serverData_Crud_to_ThirdfragmentCrudRetrieve"
             app:destination="@id/ThirdfragmentCrudRetrieve" />
         <action
-            android:id="@+id/action_SecondFragmentCrudSelect_to_fragment_crud_create"
-            app:destination="@id/fragment_crud_create" />
+            android:id="@+id/action_SecondFragment_serverData_Crud_to_fragment_crud_create_elder"
+            app:destination="@id/fragment_crud_create_elder" />
     </fragment>
 
     <fragment
@@ -40,40 +40,15 @@
         tools:layout="@layout/fragment_crud_retrive" >
         <action
             android:id="@+id/action_ThirdfragmentCrudRetriev_to_SecondFragmentCrudSelect"
-            app:destination="@id/SecondFragmentCrudSelect" />
+            app:destination="@id/SecondFragment_serverData_Crud" />
     </fragment>
 
-    <fragment
-        android:id="@+id/fragment_crud_create"
-        android:name="hk.com.caretech.clive.idata_android.Server.Fragment_crud_create"
-        android:label="fragment_crud_create"
-        tools:layout="@layout/fragment_crud_create" >
-
-        <action
-            android:id="@+id/action_fragment_crud_create_to_SecondFragmentCrudSelect2"
-            app:destination="@id/SecondFragmentCrudSelect" />
-        <action
-            android:id="@+id/action_fragment_crud_create_to_fragment_crud_create_elder"
-            app:destination="@id/fragment_crud_create_elder" />
-        <action
-            android:id="@+id/action_fragment_crud_create_to_fragment_crud_create_temp"
-            app:destination="@id/fragment_crud_create_temp" />
-    </fragment>
     <fragment
         android:id="@+id/fragment_crud_create_elder"
         android:name="hk.com.caretech.clive.idata_android.Server.Fragment_crud_create_elder"
         android:label="Fragment_crud_create_elder" >
         <action
-            android:id="@+id/action_fragment_crud_create_elder_to_fragment_crud_create"
-            app:destination="@id/fragment_crud_create" />
-    </fragment>
-    <fragment
-        android:id="@+id/fragment_crud_create_temp"
-        android:name="hk.com.caretech.clive.idata_android.Server.Fragment_crud_create_temp"
-        android:label="fragment_crud_create_temp"
-        tools:layout="@layout/fragment_crud_create_temp" >
-        <action
-            android:id="@+id/action_fragment_crud_create_temp_to_fragment_crud_create"
-            app:destination="@id/fragment_crud_create" />
+            android:id="@+id/action_fragment_crud_create_elder_to_SecondFragmentCrudSelect"
+            app:destination="@id/SecondFragment_serverData_Crud" />
     </fragment>
 </navigation>

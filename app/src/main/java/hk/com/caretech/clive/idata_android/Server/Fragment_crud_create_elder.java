@@ -79,7 +79,7 @@ public class Fragment_crud_create_elder extends Fragment implements View.OnClick
         switch (view.getId()) {
             case R.id.previous_crud_create_elder:
                 NavHostFragment.findNavController(Fragment_crud_create_elder.this)
-                        .navigate(R.id.action_fragment_crud_create_elder_to_fragment_crud_create);
+                        .navigate(R.id.action_fragment_crud_create_elder_to_SecondFragmentCrudSelect);
                 break;
 
             case R.id.bttn_addElder_crud_create_elder:

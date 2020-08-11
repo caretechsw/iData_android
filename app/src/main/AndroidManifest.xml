@@ -12,7 +12,7 @@
         android:launchMode="singleTask"
         android:theme="@style/AppTheme">
         <activity
-            android:name="hk.com.caretech.clive.idata_android.MainActivity"
+            android:name="hk.com.caretech.clive.idata_android.cewen.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -21,10 +21,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="hk.com.caretech.clive.idata_android.Server.RetrieveElderActivity"></activity>
-        <activity android:name="hk.com.caretech.clive.idata_android.Server.RetrieveTemperatureActivity"></activity>
-        <activity android:name="hk.com.caretech.clive.idata_android.RetrieveLocalTemperatureActivity"></activity>
-        <activity android:name="hk.com.caretech.clive.idata_android.Server.ServerDataActivity"></activity>
+        <activity android:name="hk.com.caretech.clive.idata_android.Server.RetrieveElderActivity" />
+        <activity android:name="hk.com.caretech.clive.idata_android.Server.RetrieveTemperatureActivity" />
+        <activity android:name="hk.com.caretech.clive.idata_android.RetrieveLocalTemperatureActivity" />
+        <activity android:name="hk.com.caretech.clive.idata_android.Server.ServerDataActivity" />
+        <activity android:name="hk.com.caretech.clive.idata_android.cewen.ScanActivity" />
+
     </application>
 
 

@@ -34,10 +34,10 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         final String sql = " CREATE TABLE IF NOT EXISTS " + TABLE_TEMP
                 + "( "
-                + COLUMN_TEMP + " DOUBLE NOT NULL, "
                 + COLUMN_ELDER_ID + " VARCHAR NOT NULL, "
+                + COLUMN_TEMP + " DOUBLE NOT NULL, "
                 + COLUMN_DEVICE_ID + " VARCHAR NOT NULL, "
-                + COLUMN_TIMESTAMP + " TIMESTAMP NOT NULL, "
+                + COLUMN_TIMESTAMP + " LONG NOT NULL, "
                 + COLUMN_STATUS + " INTEGER NOT NULL, "
         + " PRIMARY KEY (" + COLUMN_DEVICE_ID + ", " + COLUMN_TIMESTAMP +")"
                 +");";
@@ -51,6 +51,8 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
         db.execSQL(sql);
     }
 
+
+
     /*
      * This method is taking four arguments
      * temp is "temperature" measured by thermometer
@@ -60,20 +62,27 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
      * 1 means the name is synced with the server
      * 0 means the name is not synced with the server
      * */
-    public boolean addTemp(double temp, int elder_id, String device_id, int status) {
+    public boolean addData( String elder_id, double temp, String device_id, int status) {
         SQLiteDatabase db = this.getWritableDatabase();
+        try{
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COLUMN_TEMP, temp);
         contentValues.put(COLUMN_ELDER_ID, elder_id);
+        contentValues.put(COLUMN_TEMP, temp);
         contentValues.put(COLUMN_DEVICE_ID, device_id);
-        contentValues.put(COLUMN_TIMESTAMP, new Timestamp(System.currentTimeMillis()).toString());
+        contentValues.put(COLUMN_TIMESTAMP, System.currentTimeMillis());
         contentValues.put(COLUMN_STATUS, status);
+        Log.i(TAG, "check added timestamp :" +System.currentTimeMillis());
+        db.insert(TABLE_TEMP, null, contentValues);}
+        catch (Exception e){
 
-
-        db.insert(TABLE_TEMP, null, contentValues);
-        db.close();
-        Log.i(TAG, "addTemp");
+        }
+        finally {
+            db.close();
+            Log.i(TAG, "addTemp");
+        }
         return true;
+
+
     }
 
     /*

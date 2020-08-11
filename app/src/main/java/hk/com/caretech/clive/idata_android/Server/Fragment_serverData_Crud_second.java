@@ -13,7 +13,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import hk.com.caretech.clive.idata_android.R;
 
 
-public class Fragment_serverCrud_second extends Fragment implements View.OnClickListener {
+public class Fragment_serverData_Crud_second extends Fragment implements View.OnClickListener {
 
     private String baseUrl;
 
@@ -23,7 +23,7 @@ public class Fragment_serverCrud_second extends Fragment implements View.OnClick
             Bundle savedInstanceState
     ) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_serverdata_crud, container, false);
+        return inflater.inflate(R.layout.fragment_serverdata_second_crud, container, false);
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
@@ -60,19 +60,19 @@ public class Fragment_serverCrud_second extends Fragment implements View.OnClick
     public void onClick(View v) {
         switch(v.getId()) {
             case R.id.previous_serverdata_crud:
-                NavHostFragment.findNavController(Fragment_serverCrud_second.this)
-                        .navigate(R.id.action_SecondFragmentCrudSelect_to_FirstFragmentIpAddress);
+                NavHostFragment.findNavController(Fragment_serverData_Crud_second.this)
+                        .navigate(R.id.action_SecondFragment_serverData_Crud_to_FirstFragmentIpAddress);
                 break;
 
             case R.id.create_bttn:
-                NavHostFragment.findNavController(Fragment_serverCrud_second.this)
-                        .navigate(R.id.action_SecondFragmentCrudSelect_to_fragment_crud_create);
+                NavHostFragment.findNavController(Fragment_serverData_Crud_second.this)
+                        .navigate(R.id.action_SecondFragment_serverData_Crud_to_fragment_crud_create_elder);
                 break;
 
             case R.id.retrive_bttn:
 
-                NavHostFragment.findNavController(Fragment_serverCrud_second.this)
-                        .navigate(R.id.action_SecondFragmentCrudSelect_to_ThirdfragmentCrudRetrieve);
+                NavHostFragment.findNavController(Fragment_serverData_Crud_second.this)
+                        .navigate(R.id.action_SecondFragment_serverData_Crud_to_ThirdfragmentCrudRetrieve);
                 break;
 
             case R.id.del_bttn:

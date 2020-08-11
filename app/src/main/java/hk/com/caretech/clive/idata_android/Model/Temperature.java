@@ -4,27 +4,20 @@ import java.sql.Timestamp;
 
 public class Temperature {
 
-    private int temperature_id;
+
     private double temperature;
     private int elder_id;
+    private String device_id;
     private Timestamp timestamp;
-
-    public Temperature(int temperature_id, double temperature, int elder_id, Timestamp timestamp) {
-        this.temperature_id = temperature_id;
-        this.temperature = temperature;
-        this.elder_id = elder_id;
-        this.timestamp = timestamp;
-    }
 
     public Temperature() {
     }
 
-    public int getTemperature_id() {
-        return temperature_id;
-    }
-
-    public void setTemperature_id(int temperature_id) {
-        this.temperature_id = temperature_id;
+    public Temperature(double temperature, int elder_id, String device_id, Timestamp timestamp) {
+        this.temperature = temperature;
+        this.elder_id = elder_id;
+        this.device_id = device_id;
+        this.timestamp = timestamp;
     }
 
     public double getTemperature() {
@@ -43,6 +36,14 @@ public class Temperature {
         this.elder_id = elder_id;
     }
 
+    public String getDevice_id() {
+        return device_id;
+    }
+
+    public void setDevice_id(String device_id) {
+        this.device_id = device_id;
+    }
+
     public Timestamp getTimestamp() {
         return timestamp;
     }
@@ -51,14 +52,12 @@ public class Temperature {
         this.timestamp = timestamp;
     }
 
-
-
     @Override
     public String toString() {
         return "Temperature{" +
-                "temperature_id=" + temperature_id +
-                ", temperature=" + temperature +
+                "temperature=" + temperature +
                 ", elder_id=" + elder_id +
+                ", device_id='" + device_id + '\'' +
                 ", timestamp=" + timestamp +
                 '}';
     }

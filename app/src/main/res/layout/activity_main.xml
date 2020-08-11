@@ -1,12 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="hk.com.caretech.clive.idata_android.MainActivity">
+    android:orientation="vertical"
+    tools:context=".cewen.MainActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="5dp"
+        android:orientation="horizontal"
+        tools:layout_editor_absoluteX="15dp"
+        tools:layout_editor_absoluteY="317dp">
+
+        <TextView
+            android:id="@+id/textView_showInputElderId_main"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/input_elder_id"
+            android:textSize="25sp"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <EditText
+            android:id="@+id/editText_inputElderId_main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:hint="@string/elder_id"
+            android:inputType="number"
+            android:textSize="25sp"
+            app:layout_constraintEnd_toEndOf="parent" />
+    </LinearLayout>
+
+    <TextView
+        android:textAlignment="center"
+        android:padding="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="Please press the scan button to start temperature measurement"
+        app:layout_constraintTop_toBottomOf="@id/linearLayout_main"
+        />
 
 
-    <include layout="@layout/content_main" />
+    <Button
+        android:text="Barcode scanning"
+        android:id="@+id/scanButton"
+        android:padding="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+    <Button
+        android:id="@+id/bttn_Logout_main"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+        android:text="@string/logout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</LinearLayout>

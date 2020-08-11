@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    tools:context="hk.com.caretech.clive.idata_android.Fragment_first">
+    tools:context="hk.com.caretech.clive.idata_android.Server.Fragment_server_first">
 
     <Button
         android:id="@+id/previous_serverdata_first"

@@ -33,10 +33,10 @@
         android:id="@+id/linearLayout_crud_create_elder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="@id/previous_crud_create_elder"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/previous_crud_create_elder">
 
         <TextView
             android:id="@+id/textview_crud_create_elder"
@@ -66,7 +66,7 @@
 
             <TextView
                 android:id="@+id/textView2_crud_create_elder"
-                android:layout_width="120dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="25sp"
                 android:text="@string/bed_no"

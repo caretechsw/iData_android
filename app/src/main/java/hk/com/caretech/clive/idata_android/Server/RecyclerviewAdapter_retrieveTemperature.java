@@ -18,7 +18,7 @@ class RecyclerviewAdapter_retrieveTemperature extends RecyclerView.Adapter<Recyc
 
 
     private Temperature[] tempList;
-    private TextView textView_temperatureId;
+    private TextView textView_deviceID;
     private TextView textView_temperature;
     private TextView textView_timestamp;
 
@@ -33,7 +33,7 @@ class RecyclerviewAdapter_retrieveTemperature extends RecyclerView.Adapter<Recyc
     public RecyclerviewAdapter_retrieveTemperature.TheView onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new RecyclerviewAdapter_retrieveTemperature.TheView(
                 LayoutInflater.from(parent.getContext()).inflate(
-                        R.layout.temp_table_serverdata, parent, false));
+                        R.layout.temptable_serverdata, parent, false));
     }
 
     @Override
@@ -53,20 +53,20 @@ class RecyclerviewAdapter_retrieveTemperature extends RecyclerView.Adapter<Recyc
 
         public TheView(@NonNull View itemView) {
             super(itemView);
-            textView_temperatureId = itemView.findViewById(R.id.textView_tempId_temp_table_serverdata);
-            textView_temperature = itemView.findViewById(R.id.textView_temp_temp_table_serverdata);
-            textView_timestamp = itemView.findViewById(R.id.textView_timestamp_temp_table_serverdata);
+            textView_temperature = itemView.findViewById(R.id.textView_temp_temptable_serverdata);
+            textView_deviceID = itemView.findViewById(R.id.textView_deviceID_temptable_serverdata);
+            textView_timestamp = itemView.findViewById(R.id.textView_timestamp_temptable_serverdata);
 
 
         }
         public void bindItemList(int position) {
             if(position==0){
-               // textView_temperatureId.setText("Temp ID");
-                textView_temperature.setText("Temp(°C)");
-                textView_timestamp.setText("Date and Time");
+                textView_temperature.setText("溫盛(°C)");
+                textView_deviceID.setText("量度器");
+                textView_timestamp.setText("時間");
             }else if(position>0){
-                //textView_temperatureId.setText(Integer.toString(tempList[position-1].getTemperature_id()));
                 textView_temperature.setText(Double.toString(tempList[position-1].getTemperature()));
+                textView_deviceID.setText((tempList[position-1].getDevice_id()));
                 textView_timestamp.setText(df.format(tempList[position-1].getTimestamp()));
             }
             }

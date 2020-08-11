@@ -40,7 +40,7 @@ public class Fragment_server_first extends Fragment {
             Bundle savedInstanceState
     ) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.serverdata_first, container, false);
+        return inflater.inflate(R.layout.fragment_serverdata_first, container, false);
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
@@ -95,7 +95,7 @@ public class Fragment_server_first extends Fragment {
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    NavHostFragment.findNavController(Fragment_server_first.this).navigate(R.id.action_FirstFragmentIpAddress_to_SecondFragmentCrudSelect);
+                                    NavHostFragment.findNavController(Fragment_server_first.this).navigate(R.id.action_FirstFragmentIpAddress_to_SecondFragment_serverData_Crud);
                                 }
                             });
                         }

@@ -39,7 +39,7 @@ public class RetrieveTemperatureActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.temp_table_serverdata_recyclerview);
+        setContentView(R.layout.temptable_serverdata_recyclerview);
         Bundle bundle;
         bundle = getIntent().getExtras();
         String url = bundle.getString("tempUrl");
