@@ -71,6 +71,8 @@ class RecyclerviewAdapter_retrieveTemperature extends RecyclerView.Adapter<Recyc
             }
             }
         }
+
+        static String TAG = RecyclerviewAdapter_retrieveTemperature.class.getName();
     }
 
 

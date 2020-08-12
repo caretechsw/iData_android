@@ -23,7 +23,7 @@ class RecyclerviewAdapter_retrieveLocalTemperature extends RecyclerView.Adapter<
     private TextView textView_temperature;
     private TextView textView_deviceID;
     private TextView textView_timestamp;
-
+    private TextView textView_status;
 
     public RecyclerviewAdapter_retrieveLocalTemperature(List<TemperatureModel_Local> tempList) {
         this.tempList = tempList;
@@ -48,6 +48,12 @@ class RecyclerviewAdapter_retrieveLocalTemperature extends RecyclerView.Adapter<
         return tempList.size()+1;
     }
 
+    @Override
+    public int getItemViewType(int position) {
+       // return super.getItemViewType(position);
+        return position;
+    }
+
     class TheView extends RecyclerView.ViewHolder {
 
         //SimpleDateFormat fullDF = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -59,6 +65,7 @@ class RecyclerviewAdapter_retrieveLocalTemperature extends RecyclerView.Adapter<
             textView_temperature = itemView.findViewById(R.id.textView_temp_temptable_local);
            // textView_deviceID = itemView.findViewById(R.id.textView_deviceID_temptable_local);
             textView_timestamp = itemView.findViewById(R.id.textView_timestamp_temptable_local);
+            textView_status = itemView.findViewById(R.id.textView_status_temptable_local);
 
         }
 
@@ -66,19 +73,22 @@ class RecyclerviewAdapter_retrieveLocalTemperature extends RecyclerView.Adapter<
             if(position==0){
                 Log.i(TAG, "checkSize :" +tempList.size());
                 textView_elderID.setText("ID");
-                textView_temperature.setText("溫度(°C)");
+                textView_temperature.setText("溫度°C");
                // textView_deviceID.setText("量度器");
-                textView_timestamp.setText("時間(月-日)  ");
+                textView_timestamp.setText("時間(月-日)");
+                textView_status.setText("S");
             }else if(position>0){
-                Log.i(TAG, "position :" +position);
-                textView_elderID.setText((tempList.get(position-1).getElder_id()));
+                int actualPosition = position-1; //position 0 has been used to display heading.
+                Log.i(TAG, "position :" +position +" actualPosition : "+ actualPosition);
+                textView_elderID.setText(Integer.toString(tempList.get(position-1).getElder_id()));
                 textView_temperature.setText(Double.toString(tempList.get(position-1).getTemperature()));
              //   textView_deviceID.setText(tempList.get(position-1).getDevice_id());
                 textView_timestamp.setText(simplifiedDF.format(tempList.get(position-1).getTimestamp()));
+                textView_status.setText(Integer.toString(tempList.get(actualPosition).getStatus()));
             }
             }
         }
-        static String TAG = "RecyclerviewAdapter_retrieveLocalTemperature";
+        static String TAG = RecyclerviewAdapter_retrieveLocalTemperature.class.getName();
     }
 
 

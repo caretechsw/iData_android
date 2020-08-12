@@ -4,13 +4,13 @@ import java.sql.Timestamp;
 
 public class TemperatureModel_Local {
 
-    private String elder_id;
+    private int elder_id;
     private double temperature;
     private String device_id;
     private long timestamp;
     private int status;
 
-    public TemperatureModel_Local(String elder_id, double temperature, String device_id, long timestamp, int status) {
+    public TemperatureModel_Local(int elder_id, double temperature, String device_id, long timestamp, int status) {
         this.elder_id = elder_id;
         this.temperature = temperature;
         this.device_id = device_id;
@@ -19,11 +19,11 @@ public class TemperatureModel_Local {
     }
 
 
-    public String getElder_id() {
+    public int getElder_id() {
         return elder_id;
     }
 
-    public void setElder_id(String elder_id) {
+    public void setElder_id(int elder_id) {
         this.elder_id = elder_id;
     }
 

@@ -14,6 +14,6 @@ public class ServerDataActivity extends AppCompatActivity {
         setContentView(R.layout.activity_serverdata);
 
     }
-    static String TAG ="ServerDataActivity";
+    static String TAG = ServerDataActivity.class.getName();
 
 }

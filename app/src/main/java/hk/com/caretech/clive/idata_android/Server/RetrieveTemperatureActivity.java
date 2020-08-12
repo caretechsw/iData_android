@@ -103,5 +103,5 @@ public class RetrieveTemperatureActivity extends AppCompatActivity {
         });
     }
 
-    static String TAG ="RetrieveTemperatureActivity";
+    static String TAG = RetrieveTemperatureActivity.class.getName();
 }

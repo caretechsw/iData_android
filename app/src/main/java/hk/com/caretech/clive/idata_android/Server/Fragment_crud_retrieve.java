@@ -116,5 +116,5 @@ public class Fragment_crud_retrieve extends Fragment implements View.OnClickList
                     break;
     }
 }
- static String TAG = "Fragment_crud_retrieve";
+ static String TAG = Fragment_crud_retrieve.class.getName();
 }

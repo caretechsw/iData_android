@@ -15,9 +15,8 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
 
     public static final String DB_NAME = "idata";
     public static final String TABLE_TEMP = "temperature";
-
-    public static final String COLUMN_TEMP = "temperature";
     public static final String COLUMN_ELDER_ID = "elder_id";
+    public static final String COLUMN_TEMP = "temperature";
     public static final String COLUMN_DEVICE_ID = "device_id";
     public static final String COLUMN_TIMESTAMP = "timestamp";
     public static final String COLUMN_STATUS = "status";
@@ -34,10 +33,10 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         final String sql = " CREATE TABLE IF NOT EXISTS " + TABLE_TEMP
                 + "( "
-                + COLUMN_ELDER_ID + " VARCHAR NOT NULL, "
+                + COLUMN_ELDER_ID + " INTEGER NOT NULL, "
                 + COLUMN_TEMP + " DOUBLE NOT NULL, "
                 + COLUMN_DEVICE_ID + " VARCHAR NOT NULL, "
-                + COLUMN_TIMESTAMP + " LONG NOT NULL, "
+                + COLUMN_TIMESTAMP + " TIMESTAMP NOT NULL, "
                 + COLUMN_STATUS + " INTEGER NOT NULL, "
         + " PRIMARY KEY (" + COLUMN_DEVICE_ID + ", " + COLUMN_TIMESTAMP +")"
                 +");";
@@ -62,9 +61,9 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
      * 1 means the name is synced with the server
      * 0 means the name is not synced with the server
      * */
-    public boolean addData( String elder_id, double temp, String device_id, int status) {
+    public boolean addData(int elder_id, double temp, String device_id, int status) {
         SQLiteDatabase db = this.getWritableDatabase();
-        try{
+
         ContentValues contentValues = new ContentValues();
         contentValues.put(COLUMN_ELDER_ID, elder_id);
         contentValues.put(COLUMN_TEMP, temp);
@@ -72,17 +71,10 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
         contentValues.put(COLUMN_TIMESTAMP, System.currentTimeMillis());
         contentValues.put(COLUMN_STATUS, status);
         Log.i(TAG, "check added timestamp :" +System.currentTimeMillis());
-        db.insert(TABLE_TEMP, null, contentValues);}
-        catch (Exception e){
-
-        }
-        finally {
-            db.close();
-            Log.i(TAG, "addTemp");
-        }
+        db.insert(TABLE_TEMP, null, contentValues);
+        db.close();
+        Log.i(TAG, "addTemp");
         return true;
-
-
     }
 
     /*
@@ -91,7 +83,7 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
      * we have to update the sync status
      * and the second one is the status that will be changed
      * */
-    public boolean updateTempStatus(double temp, int elder_id, String device_id, int status) {
+    public boolean updateDataStatus(double temp, int elder_id, String device_id, int status) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COLUMN_TEMP, temp);
@@ -106,9 +98,9 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
     /*
      * this method will give us all the temps stored in sqlite
      * */
-    public Cursor getTemps() {
+    public Cursor getData() {
         SQLiteDatabase db = this.getReadableDatabase();
-        String sql = " SELECT * FROM " + TABLE_TEMP + " ORDER BY " + COLUMN_TIMESTAMP + " ASC;";
+        String sql = " SELECT * FROM " + TABLE_TEMP + " ORDER BY " + COLUMN_TIMESTAMP + " DESC;";
         Cursor c = db.rawQuery(sql, null);
         return c;
     }
@@ -117,12 +109,21 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
      * this method is for getting all the unsynced temps
      * so that we can sync it with database
      * */
-    public Cursor getUnsyncedTemps() {
+    public Cursor getUnsyncedData() {
         SQLiteDatabase db = this.getReadableDatabase();
         String sql = "SELECT * FROM " + TABLE_TEMP + " WHERE " + COLUMN_STATUS + " = 0;";
         Cursor c = db.rawQuery(sql, null);
         return c;
     }
 
-    static String TAG ="SQLiteDBHelper";
+
+
+    public int deleteAllLocalData()
+    {
+        SQLiteDatabase sqLiteDatabase=getWritableDatabase();
+        int rowDeleted=sqLiteDatabase.delete(TABLE_TEMP,null,null);
+        return rowDeleted;
+    }
+
+    static String TAG =SQLiteDBHelper.class.getName();
 }

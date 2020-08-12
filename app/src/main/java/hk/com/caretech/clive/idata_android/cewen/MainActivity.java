@@ -1,6 +1,11 @@
 package hk.com.caretech.clive.idata_android.cewen;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
+import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -21,11 +26,26 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.idatachina.imeasuresdk.IMeasureSDK;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 import hk.com.caretech.clive.idata_android.R;
 import hk.com.caretech.clive.idata_android.RetrieveLocalTemperatureActivity;
 import hk.com.caretech.clive.idata_android.SQLiteDBHelper;
 import hk.com.caretech.clive.idata_android.Server.ServerDataActivity;
+import hk.com.caretech.clive.idata_android.Synchronization.SyncUtils;
+import hk.com.caretech.clive.idata_android.TemperatureModel_Local;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,11 +55,13 @@ public class MainActivity extends AppCompatActivity {
 
     private SQLiteDBHelper sqlDb;
     private Intent intent;
-    private String url;
+    private static String addToServerUrl = "http://192.168.1.208/temp/add";
     private String android_id;
     private EditText editText_inputElderId_main;
     private Button bttn_Logout_main;
     private String inputElderId;
+    private List<TemperatureModel_Local> dataList = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        SyncUtils.CreateSyncAccount(this);
 
         editText_inputElderId_main = findViewById(R.id.editText_inputElderId_main);
         bttn_Logout_main = findViewById(R.id.bttn_Logout_main);
@@ -56,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         scanButton = (Button)findViewById(R.id.scanButton) ;
-
         scanButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,6 +98,8 @@ public class MainActivity extends AppCompatActivity {
 
         editText_inputElderId_main.requestFocus();
     }
+
+
 
 //    public void showImageSlideDialog(itemList: ItemInfo_Firebase_Model) {
 //        val mProductImageSlideFragment = ProductImageSlideDialogFragment(itemList)
@@ -145,7 +169,10 @@ public class MainActivity extends AppCompatActivity {
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        saveDataToLocalStorage(inputElderId, temp, android_id, 0);
+
+                                        int elder_id_int = Integer.valueOf(inputElderId);
+
+                                        saveDataToLocalStorage(elder_id_int, temp, android_id, 0);
 
                                         Toast.makeText(MainActivity.this, "Temperature：" + temp, Toast.LENGTH_SHORT).show();
 
@@ -203,6 +230,22 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void loadLocalData() {
+        dataList.clear();
+        Cursor cursor = sqlDb.getData();
+        if (cursor.moveToFirst()) {
+            do {
+                TemperatureModel_Local temp = new TemperatureModel_Local(
+                        cursor.getInt(cursor.getColumnIndex(SQLiteDBHelper.COLUMN_ELDER_ID)),
+                        cursor.getDouble(cursor.getColumnIndex(SQLiteDBHelper.COLUMN_TEMP)),
+                        cursor.getString(cursor.getColumnIndex(SQLiteDBHelper.COLUMN_DEVICE_ID)),
+                        cursor.getLong(cursor.getColumnIndex(SQLiteDBHelper.COLUMN_TIMESTAMP)),
+                        cursor.getInt(cursor.getColumnIndex(SQLiteDBHelper.COLUMN_STATUS)));
+                dataList.add(temp);
+            } while (cursor.moveToNext());
+        }
+    }
+
     @Override
     public boolean onCreateOptionsMenu (Menu menu){
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -228,7 +271,14 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 return true;
             case R.id.action_DataSync:
-                //saveDataToServer();
+                //make handler to prevent user from clicking frequently
+                //showing the last time synchonised with server
+                //check connection
+                SyncUtils.forceRefreshAll(this);
+                return true;
+            case R.id.action_setting:
+                //??
+
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -249,7 +299,7 @@ public class MainActivity extends AppCompatActivity {
      *      * 0 means the name is not synced with the server
      *      * as normal, 0 should be stored first
      */
-    private void saveDataToLocalStorage(String elder_id,double temp, String device_id, int status) {
+    private void saveDataToLocalStorage(int elder_id,double temp, String device_id, int status) {
         sqlDb = new SQLiteDBHelper(this);
         sqlDb.addData(elder_id,temp, device_id, status);
 //        Name n = new Name(name, status);
@@ -264,26 +314,36 @@ public class MainActivity extends AppCompatActivity {
          * this method is saving the name to ther server
          * */
         private void saveDataToServer() {
-            OkHttpHandler okHttpHandler = new OkHttpHandler();
-            okHttpHandler.execute(url);
+      //      loadLocalData();
+//            OkHttpHandler okHttpHandler = new OkHttpHandler();
+//            if(dataList.size()>0){
+//            okHttpHandler.execute(addToServerUrl);}
         }
 
 
-
-
-    public class OkHttpHandler extends AsyncTask {
-        OkHttpClient client = new OkHttpClient();
-
-        @Override
-        protected Object doInBackground(Object[] objects) {
-
-//                String url_elder = "http://192.168.1.20:7070/temp";
+//    public class OkHttpHandler extends AsyncTask {
+//        OkHttpClient client = new OkHttpClient();
+//        String temperature;
+//        String elder_id;
+//        String device_id;
+//        String timestamp;
+//
+//        @Override
+//        protected Object doInBackground(Object[] objects) {
+//
+//            FormBody.Builder formBody = new FormBody();
+//
+//            for(ArrayList<TemperatureModel_Local> d : dataList){
 //                RequestBody formBody = new FormBody.Builder()
 //                        .add("temperature", temperature)
-//                        .add("elder_id", elder_id).build();// dynamically add more parameter like this:
+//                        .add("elder_id", elder_id)
+//                        .add("device_id", device_id)
+//                        .add("timestamp", timestamp)
+//                        .build();// dynamically add more parameter like this:
+//                 }
 //
 //                Request request = new Request.Builder()
-//                        .url(url_elder + "/add")
+//                        .url(objects[0].toString())
 //                        .post(formBody)
 //                        .build();
 //
@@ -298,10 +358,17 @@ public class MainActivity extends AppCompatActivity {
 //                        Toast.makeText(MainActivity.this, "Data synchonized", Toast.LENGTH_SHORT).show();
 //                    }
 //                });
-            return null;
-        }
-    }
+//
+//            return null;
+//        }
+//
+//        @Override
+//        protected void onPostExecute(Object o) {
+//            super.onPostExecute(o);
+//            //sqlDb.updateDataStatus()
+//        }
+//    }
 
 
-    static String TAG = "MainActivity";
+    static String TAG = MainActivity.class.getName();
 }

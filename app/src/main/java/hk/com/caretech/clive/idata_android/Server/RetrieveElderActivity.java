@@ -96,5 +96,5 @@ public class RetrieveElderActivity extends AppCompatActivity {
         });
     }
 
-    static String TAG ="RetrieveElderActivity";
+    static String TAG = RetrieveElderActivity.class.getName();
 }

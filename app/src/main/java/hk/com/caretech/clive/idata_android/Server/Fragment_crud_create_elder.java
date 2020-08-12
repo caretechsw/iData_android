@@ -127,5 +127,5 @@ public class Fragment_crud_create_elder extends Fragment implements View.OnClick
         }
     }
 
- static String TAG = "Fragment_crud_create_elder";
+ static String TAG = Fragment_crud_create_elder.class.getName();
 }

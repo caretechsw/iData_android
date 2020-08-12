@@ -23,7 +23,7 @@ public class RetrieveLocalTemperatureActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
-    List<TemperatureModel_Local> tempList = new ArrayList<>();
+    private List<TemperatureModel_Local> dataList = new ArrayList<>();
     //Broadcast receiver to know the sync status
     private BroadcastReceiver broadcastReceiver;
     //database helper object
@@ -61,25 +61,24 @@ public class RetrieveLocalTemperatureActivity extends AppCompatActivity {
 
 
     public void loadLocalData() {
-        tempList.clear();
-        Cursor cursor = sqlDb.getTemps();
+        dataList.clear();
+        Cursor cursor = sqlDb.getData();
         if (cursor.moveToFirst()) {
             do {
                 TemperatureModel_Local temp = new TemperatureModel_Local(
-                        cursor.getString(cursor.getColumnIndex(SQLiteDBHelper.COLUMN_ELDER_ID)),
+                        cursor.getInt(cursor.getColumnIndex(SQLiteDBHelper.COLUMN_ELDER_ID)),
                         cursor.getDouble(cursor.getColumnIndex(SQLiteDBHelper.COLUMN_TEMP)),
                         cursor.getString(cursor.getColumnIndex(SQLiteDBHelper.COLUMN_DEVICE_ID)),
                         cursor.getLong(cursor.getColumnIndex(SQLiteDBHelper.COLUMN_TIMESTAMP)),
                         cursor.getInt(cursor.getColumnIndex(SQLiteDBHelper.COLUMN_STATUS)));
-
-                tempList.add(temp);
+                dataList.add(temp);
             } while (cursor.moveToNext());
         }
         initAdapter();
     }
 
     public void initAdapter(){
-        mAdapter = new RecyclerviewAdapter_retrieveLocalTemperature(tempList);
+        mAdapter = new RecyclerviewAdapter_retrieveLocalTemperature(dataList);
         recyclerView.setAdapter(mAdapter);
         layoutManager = new LinearLayoutManager(RetrieveLocalTemperatureActivity.this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setHasFixedSize(true);
@@ -87,5 +86,5 @@ public class RetrieveLocalTemperatureActivity extends AppCompatActivity {
     }
 
 
-    static String TAG = "RetrieveLocalTemperatureActivity";
+    static String TAG = RetrieveLocalTemperatureActivity.class.getName();
 }

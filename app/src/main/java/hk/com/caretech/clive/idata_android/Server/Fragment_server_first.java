@@ -124,5 +124,5 @@ public class Fragment_server_first extends Fragment {
         getParentFragmentManager().setFragmentResult("requestKey", bundle);
     }
 
-    static String TAG = "Fragment_server_first";
+    static String TAG = Fragment_server_first.class.getName();
 }

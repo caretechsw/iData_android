@@ -97,7 +97,7 @@ class RecyclerviewAdapter_retrieveElder extends RecyclerView.Adapter<Recyclervie
 //                        .into(view.image)
             }
         }
-        static String TAG="RecyclerViewAdapter_retrieveElder";
+        static String TAG = RecyclerviewAdapter_retrieveElder.class.getName();
     }
 
 

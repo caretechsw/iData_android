@@ -82,5 +82,5 @@ public class Fragment_serverData_Crud_second extends Fragment implements View.On
 
         }
     }
-    static String TAG = "Fragment_serverCrud_second";
+    static String TAG = Fragment_serverData_Crud_second.class.getName();
 }
