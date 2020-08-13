@@ -39,6 +39,7 @@ import hk.com.caretech.clive.idata_android.SQLiteDBHelper;
 import hk.com.caretech.clive.idata_android.Server.ServerDataActivity;
 import hk.com.caretech.clive.idata_android.Synchronization.SyncUtils;
 import hk.com.caretech.clive.idata_android.TemperatureModel_Local;
+import hk.com.caretech.clive.idata_android.Utils.SyncStatus;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
@@ -69,7 +70,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        SyncUtils.CreateSyncAccount(this);
+
+        SyncUtils.CreateSyncAccount(MainActivity.this);
 
         editText_inputElderId_main = findViewById(R.id.editText_inputElderId_main);
         bttn_Logout_main = findViewById(R.id.bttn_Logout_main);
@@ -172,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
 
                                         int elder_id_int = Integer.valueOf(inputElderId);
 
-                                        saveDataToLocalStorage(elder_id_int, temp, android_id, 0);
+                                        saveDataToLocalStorage(elder_id_int, temp, android_id, SyncStatus.UNSYNCHONISED);
 
                                         Toast.makeText(MainActivity.this, "Temperature：" + temp, Toast.LENGTH_SHORT).show();
 
@@ -274,7 +276,7 @@ public class MainActivity extends AppCompatActivity {
                 //make handler to prevent user from clicking frequently
                 //showing the last time synchonised with server
                 //check connection
-                SyncUtils.forceRefreshAll(this);
+                SyncUtils.forceRefreshAll(MainActivity.this);
                 return true;
             case R.id.action_setting:
                 //??
@@ -309,65 +311,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-        /*
-         * this method is saving the name to ther server
-         * */
-        private void saveDataToServer() {
-      //      loadLocalData();
-//            OkHttpHandler okHttpHandler = new OkHttpHandler();
-//            if(dataList.size()>0){
-//            okHttpHandler.execute(addToServerUrl);}
-        }
-
-
-//    public class OkHttpHandler extends AsyncTask {
-//        OkHttpClient client = new OkHttpClient();
-//        String temperature;
-//        String elder_id;
-//        String device_id;
-//        String timestamp;
-//
-//        @Override
-//        protected Object doInBackground(Object[] objects) {
-//
-//            FormBody.Builder formBody = new FormBody();
-//
-//            for(ArrayList<TemperatureModel_Local> d : dataList){
-//                RequestBody formBody = new FormBody.Builder()
-//                        .add("temperature", temperature)
-//                        .add("elder_id", elder_id)
-//                        .add("device_id", device_id)
-//                        .add("timestamp", timestamp)
-//                        .build();// dynamically add more parameter like this:
-//                 }
-//
-//                Request request = new Request.Builder()
-//                        .url(objects[0].toString())
-//                        .post(formBody)
-//                        .build();
-//
-//                Call call = client.newCall(request);
-//
-//                call.enqueue(new Callback() {
-//                    @Override
-//                    public void onFailure(@NotNull Call call, @NotNull IOException e) {
-//                    }
-//                    @Override
-//                    public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-//                        Toast.makeText(MainActivity.this, "Data synchonized", Toast.LENGTH_SHORT).show();
-//                    }
-//                });
-//
-//            return null;
-//        }
-//
-//        @Override
-//        protected void onPostExecute(Object o) {
-//            super.onPostExecute(o);
-//            //sqlDb.updateDataStatus()
-//        }
-//    }
 
 
     static String TAG = MainActivity.class.getName();

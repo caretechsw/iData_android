@@ -12,7 +12,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <sync-adapter xmlns:android="http://schemas.android.com/apk/res/android"
-    android:contentAuthority="com.caretech.app.authority"
+    android:contentAuthority="hk.com.caretech.clive.idata_android"
     android:accountType="com.caretech.app.account"
     android:userVisible="true"
     android:supportsUploading="false"

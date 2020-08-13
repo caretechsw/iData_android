@@ -11,6 +11,8 @@ import androidx.annotation.Nullable;
 
 import java.sql.Timestamp;
 
+import hk.com.caretech.clive.idata_android.Utils.SyncStatus;
+
 public class SQLiteDBHelper extends SQLiteOpenHelper {
 
     public static final String DB_NAME = "idata";
@@ -83,16 +85,16 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
      * we have to update the sync status
      * and the second one is the status that will be changed
      * */
-    public boolean updateDataStatus(double temp, int elder_id, String device_id, int status) {
+    public void updateDataStatusToSync(String device_id, String timestamp) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COLUMN_TEMP, temp);
-        contentValues.put(COLUMN_ELDER_ID, elder_id);
-       // contentValues.put(COLUMN_TIMESTAMP, timestamp.getTime());
-
-        db.update(TABLE_TEMP, contentValues, COLUMN_DEVICE_ID+COLUMN_TIMESTAMP + "=" + device_id+temp, null);
+        contentValues.put(COLUMN_STATUS, SyncStatus.SYNCHONISED);
+        String whereQuery = COLUMN_DEVICE_ID + " = '" + device_id + "' AND " + COLUMN_TIMESTAMP + " = '" + timestamp + "'";
+        //String query = "update "+TABLE_TEMP+" set "+COLUMN_STATUS+"="+1+" where "+COLUMN_DEVICE_ID+"='"+device_id+"' AND "+COLUMN_TIMESTAMP+"='"+timestamp+"'";
+        //db.execSQL(query);
+        db.update(TABLE_TEMP, contentValues, whereQuery, null);
+        Log.i(TAG, "updateDataStatusToSync : update ran");
         db.close();
-        return true;
     }
 
     /*

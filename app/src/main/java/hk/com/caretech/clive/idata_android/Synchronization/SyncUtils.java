@@ -16,9 +16,9 @@ import static android.content.Context.ACCOUNT_SERVICE;
 
 public class SyncUtils {
     // The authority for the sync adapter's content provider
-    public static final String AUTHORITY = "com.caretech.android.datasync.provider";
+    public static final String AUTHORITY = "hk.com.caretech.clive.idata_android";
     // An account type, in the form of a domain name
-    public static final String ACCOUNT_TYPE = "com.caretech.app.account"; //"example.com";
+    public static final String ACCOUNT_TYPE = "com.caretech.app.account";
     // The account name
     public static final String ACCOUNT = "Caretech";
 
@@ -76,7 +76,6 @@ public class SyncUtils {
         } else {
             account = null;
         }
-
         return account;
     }
 

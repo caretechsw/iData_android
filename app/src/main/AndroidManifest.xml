@@ -58,7 +58,7 @@
 
         <provider
             android:name="hk.com.caretech.clive.idata_android.Synchronization.StubProvider"
-            android:authorities="com.caretech.android.datasync.provider"
+            android:authorities="hk.com.caretech.clive.idata_android"
             android:exported="false"
             android:syncable="true"/>
 
