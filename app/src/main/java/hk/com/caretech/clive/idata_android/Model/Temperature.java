@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 public class Temperature {
 
 
+    private String dev_timestamp;
     private double temperature;
     private int elder_id;
     private String device_id;
@@ -13,11 +14,20 @@ public class Temperature {
     public Temperature() {
     }
 
-    public Temperature(double temperature, int elder_id, String device_id, Timestamp timestamp) {
+    public Temperature(String dev_timestamp, double temperature, int elder_id, String device_id, Timestamp timestamp) {
+        this.dev_timestamp = dev_timestamp;
         this.temperature = temperature;
         this.elder_id = elder_id;
         this.device_id = device_id;
         this.timestamp = timestamp;
+    }
+
+    public String getDev_timestamp() {
+        return dev_timestamp;
+    }
+
+    public void setDev_timestamp(String dev_timestamp) {
+        this.dev_timestamp = dev_timestamp;
     }
 
     public double getTemperature() {
@@ -55,7 +65,8 @@ public class Temperature {
     @Override
     public String toString() {
         return "Temperature{" +
-                "temperature=" + temperature +
+                "dev_timestamp='" + dev_timestamp + '\'' +
+                ", temperature=" + temperature +
                 ", elder_id=" + elder_id +
                 ", device_id='" + device_id + '\'' +
                 ", timestamp=" + timestamp +

@@ -3,6 +3,7 @@ package hk.com.caretech.clive.idata_android.Utils;
 public class NetworkUtils {
 
 
+
     public static String retrieveElderUrl(String ip){
         String url  = "http://"+ ip +":7070/elder";
         return url;

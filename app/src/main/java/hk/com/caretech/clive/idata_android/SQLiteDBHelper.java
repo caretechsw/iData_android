@@ -38,7 +38,7 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
                 + COLUMN_ELDER_ID + " INTEGER NOT NULL, "
                 + COLUMN_TEMP + " DOUBLE NOT NULL, "
                 + COLUMN_DEVICE_ID + " VARCHAR NOT NULL, "
-                + COLUMN_TIMESTAMP + " TIMESTAMP NOT NULL, "
+                + COLUMN_TIMESTAMP + " LONG NOT NULL, "
                 + COLUMN_STATUS + " INTEGER NOT NULL, "
         + " PRIMARY KEY (" + COLUMN_DEVICE_ID + ", " + COLUMN_TIMESTAMP +")"
                 +");";
@@ -63,39 +63,40 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
      * 1 means the name is synced with the server
      * 0 means the name is not synced with the server
      * */
-    public boolean addData(int elder_id, double temp, String device_id, int status) {
+    public boolean addData(int elder_id, double temp, String device_id, long timestamp, int status) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
         contentValues.put(COLUMN_ELDER_ID, elder_id);
         contentValues.put(COLUMN_TEMP, temp);
         contentValues.put(COLUMN_DEVICE_ID, device_id);
-        contentValues.put(COLUMN_TIMESTAMP, System.currentTimeMillis());
+        contentValues.put(COLUMN_TIMESTAMP, timestamp);
         contentValues.put(COLUMN_STATUS, status);
-        Log.i(TAG, "check added timestamp :" +System.currentTimeMillis());
+        Log.i(TAG, "check added timestamp :" +timestamp);
         db.insert(TABLE_TEMP, null, contentValues);
-        db.close();
+        //db.close();
         Log.i(TAG, "addTemp");
         return true;
     }
 
     /*
-     * This method taking two arguments
-     * first one is the temp_id of the temperature for which
-     * we have to update the sync status
-     * and the second one is the status that will be changed
+     * This method taking two arguments as surrogate key
+     * to change the status to be sync status
+     *
      * */
-    public void updateDataStatusToSync(String device_id, String timestamp) {
+    public void updateDataStatusToSync(String device_id, long timestamp) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COLUMN_STATUS, SyncStatus.SYNCHONISED);
         String whereQuery = COLUMN_DEVICE_ID + " = '" + device_id + "' AND " + COLUMN_TIMESTAMP + " = '" + timestamp + "'";
-        //String query = "update "+TABLE_TEMP+" set "+COLUMN_STATUS+"="+1+" where "+COLUMN_DEVICE_ID+"='"+device_id+"' AND "+COLUMN_TIMESTAMP+"='"+timestamp+"'";
-        //db.execSQL(query);
+
         db.update(TABLE_TEMP, contentValues, whereQuery, null);
-        Log.i(TAG, "updateDataStatusToSync : update ran");
-        db.close();
+
+        //Don't close the db here, it will be closed at outside(should be in syncadapter) of this method
+       // db.close();
     }
+
+
 
     /*
      * this method will give us all the temps stored in sqlite

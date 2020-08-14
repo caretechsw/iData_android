@@ -60,7 +60,7 @@ class RecyclerviewAdapter_retrieveElder extends RecyclerView.Adapter<Recyclervie
         }
         public void bindItemList(int position) {
             if(position==0){
-                textView_id.setText("院友ID");
+                textView_id.setText("ID");
                 textView_name.setText("名稱");
                 textView_bed_no.setText("床號");
             }else if(position>0){

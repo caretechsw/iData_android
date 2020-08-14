@@ -61,8 +61,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText editText_inputElderId_main;
     private Button bttn_Logout_main;
     private String inputElderId;
-    private List<TemperatureModel_Local> dataList = new ArrayList<>();
-
+    //private List<TemperatureModel_Local> dataList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        SyncUtils.CreateSyncAccount(MainActivity.this);
 
         editText_inputElderId_main = findViewById(R.id.editText_inputElderId_main);
         bttn_Logout_main = findViewById(R.id.bttn_Logout_main);
@@ -174,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
 
                                         int elder_id_int = Integer.valueOf(inputElderId);
 
-                                        saveDataToLocalStorage(elder_id_int, temp, android_id, SyncStatus.UNSYNCHONISED);
+                                        saveDataToLocalStorage(elder_id_int, temp, android_id, System.currentTimeMillis(), SyncStatus.UNSYNCHONISED);
 
                                         Toast.makeText(MainActivity.this, "Temperature：" + temp, Toast.LENGTH_SHORT).show();
 
@@ -217,7 +215,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         mIMeasureSDK.close();
-        sqlDb.close();
     }
 
     @Override
@@ -232,21 +229,21 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void loadLocalData() {
-        dataList.clear();
-        Cursor cursor = sqlDb.getData();
-        if (cursor.moveToFirst()) {
-            do {
-                TemperatureModel_Local temp = new TemperatureModel_Local(
-                        cursor.getInt(cursor.getColumnIndex(SQLiteDBHelper.COLUMN_ELDER_ID)),
-                        cursor.getDouble(cursor.getColumnIndex(SQLiteDBHelper.COLUMN_TEMP)),
-                        cursor.getString(cursor.getColumnIndex(SQLiteDBHelper.COLUMN_DEVICE_ID)),
-                        cursor.getLong(cursor.getColumnIndex(SQLiteDBHelper.COLUMN_TIMESTAMP)),
-                        cursor.getInt(cursor.getColumnIndex(SQLiteDBHelper.COLUMN_STATUS)));
-                dataList.add(temp);
-            } while (cursor.moveToNext());
-        }
-    }
+//    public void loadLocalData() {
+//        dataList.clear();
+//        Cursor cursor = sqlDb.getData();
+//        if (cursor.moveToFirst()) {
+//            do {
+//                TemperatureModel_Local temp = new TemperatureModel_Local(
+//                        cursor.getInt(cursor.getColumnIndex(SQLiteDBHelper.COLUMN_ELDER_ID)),
+//                        cursor.getDouble(cursor.getColumnIndex(SQLiteDBHelper.COLUMN_TEMP)),
+//                        cursor.getString(cursor.getColumnIndex(SQLiteDBHelper.COLUMN_DEVICE_ID)),
+//                        cursor.getLong(cursor.getColumnIndex(SQLiteDBHelper.COLUMN_TIMESTAMP)),
+//                        cursor.getInt(cursor.getColumnIndex(SQLiteDBHelper.COLUMN_STATUS)));
+//                dataList.add(temp);
+//            } while (cursor.moveToNext());
+//        }
+//    }
 
     @Override
     public boolean onCreateOptionsMenu (Menu menu){
@@ -276,6 +273,7 @@ public class MainActivity extends AppCompatActivity {
                 //make handler to prevent user from clicking frequently
                 //showing the last time synchonised with server
                 //check connection
+                SyncUtils.CreateSyncAccount(MainActivity.this); //place this into oncreate method if would like to do auto-sync when start the app
                 SyncUtils.forceRefreshAll(MainActivity.this);
                 return true;
             case R.id.action_setting:
@@ -301,12 +299,13 @@ public class MainActivity extends AppCompatActivity {
      *      * 0 means the name is not synced with the server
      *      * as normal, 0 should be stored first
      */
-    private void saveDataToLocalStorage(int elder_id,double temp, String device_id, int status) {
+    private void saveDataToLocalStorage(int elder_id,double temp, String device_id, long timestamp, int status) {
         sqlDb = new SQLiteDBHelper(this);
-        sqlDb.addData(elder_id,temp, device_id, status);
+        sqlDb.addData(elder_id,temp, device_id,timestamp, status);
 //        Name n = new Name(name, status);
 //        names.add(n);
 //        refreshList();
+        sqlDb.close();
     }
 
 
