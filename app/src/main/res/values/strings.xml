@@ -36,7 +36,12 @@
     <string name="read_server_data">讀取伺服器資料</string>
     <string name="sync_data">資料同步</string>
     <string name="temp">temp..</string>
-    <string name="logout">登出</string>
+    <string name="id">ID</string>
+    <string name="time_m_d">時間(月-日)</string>
+    <string name="tempwithsymbol">溫度°C</string>
+    <string name="status">S</string>
+    <string name="re_enter">重新輸入</string>
+    <string name="elderId">院友ID: </string>
 
     <string-array name="searchelders_array">
         <item>id</item>

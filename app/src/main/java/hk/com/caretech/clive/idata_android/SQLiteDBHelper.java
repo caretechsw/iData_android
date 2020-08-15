@@ -16,12 +16,18 @@ import hk.com.caretech.clive.idata_android.Utils.SyncStatus;
 public class SQLiteDBHelper extends SQLiteOpenHelper {
 
     public static final String DB_NAME = "idata";
+
     public static final String TABLE_TEMP = "temperature";
-    public static final String COLUMN_ELDER_ID = "elder_id";
-    public static final String COLUMN_TEMP = "temperature";
-    public static final String COLUMN_DEVICE_ID = "device_id";
-    public static final String COLUMN_TIMESTAMP = "timestamp";
-    public static final String COLUMN_STATUS = "status";
+    public static final String TEMP_COLUMN_ELDER_ID = "elder_id";
+    public static final String TEMP_COLUMN_TEMP = "temperature";
+    public static final String TEMP_COLUMN_DEVICE_ID = "device_id";
+    public static final String TEMP_COLUMN_TIMESTAMP = "timestamp";
+    public static final String TEMP_COLUMN_STATUS = "status";
+
+    public static final String TABLE_ELDER = "elder";
+    public static final String ELDER_COLUMN_ID = "id";
+    public static final String ELDER_COLUMN_NAME = "name";
+    public static final String ELDER_COLUMN_BED_NO = "bed_no";
 
 
     //database version
@@ -33,23 +39,35 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        final String sql = " CREATE TABLE IF NOT EXISTS " + TABLE_TEMP
+        final String sql_temp = " CREATE TABLE IF NOT EXISTS " + TABLE_TEMP
                 + "( "
-                + COLUMN_ELDER_ID + " INTEGER NOT NULL, "
-                + COLUMN_TEMP + " DOUBLE NOT NULL, "
-                + COLUMN_DEVICE_ID + " VARCHAR NOT NULL, "
-                + COLUMN_TIMESTAMP + " LONG NOT NULL, "
-                + COLUMN_STATUS + " INTEGER NOT NULL, "
-        + " PRIMARY KEY (" + COLUMN_DEVICE_ID + ", " + COLUMN_TIMESTAMP +")"
+                + TEMP_COLUMN_ELDER_ID + " INTEGER NOT NULL, "
+                + TEMP_COLUMN_TEMP + " DOUBLE NOT NULL, "
+                + TEMP_COLUMN_DEVICE_ID + " VARCHAR NOT NULL, "
+                + TEMP_COLUMN_TIMESTAMP + " LONG NOT NULL, "
+                + TEMP_COLUMN_STATUS + " INTEGER NOT NULL, "
+                + " PRIMARY KEY (" + TEMP_COLUMN_DEVICE_ID + ", " + TEMP_COLUMN_TIMESTAMP +")"
                 +");";
 
-        db.execSQL(sql);
+        final String sql_elder = " CREATE TABLE IF NOT EXISTS " + TABLE_ELDER
+                + "( "
+                + ELDER_COLUMN_ID + " INTEGER NOT NULL, "
+                + ELDER_COLUMN_NAME + " VARCHAR, "
+                + ELDER_COLUMN_BED_NO + " INTEGER, "
+                + " PRIMARY KEY (" + ELDER_COLUMN_ID + ")"
+                +");";
+
+        db.execSQL(sql_temp);
+        db.execSQL(sql_elder);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        String sql = " DROP TABLE IF EXISTS "+ TABLE_TEMP;
-        db.execSQL(sql);
+        String sql_temp = " DROP TABLE IF EXISTS "+ TABLE_TEMP;
+        String sql_elder = " DROP TABLE IF EXISTS "+ TABLE_ELDER;
+        db.execSQL(sql_temp);
+        db.execSQL(sql_elder);
+        onCreate(db);
     }
 
 
@@ -63,15 +81,39 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
      * 1 means the name is synced with the server
      * 0 means the name is not synced with the server
      * */
-    public boolean addData(int elder_id, double temp, String device_id, long timestamp, int status) {
+    public boolean addEldertoLocal(int id, String name, int bed_no) {
         SQLiteDatabase db = this.getWritableDatabase();
-
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COLUMN_ELDER_ID, elder_id);
-        contentValues.put(COLUMN_TEMP, temp);
-        contentValues.put(COLUMN_DEVICE_ID, device_id);
-        contentValues.put(COLUMN_TIMESTAMP, timestamp);
-        contentValues.put(COLUMN_STATUS, status);
+        contentValues.put(ELDER_COLUMN_ID, id);
+        contentValues.put(ELDER_COLUMN_NAME, name);
+        contentValues.put(ELDER_COLUMN_BED_NO, bed_no);
+        db.insert(TABLE_ELDER, null, contentValues);
+        //db.close();
+        Log.i(TAG, "addElder");
+        return true;
+    }
+
+
+
+    /**saving Temperature to local storage
+     *
+     * @param temp
+     * @param elder_id
+     * @param device_id
+     * @param status
+     * The status has two posible values:
+     *      * 1 means the data is synced with the server
+     *      * 0 means the data is not synced with the server
+     *      * Normally, 0 should be stored first
+     */
+    public boolean addTemptoLocal(int elder_id, double temp, String device_id, long timestamp, int status) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(TEMP_COLUMN_ELDER_ID, elder_id);
+        contentValues.put(TEMP_COLUMN_TEMP, temp);
+        contentValues.put(TEMP_COLUMN_DEVICE_ID, device_id);
+        contentValues.put(TEMP_COLUMN_TIMESTAMP, timestamp);
+        contentValues.put(TEMP_COLUMN_STATUS, status);
         Log.i(TAG, "check added timestamp :" +timestamp);
         db.insert(TABLE_TEMP, null, contentValues);
         //db.close();
@@ -87,8 +129,8 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
     public void updateDataStatusToSync(String device_id, long timestamp) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COLUMN_STATUS, SyncStatus.SYNCHONISED);
-        String whereQuery = COLUMN_DEVICE_ID + " = '" + device_id + "' AND " + COLUMN_TIMESTAMP + " = '" + timestamp + "'";
+        contentValues.put(TEMP_COLUMN_STATUS, SyncStatus.SYNCHONISED);
+        String whereQuery = TEMP_COLUMN_DEVICE_ID + " = '" + device_id + "' AND " + TEMP_COLUMN_TIMESTAMP + " = '" + timestamp + "'";
 
         db.update(TABLE_TEMP, contentValues, whereQuery, null);
 
@@ -96,17 +138,46 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
        // db.close();
     }
 
-
-
     /*
-     * this method will give us all the temps stored in sqlite
+     * this method will give us all the local temperature data
      * */
-    public Cursor getData() {
+    public Cursor getTemp() {
         SQLiteDatabase db = this.getReadableDatabase();
-        String sql = " SELECT * FROM " + TABLE_TEMP + " ORDER BY " + COLUMN_TIMESTAMP + " DESC;";
+        String sql = " SELECT * FROM " + TABLE_TEMP + " ORDER BY " + TEMP_COLUMN_TIMESTAMP + " DESC;";
         Cursor c = db.rawQuery(sql, null);
         return c;
     }
+
+    /*
+     * this method will give us all the local temperature data
+     * */
+    public Cursor getElder() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String sql = " SELECT * FROM " + TABLE_ELDER + " ORDER BY " +ELDER_COLUMN_ID + " ASC;";
+        Cursor c = db.rawQuery(sql, null);
+        return c;
+    }
+
+    /*
+     * get the local data by individual elder id from Temperature table
+     * */
+    public Cursor getTempById(int elder_id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String sql = " SELECT * FROM " + TABLE_TEMP + " WHERE " + TEMP_COLUMN_ELDER_ID + " = " +elder_id;
+        Cursor c = db.rawQuery(sql, null);
+        return c;
+    }
+
+    /*
+     * get the local data by individual id from Elder table
+     * */
+    public Cursor getElderById(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String sql = " SELECT * FROM " + TABLE_ELDER + " WHERE " + ELDER_COLUMN_ID + " = " +id;
+        Cursor c = db.rawQuery(sql, null);
+        return c;
+    }
+
 
     /*
      * this method is for getting all the unsynced temps
@@ -114,7 +185,7 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
      * */
     public Cursor getUnsyncedData() {
         SQLiteDatabase db = this.getReadableDatabase();
-        String sql = "SELECT * FROM " + TABLE_TEMP + " WHERE " + COLUMN_STATUS + " = 0;";
+        String sql = "SELECT * FROM " + TABLE_TEMP + " WHERE " + TEMP_COLUMN_STATUS + " = 0;";
         Cursor c = db.rawQuery(sql, null);
         return c;
     }
