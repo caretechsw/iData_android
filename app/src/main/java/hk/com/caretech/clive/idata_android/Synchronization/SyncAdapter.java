@@ -5,9 +5,11 @@ import android.content.AbstractThreadedSyncAdapter;
 import android.content.ContentProviderClient;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SyncResult;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -25,6 +27,7 @@ import hk.com.caretech.clive.idata_android.SQLiteDBHelper;
 import hk.com.caretech.clive.idata_android.TemperatureModel_Local;
 import hk.com.caretech.clive.idata_android.Utils.ServerUtils;
 import hk.com.caretech.clive.idata_android.Utils.SyncStatus;
+import hk.com.caretech.clive.idata_android.cewen.MainActivity;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
@@ -41,7 +44,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
     private SQLiteDBHelper sqldb;
     private List<TemperatureModel_Local> localDataList = new ArrayList<>();
     private Context context;
-
+    private Boolean requestOthersSync = false;
 
     public SyncAdapter(Context context, boolean autoInitialize) {
         super(context, autoInitialize);
@@ -66,7 +69,6 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
         sqldb = new SQLiteDBHelper(context);
         httpClient = new OkHttpClient();
 
-
         Cursor cursor = sqldb.getTemp();
         getElderDBFromServer();
         getTempDBFromServer();
@@ -75,28 +77,8 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
         //Downloading and uploading data -requests the data, downloads , inserts it in the provider.
 
 
-
         //Handling data conflicts or determining how current the data is
         // Clean up. -close connections
-
-//        final Request request = new Request.Builder().url(ServerUtils.retrieveElderUrl).build();
-//
-//        httpClient.newCall(request).enqueue(new Callback() {
-//            @Override
-//            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-//                e.printStackTrace();
-//                System.out.print("failed");
-//            }
-//            @Override
-//            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-//                if (response.isSuccessful()) {
-//                    String jsonData = response.body().string();
-//
-//                    Elder[] elderList =  new Gson().fromJson(jsonData, Elder[].class);
-//
-//                }
-//            }
-//        });
 
         cursor.close();
         closeDB();
@@ -199,6 +181,11 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
                 Log.i(TAG, "status :" + status);
                 Log.i(TAG, "dev_timestamp :" + dev_timestamp);
 
+                //assign requestOthersSync to true to trigger broadcast sender
+                if(status==SyncStatus.UNSYNCHONISED){
+                    requestOthersSync = true;
+                }
+
                 Cursor cursor2 = sqldb.getElderById(elder_id);
 
                 RequestBody formBody = new FormBody.Builder()
@@ -273,7 +260,17 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
             }
                 while (cursor.moveToNext()) ;
         }
+        broadcastSender();
 }
+
+    public void broadcastSender(){
+        String thisDeviceID = Settings.System.getString(context.getContentResolver(),
+                Settings.Secure.ANDROID_ID);
+        Intent intent = new Intent(MainActivity.DATA_UPDATED_BROADCAST);
+        intent.putExtra("requestOthersSync" , requestOthersSync);
+        intent.putExtra("device_id" , thisDeviceID);
+        context.sendBroadcast(intent);
+    }
 
     static String TAG = SyncAdapter.class.getName();
 }

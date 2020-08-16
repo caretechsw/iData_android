@@ -10,6 +10,7 @@
         android:maxSdkVersion="22" />
     <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
     <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application
         android:allowBackup="true"
@@ -34,6 +35,12 @@
         <activity android:name="hk.com.caretech.clive.idata_android.RetrieveLocalTemperatureActivity" />
         <activity android:name="hk.com.caretech.clive.idata_android.Server.ServerDataActivity" />
         <activity android:name="hk.com.caretech.clive.idata_android.cewen.ScanActivity" />
+
+<!--        <receiver android:name=".">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="" />-->
+<!--            </intent-filter>-->
+<!--        </receiver>-->
 
         <service
             android:name="hk.com.caretech.clive.idata_android.Synchronization.AuthenticatorService">

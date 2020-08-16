@@ -1,6 +1,9 @@
 package hk.com.caretech.clive.idata_android.cewen;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -12,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -41,10 +45,10 @@ public class MainActivity extends AppCompatActivity {
     private EditText editText_inputElderId_main;
     private Button bttn_reentry_main;
     private String inputElderId;
-    //private List<TemperatureModel_Local> dataList = new ArrayList<>();
-    OkHttpClient httpClient;
+    private TextView textview_broadcast;
     Boolean isIdExist = false;
-
+    BroadcastReceiver broadcastReceiver;
+    public static final String DATA_UPDATED_BROADCAST = "hk.com.caretech.clive.idata_android";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,15 +58,17 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         sqlDb = new SQLiteDBHelper(this);
 
-
         editText_inputElderId_main = findViewById(R.id.editText_inputElderId_main);
         bttn_reentry_main = findViewById(R.id.bttn_reentry_main);
+        textview_broadcast = findViewById(R.id.textview_broadcast);
+        scanButton = (Button)findViewById(R.id.scanButton) ;
+
+
         bttn_reentry_main.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {logout();}
         });
 
-        scanButton = (Button)findViewById(R.id.scanButton) ;
         scanButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
         mIMeasureSDK = new IMeasureSDK(getBaseContext());
         mIMeasureSDK.init(initCallback);
 
+        //get device id
         android_id = Settings.System.getString(this.getContentResolver(),
                 Settings.Secure.ANDROID_ID);
         if (android_id != null) {
@@ -81,11 +88,27 @@ public class MainActivity extends AppCompatActivity {
         }
 
         editText_inputElderId_main.requestFocus();
+
+        broadcastReceiver = new BroadcastReceiver(){
+            @Override
+            public void onReceive(Context context, Intent intent) {
+             if(intent!=null) {
+                 String device_id = intent.getStringExtra("device_id");
+                 boolean result = intent.getBooleanExtra("requestOthersSync", false);
+                 if(result && !device_id.equals(android_id)){
+                     textview_broadcast.setText("有資料可供更新");}
+             }
+            }
+        };
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        registerReceiver(broadcastReceiver, new IntentFilter(DATA_UPDATED_BROADCAST));
+    }
 
-
-//    public void showImageSlideDialog(itemList: ItemInfo_Firebase_Model) {
+    //    public void showImageSlideDialog(itemList: ItemInfo_Firebase_Model) {
 //        val mProductImageSlideFragment = ProductImageSlideDialogFragment(itemList)
 //        mProductImageSlideFragment.show(
 //                (view.context as CategoryActivity).getSupportFragmentManager(),
@@ -153,17 +176,11 @@ public class MainActivity extends AppCompatActivity {
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-
                                         int elder_id_int = Integer.valueOf(inputElderId);
 
                                         sqlDb.addTemptoLocal(elder_id_int, temp, android_id, System.currentTimeMillis(), SyncStatus.UNSYNCHONISED);
 
                                         Toast.makeText(MainActivity.this, "Temperature：" + temp, Toast.LENGTH_SHORT).show();
-
-//                                temp = edTemp.getText().toString();
-//                                if (!TextUtils.isEmpty(elderID) && !TextUtils.isEmpty(temp)) {
-//                                    saveTempToLocalStorage(Double.parseDouble(temp), Integer.parseInt(elderID), android_id, 0);
-
                                         Log.d(TAG, "success: " + temp);
                                     }
                                 });
@@ -197,47 +214,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
     //This method will check the id if exists over the elder and temp tables
     public boolean elderIdExists(int inputElderId){
         sqlDb = new SQLiteDBHelper(this);
         Cursor cursor_temp = sqlDb.getTempById(inputElderId);
         Cursor cursor_elder = sqlDb.getElderById(inputElderId);
         Log.i(TAG, "cursor_temp size"+cursor_temp.getCount()+ "cursor_elder size"+cursor_elder.getCount());
-        if(cursor_temp.getCount() > 0 || cursor_elder.getCount()>0){return true;
+        if(cursor_temp.getCount() > 0 || cursor_elder.getCount()>0){
+            return true;
         }
-//        if (cursor.moveToFirst()) {
-//            do {
-//                int elder_id = cursor.getInt(cursor.getColumnIndex(SQLiteDBHelper.COLUMN_ELDER_ID));
-//                if(inputElderId==elder_id)
-//            } while (cursor.moveToNext());
-//        }
-
-
-//        HttpUrl.Builder httpBuilder = HttpUrl.parse( NetworkUtils.retrieveIdUrl() ).newBuilder();
-//
-//        HttpUrl finalUrl = httpBuilder.addQueryParameter("id", inputElderId).build();
-//
-//        final Request request = new Request.Builder().url(finalUrl).build();
-//        Log.i(TAG, " finalUrl : "+ finalUrl);
-//        httpClient = new OkHttpClient();
-//        httpClient.newCall(request).enqueue(new Callback() {
-//            @Override
-//            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-//                if(response.isSuccessful()) {
-//                    if (response.code() == 200 || response.code() == 201) {
-//                        isIdExist = true;
-//                        Log.i(TAG, "isIdExist : " + isIdExist);
-//                    }Log.i(TAG, "response.code() : " + response.code());
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onFailure(@NotNull Call call, @NotNull IOException e){
-//                isIdExist = false;
-//            }
-//        });
         Log.i(TAG, "isIdExist (at return: " + isIdExist);
         sqlDb.close();
         return false;
@@ -246,7 +231,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
+        unregisterReceiver(broadcastReceiver);
         sqlDb.close();
+
     }
 
     @Override
@@ -273,36 +260,8 @@ public class MainActivity extends AppCompatActivity {
                     //show dialog to choose yes/no here
                     Toast.makeText(MainActivity.this,"ID不存在",Toast.LENGTH_LONG).show();
 
-                    //if no
                 editText_inputElderId_main.setText("");}
             }
-
-//            HttpUrl.Builder httpBuilder = HttpUrl
-//                    .parse(NetworkUtils.retrieveIdUrl() ).newBuilder();
-//            HttpUrl finalUrl = httpBuilder.addQueryParameter("id", inputElderId).build();
-//
-//            final Request request = new Request.Builder().url(finalUrl).build();
-//            Log.i(TAG, " finalUrl : "+ finalUrl);
-//            httpClient = new OkHttpClient();
-//            httpClient.newCall(request).enqueue(new Callback() {
-//                @Override
-//                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-//                    if(response.isSuccessful()) {
-//                        if (response.code() == 200 || response.code() == 201) {
-//                            editText_inputElderId_main.setText(inputElderId);
-////                            isIdExist = true;
-////                            Log.i(TAG, "isIdExist : " + isIdExist);
-//                        }Log.i(TAG, "response.code() : " + response.code());
-//                    }
-//                }
-//                @Override
-//                public void onFailure(@NotNull Call call, @NotNull IOException e){
-//                    //isIdExist = false;
-//                }
-//            });
-
-           // Log.d(TAG, "isIdExist: "+isIdExist);
-
             }
         }
 
@@ -337,6 +296,7 @@ public class MainActivity extends AppCompatActivity {
                 //check connection
                 SyncUtils.CreateSyncAccount(MainActivity.this); //place this into oncreate method if would like to do auto-sync when start the app
                 SyncUtils.forceRefreshAll(MainActivity.this);
+                textview_broadcast.setText("");
                 return true;
             case R.id.action_setting:
                 //??
@@ -345,6 +305,7 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 
     static String TAG = MainActivity.class.getName();
 }
