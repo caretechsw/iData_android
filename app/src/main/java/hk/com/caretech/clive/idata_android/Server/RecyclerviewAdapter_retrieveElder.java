@@ -93,8 +93,6 @@ class RecyclerviewAdapter_retrieveElder extends RecyclerView.Adapter<Recyclervie
                     });
                 }
             }
-//                Glide.with(view.context).load(item)
-//                        .into(view.image)
             }
         }
         static String TAG = RecyclerviewAdapter_retrieveElder.class.getName();

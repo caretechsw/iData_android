@@ -1,5 +1,7 @@
 package hk.com.caretech.clive.idata_android;
 
+import android.app.Activity;
+import android.content.ContentValues;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,12 +10,17 @@ import android.widget.TextView;
 
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.Group;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
-
 
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import hk.com.caretech.clive.idata_android.Model.Elder;
 import hk.com.caretech.clive.idata_android.Utils.SyncStatus;
 
 
@@ -21,16 +28,19 @@ class RecyclerviewAdapter_retrieveLocalTemperature extends RecyclerView.Adapter<
 
 
     private List<TemperatureModel_Local> tempList;
-
+    private List<Elder> elderList;
     private TextView textView_elderID;
     private TextView textView_temperature;
     private TextView textView_deviceID;
     private TextView textView_timestamp;
     private TextView textView_status;
+    private Group group_temptable_local;
 
-    public RecyclerviewAdapter_retrieveLocalTemperature(List<TemperatureModel_Local> tempList) {
+    public RecyclerviewAdapter_retrieveLocalTemperature(List<TemperatureModel_Local> tempList, List<Elder> elderList) {
         this.tempList = tempList;
+        this.elderList = elderList;
     }
+
 
     @NonNull
     @Override
@@ -59,6 +69,7 @@ class RecyclerviewAdapter_retrieveLocalTemperature extends RecyclerView.Adapter<
 
     class TheView extends RecyclerView.ViewHolder {
 
+
         //SimpleDateFormat fullDF = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         SimpleDateFormat simplifiedDF = new SimpleDateFormat("MM-dd HH:mm");
 
@@ -69,8 +80,10 @@ class RecyclerviewAdapter_retrieveLocalTemperature extends RecyclerView.Adapter<
            // textView_deviceID = itemView.findViewById(R.id.textView_deviceID_temptable_local);
             textView_timestamp = itemView.findViewById(R.id.textView_timestamp_temptable_local);
             textView_status = itemView.findViewById(R.id.textView_status_temptable_local);
+            group_temptable_local =  itemView.findViewById(R.id.group_temptable_local);
 
         }
+
 
         public void bindItemList(int position) {
 //            if(position==0){
@@ -83,16 +96,32 @@ class RecyclerviewAdapter_retrieveLocalTemperature extends RecyclerView.Adapter<
 //            }else if(position>0) {
 //                int actualPosition = position - 1; //position 0 has been used to display heading.
 //                Log.i(TAG, "position :" + position + " actualPosition : " + actualPosition);
-                textView_elderID.setText(Integer.toString(tempList.get(position).getElder_id()));
-                textView_temperature.setText(Double.toString(tempList.get(position).getTemperature()));
-                textView_timestamp.setText(simplifiedDF.format(tempList.get(position).getTimestamp()));
+            textView_elderID.setText(Integer.toString(tempList.get(position).getElder_id()));
+            textView_temperature.setText(Double.toString(tempList.get(position).getTemperature()));
+            textView_timestamp.setText(simplifiedDF.format(tempList.get(position).getTimestamp()));
 
-                if (tempList.get(position).getStatus() ==SyncStatus.SYNCHONISED) {
-                    textView_status.setBackgroundResource(R.drawable.ic_dot_lime);
-                }else if (tempList.get(position).getStatus()==SyncStatus.UNSYNCHONISED) {
-                    textView_status.setBackgroundResource(R.drawable.ic_dot_lightgrey);
-                }
+            if (tempList.get(position).getStatus() == SyncStatus.SYNCHONISED) {
+                textView_status.setBackgroundResource(R.drawable.ic_dot_lime);
+            } else if (tempList.get(position).getStatus() == SyncStatus.UNSYNCHONISED) {
+                textView_status.setBackgroundResource(R.drawable.ic_dot_lightgrey);
             }
+
+
+            int refIds[] = group_temptable_local.getReferencedIds();
+            for (int id : refIds) {
+                itemView.findViewById(id).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        TempDetailsDialogFragment mTempDetailsDialogFragment = new TempDetailsDialogFragment(tempList.get(position), elderList);
+                        FragmentTransaction ft = ((AppCompatActivity)itemView.getContext()).getSupportFragmentManager().beginTransaction();
+                        mTempDetailsDialogFragment.show(ft, ContentValues.TAG);
+                    }
+                });
+
+            }
+        }
+
+
             }
         static String TAG = RecyclerviewAdapter_retrieveLocalTemperature.class.getName();
     }

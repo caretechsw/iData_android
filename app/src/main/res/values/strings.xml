@@ -42,6 +42,15 @@
     <string name="status">S</string>
     <string name="re_enter">重新輸入</string>
     <string name="elderId">院友ID: </string>
+    <string name="change_ip">更改</string>
+    <string name="id_dialog">院友ID</string>
+    <string name="name_dialog">名稱</string>
+    <string name="bedno_dialog">床號</string>
+    <string name="device_id_dialog">掃瞄裝置號碼</string>
+    <string name="temperature_diaog">溫度°C</string>
+    <string name="timestamp_dialog">量溫時間</string>
+    <string name="status_dialog">同步狀態</string>
+    <string name="seperator">:</string>
 
     <string-array name="searchelders_array">
         <item>id</item>

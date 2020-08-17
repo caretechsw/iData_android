@@ -6,6 +6,12 @@ public class Elder {
     private String name;
     private int bed_no;
 
+    public Elder(int id, String name, int bed_no) {
+        this.id = id;
+        this.name = name;
+        this.bed_no = bed_no;
+    }
+
     public int getId() {
         return id;
     }

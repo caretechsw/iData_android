@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginVertical="30dp"
+
+    tools:context=".TempDetailsDialogFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+
+<!--        <androidx.constraintlayout.widget.Guideline-->
+<!--            android:id="@+id/guideline_dialogfragment"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="vertical"-->
+<!--            app:layout_constraintGuide_begin="50dp"/>-->
+
+        <LinearLayout
+            android:id="@+id/linearLayout1_dialogfragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/textView_id_dialogfragment"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:textSize="25sp"
+                android:text="@string/id_dialog" />
+
+            <TextView
+                android:id="@+id/textView2_id_dialogfragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/seperator"
+                android:textSize="25sp" />
+
+    </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout2_dialogfragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/textView_name_dialogfragment"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:textSize="25sp"
+                android:text="@string/name_dialog" />
+
+            <TextView
+                android:id="@+id/textView2_name_dialogfragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="25sp"
+                android:text="@string/seperator"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout3_dialogfragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/textView_bedno_dialogfragment"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:textSize="25sp"
+                android:text="@string/bedno_dialog" />
+
+            <TextView
+                android:id="@+id/textView2_bedno_dialogfragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="25sp"
+                android:text="@string/seperator" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/linearLayout4_dialogfragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/textView_deviceID_dialogfragment"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:textSize="25sp"
+                android:text="@string/device_id_dialog" />
+
+            <TextView
+                android:id="@+id/textView2_deviceID_dialogfragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="25sp"
+                android:text="@string/seperator" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/linearLayout5_dialogfragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="25sp">
+
+            <TextView
+                android:id="@+id/textView_temperature_dialogfragment"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:textSize="25sp"
+                android:text="@string/temperature_diaog" />
+
+            <TextView
+                android:id="@+id/textView2_temperature_dialogfragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="25sp"
+                android:text="@string/seperator" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/linearLayout6_dialogfragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/textView_timestamp_dialogfragment"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:textSize="25sp"
+                android:text="@string/timestamp_dialog" />
+
+            <TextView
+                android:id="@+id/textView2_timestamp_dialogfragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="25sp"
+                android:text="@string/seperator" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/linearLayout7_dialogfragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/textView_status_dialogfragment"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:textSize="25sp"
+                android:text="@string/status_dialog" />
+
+            <TextView
+                android:id="@+id/textView2_status_dialogfragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="25sp"
+                android:text="@string/seperator" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

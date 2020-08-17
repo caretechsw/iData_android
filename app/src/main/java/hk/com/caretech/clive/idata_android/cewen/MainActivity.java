@@ -29,6 +29,7 @@ import hk.com.caretech.clive.idata_android.R;
 import hk.com.caretech.clive.idata_android.RetrieveLocalTemperatureActivity;
 import hk.com.caretech.clive.idata_android.SQLiteDBHelper;
 import hk.com.caretech.clive.idata_android.Server.ServerDataActivity;
+import hk.com.caretech.clive.idata_android.SettingActivity;
 import hk.com.caretech.clive.idata_android.Synchronization.SyncUtils;
 import hk.com.caretech.clive.idata_android.Utils.SyncStatus;
 import okhttp3.OkHttpClient;
@@ -223,7 +224,7 @@ public class MainActivity extends AppCompatActivity {
         if(cursor_temp.getCount() > 0 || cursor_elder.getCount()>0){
             return true;
         }
-        Log.i(TAG, "isIdExist (at return: " + isIdExist);
+        Log.i(TAG, "isIdExist (at return) " + isIdExist);
         sqlDb.close();
         return false;
     }
@@ -299,8 +300,8 @@ public class MainActivity extends AppCompatActivity {
                 textview_broadcast.setText("");
                 return true;
             case R.id.action_setting:
-                //??
-
+                intent = new Intent(this, SettingActivity.class);
+                startActivity(intent);
                 return true;
         }
         return super.onOptionsItemSelected(item);

@@ -2,6 +2,11 @@ package hk.com.caretech.clive.idata_android.Utils;
 
 public class ServerUtils {
 
+    //public static String ip =  "192.168.1.20"; //home
+    public static String ip =  "192.168.1.208"; //company
+
+    //ad3cc65c16594cae company device_id
+
     //elder table
     public static String ELDER_COLUMN_ID = "id";
     public static String ELDER_COLUMN_NAME = "name";
@@ -15,55 +20,48 @@ public class ServerUtils {
     public static String TEMP_COLUMN_STATUS = "status";
 
 
+    public static final String retrieveElderUrl = "http://"+ip+":7070/elder";
+    public static final String retrieveTempUrl = "http://"+ip+":7070/temp";
+    public static final String addElderUrl = "http://"+ip+":7070/elder/add";
+    public static final String addTempUrl = "http://"+ip+":7070/temp/add";
 
 
-
-    public static String ip(){
-        return "192.168.1.20";
-    }
 
     public static String baseUrl(){
-        return "http://"+ ip() +":7070/";
+        return "http://"+ ip +":7070/";
     }
 
     public static String retrieveElderUrl(){
-        String url  = "http://"+ ip() +":7070/elder";
+        String url  = "http://"+ ip +":7070/elder";
         return url;
     }
 
     public static String retrieveTempUrl(){
-        String url  = "http://"+ ip() +":7070/temp";
+        String url  = "http://"+ ip +":7070/temp";
         return url;
     }
 
     public static String retrieveIdUrl(){
-        String url  = "http://"+ ip() +":7070/elder/id";
+        String url  = "http://"+ ip +":7070/elder/id";
         return url;
     }
 
 
     public static String addElderUrl(){
-        String url  = "http://"+ ip() +":7070/elder/add";
+        String url  = "http://"+ ip +":7070/elder/add";
         return url;
     }
 
     public static String addTempUrl(){
-        String url  = "http://"+ ip() +":7070/temp/add";
+        String url  = "http://"+ ip +":7070/temp/add";
         return url;
     }
 
     public static String addTempUrl_abnormal(){
-        String url  = "http://"+ ip() +":7070/temp_abnormal/add";
+        String url  = "http://"+ ip +":7070/temp_abnormal/add";
         return url;
     }
 
-
-
-
-    public static final String retrieveElderUrl = "http://192.126.1.208:7070/elder";
-    public static final String retrieveTempUrl = "http://192.126.1.208:7070/temp";
-    public static final String addElderUrl = "http://192.126.1.208:7070/elder/add";
-    public static final String addTempUrl = "http://192.126.1.208:7070/temp/add";
 
     static final String TAG = ServerUtils.class.getName();
 }
