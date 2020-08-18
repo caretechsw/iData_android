@@ -2,6 +2,7 @@ package hk.com.caretech.clive.idata_android.cewen;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.Cursor;
@@ -18,6 +19,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -108,14 +110,6 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         registerReceiver(broadcastReceiver, new IntentFilter(DATA_UPDATED_BROADCAST));
     }
-
-    //    public void showImageSlideDialog(itemList: ItemInfo_Firebase_Model) {
-//        val mProductImageSlideFragment = ProductImageSlideDialogFragment(itemList)
-//        mProductImageSlideFragment.show(
-//                (view.context as CategoryActivity).getSupportFragmentManager(),
-//                ""
-//                )
-//    }
 
     public void logout(){
         editText_inputElderId_main.setText(null);
@@ -254,14 +248,25 @@ public class MainActivity extends AppCompatActivity {
                 if (elderIdExists(Integer.parseInt(inputElderId))) {
                     editText_inputElderId_main.setText(inputElderId);
                     Log.d(TAG, "onActivityResult: "+inputElderId);
-                    Toast.makeText(MainActivity.this,"ID："+inputElderId,Toast.LENGTH_LONG).show();
                     //Toast.makeText(MainActivity.this,"Successful decoding："+inputElderId,Toast.LENGTH_LONG).show();
                 }else {
 
-                    //show dialog to choose yes/no here
-                    Toast.makeText(MainActivity.this,"ID不存在",Toast.LENGTH_LONG).show();
+                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this);
+                    //alertDialog.setTitle("");
+                    alertDialog.setMessage("沒有此院友ID記錄，是否繼續?");
+                    alertDialog.setPositiveButton("是", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            editText_inputElderId_main.setText(inputElderId);
+                        }
+                    });
+                    alertDialog.setNegativeButton("取消",(dialog, which) -> {
+                        editText_inputElderId_main.setText("");
+                    });
 
-                editText_inputElderId_main.setText("");}
+                    alertDialog.setCancelable(false);
+                    alertDialog.show();
+                }
             }
             }
         }

@@ -35,6 +35,7 @@
         <activity android:name="hk.com.caretech.clive.idata_android.RetrieveLocalTemperatureActivity" />
         <activity android:name="hk.com.caretech.clive.idata_android.Server.ServerDataActivity" />
         <activity android:name="hk.com.caretech.clive.idata_android.cewen.ScanActivity" />
+        <activity android:name="hk.com.caretech.clive.idata_android.SettingActivity" />
 
 <!--        <receiver android:name=".">-->
 <!--            <intent-filter>-->

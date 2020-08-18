@@ -1,11 +1,27 @@
 package hk.com.caretech.clive.idata_android.Utils;
 
-public class ServerUtils {
+import android.content.Context;
+import android.content.SharedPreferences;
 
-    //public static String ip =  "192.168.1.20"; //home
-    public static String ip =  "192.168.1.208"; //company
+import okhttp3.OkHttpClient;
+
+public class ServerUtils {
+    private SharedPreferences prefs;
+    private SharedPreferences.Editor editor;
+
+//    prefs = context.getSharedPreferences(ipPrefs, MODE_PRIVATE);
+//    ipInput = prefs.getString(ip, "localhost");
+
+   // public static String ip =  "192.168.1.20"; //home
+    //public static String ip =  "192.168.1.208"; //company
 
     //ad3cc65c16594cae company device_id
+    //57a914a4a73fe5b8 home device
+
+
+    public static String getBaseUrl(String ip){
+        return "http://"+ ip +":7070/";
+    }
 
     //elder table
     public static String ELDER_COLUMN_ID = "id";
@@ -24,43 +40,14 @@ public class ServerUtils {
     public static final String retrieveTempUrl = "http://"+ip+":7070/temp";
     public static final String addElderUrl = "http://"+ip+":7070/elder/add";
     public static final String addTempUrl = "http://"+ip+":7070/temp/add";
+    public static final String addTemp_abnormalUrl = "http://"+ip+":7070/temp_abnormal/add";
 
-
-
-    public static String baseUrl(){
-        return "http://"+ ip +":7070/";
-    }
-
-    public static String retrieveElderUrl(){
-        String url  = "http://"+ ip +":7070/elder";
-        return url;
-    }
-
-    public static String retrieveTempUrl(){
-        String url  = "http://"+ ip +":7070/temp";
-        return url;
-    }
 
     public static String retrieveIdUrl(){
         String url  = "http://"+ ip +":7070/elder/id";
         return url;
     }
 
-
-    public static String addElderUrl(){
-        String url  = "http://"+ ip +":7070/elder/add";
-        return url;
-    }
-
-    public static String addTempUrl(){
-        String url  = "http://"+ ip +":7070/temp/add";
-        return url;
-    }
-
-    public static String addTempUrl_abnormal(){
-        String url  = "http://"+ ip +":7070/temp_abnormal/add";
-        return url;
-    }
 
 
     static final String TAG = ServerUtils.class.getName();

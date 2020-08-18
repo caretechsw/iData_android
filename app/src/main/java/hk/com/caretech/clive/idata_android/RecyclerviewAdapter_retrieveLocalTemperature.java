@@ -2,6 +2,7 @@ package hk.com.caretech.clive.idata_android;
 
 import android.app.Activity;
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,17 +29,15 @@ class RecyclerviewAdapter_retrieveLocalTemperature extends RecyclerView.Adapter<
 
 
     private List<TemperatureModel_Local> tempList;
-    private List<Elder> elderList;
-    private TextView textView_elderID;
+    private TextView textView_name;
     private TextView textView_temperature;
-    private TextView textView_deviceID;
-    private TextView textView_timestamp;
+   // private TextView textView_timestamp;
     private TextView textView_status;
     private Group group_temptable_local;
+    private SQLiteDBHelper sqlDB;
 
-    public RecyclerviewAdapter_retrieveLocalTemperature(List<TemperatureModel_Local> tempList, List<Elder> elderList) {
+    public RecyclerviewAdapter_retrieveLocalTemperature(List<TemperatureModel_Local> tempList) {
         this.tempList = tempList;
-        this.elderList = elderList;
     }
 
 
@@ -68,37 +67,35 @@ class RecyclerviewAdapter_retrieveLocalTemperature extends RecyclerView.Adapter<
     }
 
     class TheView extends RecyclerView.ViewHolder {
-
-
         //SimpleDateFormat fullDF = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        SimpleDateFormat simplifiedDF = new SimpleDateFormat("MM-dd HH:mm");
+       // SimpleDateFormat simplifiedDF = new SimpleDateFormat("MM-dd HH:mm");
 
         public TheView(@NonNull View itemView) {
             super(itemView);
-            textView_elderID = itemView.findViewById(R.id.textView_elderID_temptable_local);
+            sqlDB = new SQLiteDBHelper(itemView.getContext());
+            textView_name = itemView.findViewById(R.id.textView_name_temptable_local);
             textView_temperature = itemView.findViewById(R.id.textView_temp_temptable_local);
-           // textView_deviceID = itemView.findViewById(R.id.textView_deviceID_temptable_local);
-            textView_timestamp = itemView.findViewById(R.id.textView_timestamp_temptable_local);
+            // textView_deviceID = itemView.findViewById(R.id.textView_deviceID_temptable_local);
+            //textView_timestamp = itemView.findViewById(R.id.textView_timestamp_temptable_local);
             textView_status = itemView.findViewById(R.id.textView_status_temptable_local);
-            group_temptable_local =  itemView.findViewById(R.id.group_temptable_local);
+            group_temptable_local = itemView.findViewById(R.id.group_temptable_local);
 
         }
 
 
         public void bindItemList(int position) {
-//            if(position==0){
-//                Log.i(TAG, "checkSize :" +tempList.size());
-//                textView_elderID.setText("ID");
-//                textView_temperature.setText("溫度°C");
-//               // textView_deviceID.setText("量度器");
-//                textView_timestamp.setText("時間(月-日)");
-//                textView_status.setText("S");
-//            }else if(position>0) {
-//                int actualPosition = position - 1; //position 0 has been used to display heading.
-//                Log.i(TAG, "position :" + position + " actualPosition : " + actualPosition);
-            textView_elderID.setText(Integer.toString(tempList.get(position).getElder_id()));
+            int id = tempList.get(position).getElder_id();
+            Cursor c = sqlDB.getElderById(id);
+            if (c.getCount() > 0) {
+                if (c.moveToFirst()) {
+                    textView_name.setText(c.getString(c.getColumnIndex(SQLiteDBHelper.ELDER_COLUMN_NAME)));
+                }
+            } else {
+                textView_name.setText("沒有資料");
+            }
+            //textView_elderID.setText(Integer.toString(tempList.get(position).getElder_id()));
             textView_temperature.setText(Double.toString(tempList.get(position).getTemperature()));
-            textView_timestamp.setText(simplifiedDF.format(tempList.get(position).getTimestamp()));
+            //textView_timestamp.setText(simplifiedDF.format(tempList.get(position).getTimestamp()));
 
             if (tempList.get(position).getStatus() == SyncStatus.SYNCHONISED) {
                 textView_status.setBackgroundResource(R.drawable.ic_dot_lime);
@@ -108,21 +105,20 @@ class RecyclerviewAdapter_retrieveLocalTemperature extends RecyclerView.Adapter<
 
 
             int refIds[] = group_temptable_local.getReferencedIds();
-            for (int id : refIds) {
-                itemView.findViewById(id).setOnClickListener(new View.OnClickListener() {
+            for (int viewId : refIds) {
+                itemView.findViewById(viewId).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        TempDetailsDialogFragment mTempDetailsDialogFragment = new TempDetailsDialogFragment(tempList.get(position), elderList);
-                        FragmentTransaction ft = ((AppCompatActivity)itemView.getContext()).getSupportFragmentManager().beginTransaction();
+                        TempDetailsDialogFragment mTempDetailsDialogFragment = new TempDetailsDialogFragment(tempList.get(position));
+                        FragmentTransaction ft = ((AppCompatActivity) itemView.getContext()).getSupportFragmentManager().beginTransaction();
                         mTempDetailsDialogFragment.show(ft, ContentValues.TAG);
                     }
                 });
 
             }
         }
+    }
 
-
-            }
         static String TAG = RecyclerviewAdapter_retrieveLocalTemperature.class.getName();
     }
 

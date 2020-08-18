@@ -9,11 +9,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="50dp"/>
+        app:layout_constraintGuide_begin="155dp"/>
 
     <TextView
-        android:id="@+id/textView_elderID_temptable_local"
-        android:layout_width="48dp"
+        android:id="@+id/textView_name_temptable_local"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginVertical="5dp"
         android:layout_marginStart="3dp"
@@ -38,33 +38,20 @@
             app:layout_constraintStart_toEndOf="@id/guideline_temptable_local"
             app:layout_constraintTop_toTopOf="parent"/>
 
-<!--    <TextView-->
-<!--        android:id="@+id/textView_deviceID_temptable_local"-->
-<!--        android:layout_width="85dp"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginVertical="5dp"-->
-<!--        android:layout_marginHorizontal="8dp"-->
-<!--        android:maxLines="1"-->
-<!--        android:singleLine="true"-->
-<!--        android:text="TextView"-->
-<!--        android:textSize="20sp"-->
-<!--        app:layout_constraintStart_toEndOf="@id/guideline_temptable_local"-->
-<!--        app:layout_constraintTop_toTopOf="parent"/>-->
-
-        <TextView
-            android:id="@+id/textView_timestamp_temptable_local"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="5dp"
-            android:layout_marginStart="3dp"
-            android:layout_marginEnd="3dp"
-            android:maxLines="1"
-            android:singleLine="true"
-            android:text="TextView"
-            android:textSize="18sp"
-            app:layout_constraintStart_toEndOf="@id/textView_temp_temptable_local"
-            app:layout_constraintTop_toTopOf="parent"
-            />
+<!--        <TextView-->
+<!--            android:id="@+id/textView_timestamp_temptable_local"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginVertical="5dp"-->
+<!--            android:layout_marginStart="3dp"-->
+<!--            android:layout_marginEnd="3dp"-->
+<!--            android:maxLines="1"-->
+<!--            android:singleLine="true"-->
+<!--            android:text="TextView"-->
+<!--            android:textSize="18sp"-->
+<!--            app:layout_constraintStart_toEndOf="@id/textView_temp_temptable_local"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            />-->
 
     <TextView
         android:id="@+id/textView_status_temptable_local"
@@ -72,7 +59,7 @@
         android:layout_height="18dp"
         android:gravity="center"
         android:layout_marginTop="10dp"
-        android:layout_marginHorizontal="10dp"
+        android:layout_marginHorizontal="15dp"
         android:maxLines="1"
         android:singleLine="true"
         android:textSize="12sp"
@@ -91,7 +78,6 @@
         android:id="@+id/group_temptable_local"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="textView_elderID_temptable_local,textView_temp_temptable_local,textView_timestamp_temptable_local
-,textView_status_temptable_local"></androidx.constraintlayout.widget.Group>
+        app:constraint_referenced_ids="textView_name_temptable_local,textView_temp_temptable_local,,textView_status_temptable_local"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,14 +6,7 @@
     android:layout_height="match_parent"
     tools:context="hk.com.caretech.clive.idata_android.Server.Fragment_crud_retrieve">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:id="@+id/linearLayout_retrieve"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        >
+
 
     <Button
         android:id="@+id/previous_elder_table_serverdata_recyclerview"
@@ -26,14 +19,13 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    </LinearLayout>
 
     <View
         android:id="@+id/divider_elder_table_serverdata_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:background="?android:attr/listDivider"
-        app:layout_constraintTop_toBottomOf="@id/linearLayout_retrieve"/>
+        app:layout_constraintTop_toBottomOf="@id/previous_elder_table_serverdata_recyclerview"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview_elder_table_serverdata_recyclerview"

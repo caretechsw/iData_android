@@ -1,18 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginVertical="30dp"
-
+    android:layout_height="wrap_content"
     tools:context=".TempDetailsDialogFragment">
+
+     <androidx.core.widget.NestedScrollView
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         app:layout_constraintTop_toTopOf="parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:gravity="center">
+        app:layout_constraintTop_toTopOf="parent"
+        android:padding="5dp">
 
 <!--        <androidx.constraintlayout.widget.Guideline-->
 <!--            android:id="@+id/guideline_dialogfragment"-->
@@ -24,42 +29,58 @@
         <LinearLayout
             android:id="@+id/linearLayout1_dialogfragment"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/textView_id_dialogfragment"
-                android:layout_width="140dp"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:textSize="25sp"
+                android:textSize="20sp"
                 android:text="@string/id_dialog" />
+
+            <TextView
+                android:id="@+id/textView3_id_dialogfragment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/seperator"
+                app:layout_constraintStart_toEndOf="@id/textView_id_dialogfragment"
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/textView2_id_dialogfragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/seperator"
-                android:textSize="25sp" />
+                android:textSize="20sp" />
 
     </LinearLayout>
 
         <LinearLayout
             android:id="@+id/linearLayout2_dialogfragment"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/textView_name_dialogfragment"
-                android:layout_width="140dp"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:textSize="25sp"
+                android:textSize="20sp"
                 android:text="@string/name_dialog" />
+
+            <TextView
+                android:id="@+id/textView3_name_dialogfragment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/seperator"
+                app:layout_constraintStart_toEndOf="@id/textView_name_dialogfragment"
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/textView2_name_dialogfragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="25sp"
-                android:text="@string/seperator"
+                android:textSize="20sp"
                 />
 
         </LinearLayout>
@@ -67,105 +88,150 @@
         <LinearLayout
             android:id="@+id/linearLayout3_dialogfragment"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/textView_bedno_dialogfragment"
-                android:layout_width="140dp"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:textSize="25sp"
+                android:textSize="20sp"
                 android:text="@string/bedno_dialog" />
+
+            <TextView
+            android:id="@+id/textView3_bedno_dialogfragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/seperator"
+            app:layout_constraintStart_toEndOf="@id/textView_bedno_dialogfragment"
+            android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/textView2_bedno_dialogfragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="25sp"
-                android:text="@string/seperator" />
+                android:textSize="20sp" />
 
         </LinearLayout>
         <LinearLayout
             android:id="@+id/linearLayout4_dialogfragment"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/textView_deviceID_dialogfragment"
-                android:layout_width="140dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="25sp"
+                android:textSize="20sp"
                 android:text="@string/device_id_dialog" />
 
             <TextView
-                android:id="@+id/textView2_deviceID_dialogfragment"
-                android:layout_width="match_parent"
+                android:id="@+id/textView3_deviceID_dialogfragment"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="25sp"
-                android:text="@string/seperator" />
+                android:text="@string/seperator"
+                app:layout_constraintStart_toEndOf="@id/textView_deviceID_dialogfragment"
+                android:textSize="20sp" />
 
         </LinearLayout>
+        <TextView
+            android:id="@+id/textView2_deviceID_dialogfragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/linearLayout4_dialogfragment"
+            android:textSize="20sp" />
+
         <LinearLayout
             android:id="@+id/linearLayout5_dialogfragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="25sp">
+            android:textSize="20sp"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/textView_temperature_dialogfragment"
                 android:layout_width="140dp"
                 android:layout_height="wrap_content"
-                android:textSize="25sp"
+                android:textSize="20sp"
                 android:text="@string/temperature_diaog" />
+
+            <TextView
+                android:id="@+id/textView3_temperature_dialogfragment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/seperator"
+                app:layout_constraintStart_toEndOf="@id/textView_temperature_dialogfragment"
+                android:textSize="20sp" />
+
 
             <TextView
                 android:id="@+id/textView2_temperature_dialogfragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="25sp"
-                android:text="@string/seperator" />
+                android:textSize="20sp" />
 
         </LinearLayout>
         <LinearLayout
             android:id="@+id/linearLayout6_dialogfragment"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/textView_timestamp_dialogfragment"
                 android:layout_width="140dp"
                 android:layout_height="wrap_content"
-                android:textSize="25sp"
+                android:textSize="20sp"
                 android:text="@string/timestamp_dialog" />
 
             <TextView
-                android:id="@+id/textView2_timestamp_dialogfragment"
-                android:layout_width="match_parent"
+                android:id="@+id/textView3_timestamp_dialogfragment"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="25sp"
-                android:text="@string/seperator" />
+                android:text="@string/seperator"
+                app:layout_constraintStart_toEndOf="@id/textView_timestamp_dialogfragment"
+                android:textSize="20sp" />
 
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView2_timestamp_dialogfragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@id/linearLayout6_dialogfragment"/>
+
         <LinearLayout
             android:id="@+id/linearLayout7_dialogfragment"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/textView_status_dialogfragment"
-                android:layout_width="120dp"
+                android:layout_width="140dp"
                 android:layout_height="wrap_content"
-                android:textSize="25sp"
+                android:textSize="20sp"
                 android:text="@string/status_dialog" />
+
+            <TextView
+                android:id="@+id/textView3_status_dialogfragment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/seperator"
+                app:layout_constraintStart_toEndOf="@id/textView_status_dialogfragment"
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/textView2_status_dialogfragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="25sp"
-                android:text="@string/seperator" />
+                android:textSize="20sp" />
 
         </LinearLayout>
 
     </LinearLayout>
+     </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

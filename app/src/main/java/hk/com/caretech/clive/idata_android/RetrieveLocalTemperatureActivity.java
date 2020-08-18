@@ -29,7 +29,6 @@ public class RetrieveLocalTemperatureActivity extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private List<TemperatureModel_Local> tempList = new ArrayList<>();
-    private List<Elder> elderList = new ArrayList<>();
     //Broadcast receiver to know the sync status
     private BroadcastReceiver broadcastReceiver;
     //database helper object
@@ -61,9 +60,7 @@ public class RetrieveLocalTemperatureActivity extends AppCompatActivity {
     public void loadLocalData() {
         int countUnsyncStatus=0;
         tempList.clear();
-        elderList.clear();
         Cursor tempCursor = sqlDb.getTemp();
-        Cursor elderCursor = sqlDb.getElder();
         if (tempCursor.moveToFirst()) {
             do {
                 TemperatureModel_Local temp = new TemperatureModel_Local(
@@ -81,22 +78,13 @@ public class RetrieveLocalTemperatureActivity extends AppCompatActivity {
             } while (tempCursor.moveToNext());
         }
 
-            if (elderCursor.moveToFirst()) {
-                do {
-                    Elder elder = new Elder(
-                            elderCursor.getInt(elderCursor.getColumnIndex(SQLiteDBHelper.ELDER_COLUMN_ID)),
-                            elderCursor.getString(elderCursor.getColumnIndex(SQLiteDBHelper.ELDER_COLUMN_NAME)),
-                            elderCursor.getInt(elderCursor.getColumnIndex(SQLiteDBHelper.ELDER_COLUMN_BED_NO)));
-                    elderList.add(elder);
-                } while (tempCursor.moveToNext());
-        }
 
         textView_countUnsyncData.setText("未上載資料: "+countUnsyncStatus);
         initAdapter();
     }
 
     public void initAdapter(){
-        mAdapter = new RecyclerviewAdapter_retrieveLocalTemperature(tempList, elderList);
+        mAdapter = new RecyclerviewAdapter_retrieveLocalTemperature(tempList);
         recyclerView.setAdapter(mAdapter);
         layoutManager = new LinearLayoutManager(RetrieveLocalTemperatureActivity.this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setHasFixedSize(true);
