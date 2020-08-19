@@ -53,6 +53,7 @@
     <string name="seperator">:  </string>
     <string name="name">名稱</string>
     <string name="ip">伺服器IP :</string>
+    <string name="dot">‧</string>
 
     <string-array name="searchelders_array">
         <item>id</item>

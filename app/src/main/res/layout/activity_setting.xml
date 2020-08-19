@@ -8,7 +8,7 @@
     tools:context=".SettingActivity">
 
     <Button
-        android:id="@+id/previous_activitSetting"
+        android:id="@+id/previous_activitySetting"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/previous"
@@ -17,33 +17,112 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-        <TextView
-            android:id="@+id/textView_ip_activitSetting"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/ip"
-            android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="@id/previous_activitSetting"
-            app:layout_constraintTop_toBottomOf="@id/previous_activitSetting"/>
+    <TextView
+        android:id="@+id/textView_ip_activitySetting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ip"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@id/previous_activitySetting"
+        app:layout_constraintTop_toBottomOf="@id/previous_activitySetting"/>
+
+    <TextView
+        android:id="@+id/textView_currentIp_activitySetting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:textSize="20sp"
+        android:text="TextView"
+        app:layout_constraintStart_toEndOf="@id/textView_ip_activitySetting"
+        app:layout_constraintTop_toTopOf="@id/textView_ip_activitySetting"/>
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout_inputIP_activitySetting"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/textView_ip_activitySetting"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/button_confirm_activitySetting">
+
 
         <EditText
-            android:id="@+id/editText_inputIp_activitSetting"
-            android:layout_width="250dp"
+            android:id="@+id/editText_inputIp_activitySetting"
+            android:layout_width="57dp"
             android:layout_height="wrap_content"
             android:autofillHints=""
+            android:maxLength="3"
+            android:inputType="number"
             android:textSize="20sp"
-            app:layout_constraintTop_toBottomOf="@id/textView_ip_activitSetting"
-            app:layout_constraintStart_toStartOf="@id/textView_ip_activitSetting"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textview_dot_activitySetting"
+        android:layout_width="2dp"
+        android:textSize="15dp"
+        android:layout_height="wrap_content"
+        android:text="@string/dot"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <EditText
+        android:id="@+id/editText2_inputIp_activitySetting"
+        android:layout_width="57dp"
+        android:layout_height="wrap_content"
+        android:autofillHints=""
+        android:maxLength="3"
+        android:textSize="20sp"
+        android:inputType="number"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+    <TextView
+        android:id="@+id/textview2_dot_activitySetting"
+        android:layout_width="2dp"
+        android:textSize="15dp"
+        android:layout_height="wrap_content"
+        android:text="@string/dot"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <EditText
+        android:id="@+id/editText3_inputIp_activitySetting"
+        android:layout_width="57dp"
+        android:layout_height="wrap_content"
+        android:autofillHints=""
+        android:maxLength="3"
+        android:textSize="20sp"
+        android:inputType="number"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+        <TextView
+            android:id="@+id/textview3_dot_activitySetting"
+            android:layout_width="2dp"
+            android:textSize="15dp"
+            android:layout_height="wrap_content"
+            android:text="@string/dot"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    <EditText
+        android:id="@+id/editText4_inputIp_activitySetting"
+        android:layout_width="57dp"
+        android:layout_height="wrap_content"
+        android:autofillHints=""
+        android:maxLength="3"
+        android:textSize="20sp"
+        android:inputType="number"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </LinearLayout>
 
         <Button
             android:id="@+id/button_confirm_activitySetting"
-            android:layout_width="wrap_content"
+            android:layout_width="90dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textSize="20sp"
             android:text="確定"
-            app:layout_constraintTop_toTopOf="@id/editText_inputIp_activitSetting"
-            app:layout_constraintStart_toEndOf="@id/editText_inputIp_activitSetting" />
+            app:layout_constraintTop_toTopOf="@id/linearLayout_inputIP_activitySetting"
+            app:layout_constraintEnd_toEndOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

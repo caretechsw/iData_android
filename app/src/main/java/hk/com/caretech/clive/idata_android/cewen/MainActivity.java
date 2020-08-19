@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -49,8 +50,11 @@ public class MainActivity extends AppCompatActivity {
     private Button bttn_reentry_main;
     private String inputElderId;
     private TextView textview_broadcast;
-    Boolean isIdExist = false;
-    BroadcastReceiver broadcastReceiver;
+    private Boolean isIdExist = false;
+    private BroadcastReceiver broadcastReceiver;
+    private SharedPreferences prefs;
+    private SharedPreferences.Editor editor;
+    private String ipInput;
     public static final String DATA_UPDATED_BROADCAST = "hk.com.caretech.clive.idata_android";
 
     @Override
@@ -60,6 +64,9 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         sqlDb = new SQLiteDBHelper(this);
+
+        prefs = this.getSharedPreferences(SettingActivity.ipPrefs, MODE_PRIVATE);
+        editor = prefs.edit();
 
         editText_inputElderId_main = findViewById(R.id.editText_inputElderId_main);
         bttn_reentry_main = findViewById(R.id.bttn_reentry_main);
@@ -109,6 +116,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         registerReceiver(broadcastReceiver, new IntentFilter(DATA_UPDATED_BROADCAST));
+        prefs = this.getSharedPreferences(SettingActivity.ipPrefs, MODE_PRIVATE);
+        ipInput = prefs.getString(SettingActivity.ip, "");
     }
 
     public void logout(){
@@ -292,17 +301,21 @@ public class MainActivity extends AppCompatActivity {
                 intent = new Intent(this, RetrieveLocalTemperatureActivity.class);
                 startActivity(intent);
                 return true;
-            case R.id.action_readServerData:
-                intent = new Intent(this, ServerDataActivity.class);
-                startActivity(intent);
-                return true;
+//            case R.id.action_readServerData:
+//                intent = new Intent(this, ServerDataActivity.class);
+//                startActivity(intent);
+//                return true;
             case R.id.action_DataSync:
+
                 //make handler to prevent user from clicking frequently
                 //showing the last time synchonised with server
                 //check connection
+                if(!TextUtils.isEmpty(ipInput)){
                 SyncUtils.CreateSyncAccount(MainActivity.this); //place this into oncreate method if would like to do auto-sync when start the app
-                SyncUtils.forceRefreshAll(MainActivity.this);
-                textview_broadcast.setText("");
+                SyncUtils.forceRefreshAll(MainActivity.this, ipInput);
+                textview_broadcast.setText("");}
+                else{ Toast.makeText(this,"沒有網絡地址", Toast.LENGTH_SHORT).show();}
+
                 return true;
             case R.id.action_setting:
                 intent = new Intent(this, SettingActivity.class);

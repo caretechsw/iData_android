@@ -6,12 +6,14 @@ import android.content.ContentProviderClient;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.SyncResult;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
 
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.gson.Gson;
@@ -27,6 +29,7 @@ import java.util.List;
 import hk.com.caretech.clive.idata_android.Model.Elder;
 import hk.com.caretech.clive.idata_android.Model.Temperature;
 import hk.com.caretech.clive.idata_android.SQLiteDBHelper;
+import hk.com.caretech.clive.idata_android.SettingActivity;
 import hk.com.caretech.clive.idata_android.TemperatureModel_Local;
 import hk.com.caretech.clive.idata_android.Utils.ServerUtils;
 import hk.com.caretech.clive.idata_android.Utils.SyncStatus;
@@ -47,16 +50,18 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
     private List<TemperatureModel_Local> localDataList = new ArrayList<>();
     private Context context;
     private Boolean requestOthersSync = false;
+    private String ip;
+
 
     public SyncAdapter(Context context, boolean autoInitialize) {
         super(context, autoInitialize);
-        contentResolver = context.getContentResolver();
+        //contentResolver = context.getContentResolver();
         this.context = context;
     }
 
     public SyncAdapter(Context context, boolean autoInitialize, boolean allowParallelSyncs) {
         super(context, autoInitialize, allowParallelSyncs);
-        contentResolver = context.getContentResolver();
+      //  contentResolver = context.getContentResolver();
     }
 
 
@@ -64,7 +69,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
     @Override
     public void onPerformSync(Account account, Bundle bundle, String s, ContentProviderClient contentProviderClient, SyncResult syncResult) {
 
-            //*****************Connecting to a server
+        ip = bundle.getString("ip");
 
             sqldb = new SQLiteDBHelper(context);
             httpClient = new OkHttpClient();
@@ -74,11 +79,6 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
             getTempDBFromServer();
 
             uploadAllDataToServer(cursor);
-            //Downloading and uploading data -requests the data, downloads , inserts it in the provider.
-
-
-            //Handling data conflicts or determining how current the data is
-            // Clean up. -close connections
 
             cursor.close();
             closeDB();
@@ -99,7 +99,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
 
 
         public void getElderDBFromServer() {
-            final Request request = new Request.Builder().url(ServerUtils.retrieveElderUrl()).build();
+            final Request request = new Request.Builder().url(ServerUtils.retrieveElderUrl(ip)).build();
 
             httpClient.newCall(request).enqueue(new Callback() {
                 @Override
@@ -125,7 +125,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
         public void getTempDBFromServer(){
             // Log.i(TAG, "url:"+url);
             //httpClient = new OkHttpClient();
-            final Request request = new Request.Builder().url(ServerUtils.retrieveTempUrl()).build();
+            final Request request = new Request.Builder().url(ServerUtils.retrieveTempUrl(ip)).build();
 
             httpClient.newCall(request).enqueue(new Callback() {
                 @Override
@@ -199,7 +199,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
                     if (cursor2.getCount()>0) {
                         // if (status == SyncStatus.UNSYNCHONISED) {
                         Request request = new Request.Builder()
-                                .url(ServerUtils.addTempUrl())
+                                .url(ServerUtils.addTempUrl(ip))
                                 .post(formBody)
                                 .build();
 
@@ -230,7 +230,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
                     else {
                         Request request = new Request.Builder()
                                 //add data to temperature_adnormal table
-                                .url(ServerUtils.addTempUrl_abnormal())
+                                .url(ServerUtils.addTemp_abnormalUrl(ip))
                                 .post(formBody)
                                 .build();
 
