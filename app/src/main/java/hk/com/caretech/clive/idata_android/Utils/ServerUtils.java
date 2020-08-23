@@ -12,18 +12,6 @@ import okhttp3.OkHttpClient;
 
 public class ServerUtils  {
 
-
-
-    //    prefs = context.getSharedPreferences(ipPrefs, MODE_PRIVATE);
-//    ipInput = prefs.getString(ip, "localhost");
-
-   // public static String ip =  "192.168.1.20"; //home
-    //public static String ip =  "192.168.1.208"; //company
-
-    //ad3cc65c16594cae company device_id
-    //57a914a4a73fe5b8 home device
-
-
     public static String getBaseUrl(String ip){
         return "http://"+ ip +":7070/";
     }
@@ -66,18 +54,6 @@ public class ServerUtils  {
     public static String retrieveIdUrl(String ip){
         return "http://"+ ip +":7070/elder/id";
     }
-
-
-
-   // public static final String retrieveElderUrl = "http://"+ip+":7070/elder";
-   // public static final String retrieveTempUrl = "http://"+ip+":7070/temp";
-    //public static final String addElderUrl = "http://"+ip+":7070/elder/add";
-    //public static final String addTempUrl = "http://"+ip+":7070/temp/add";
-    //public static final String addTemp_abnormalUrl = "http://"+ip+":7070/temp_abnormal/add";
-
-
-
-
 
     static final String TAG = ServerUtils.class.getName();
 }

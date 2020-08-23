@@ -101,7 +101,7 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
      * @param elder_id
      * @param device_id
      * @param status
-     * The status has two posible values:
+     * The status has two possible values:
      *      * 1 means the data is synced with the server
      *      * 0 means the data is not synced with the server
      *      * Normally, 0 should be stored first

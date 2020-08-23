@@ -34,6 +34,7 @@ import hk.com.caretech.clive.idata_android.SQLiteDBHelper;
 import hk.com.caretech.clive.idata_android.Server.ServerDataActivity;
 import hk.com.caretech.clive.idata_android.SettingActivity;
 import hk.com.caretech.clive.idata_android.Synchronization.SyncUtils;
+import hk.com.caretech.clive.idata_android.Utils.NetworkChecker;
 import hk.com.caretech.clive.idata_android.Utils.SyncStatus;
 import okhttp3.OkHttpClient;
 
@@ -99,12 +100,16 @@ public class MainActivity extends AppCompatActivity {
 
         editText_inputElderId_main.requestFocus();
 
+
+        //receive notification from broadcastSender() method of SynAdapter Class
         broadcastReceiver = new BroadcastReceiver(){
             @Override
             public void onReceive(Context context, Intent intent) {
              if(intent!=null) {
                  String device_id = intent.getStringExtra("device_id");
                  boolean result = intent.getBooleanExtra("requestOthersSync", false);
+
+                 //run if result is true and device_id is from other devices
                  if(result && !device_id.equals(android_id)){
                      textview_broadcast.setText("有資料可供更新");}
              }
@@ -164,6 +169,13 @@ public class MainActivity extends AppCompatActivity {
     private final static  int reading = 1;
     private final static  int notReading = 0;
 
+
+    //if "editText_inputElderId_main" has no value
+    //open QRcode scanner whichever a key of keyCode 600/601/602 is pressed
+    //
+    //if "editText_inputElderId_main" has value
+    //open QRcode scanner when the key of keyCode 601/602 is pressed
+    //thermometer starts when 600 is pressed
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         Log.d(TAG, "onKeyDown: "+keyCode);
@@ -219,7 +231,12 @@ public class MainActivity extends AppCompatActivity {
 
 
     //This method will check the id if exists over the elder and temp tables
-    public boolean elderIdExists(int inputElderId){
+    /**
+     *
+     * @param inputElderId
+     * @return default value=false, true if exists
+     */
+    public boolean elderIdIfExists(int inputElderId){
         sqlDb = new SQLiteDBHelper(this);
         Cursor cursor_temp = sqlDb.getTempById(inputElderId);
         Cursor cursor_elder = sqlDb.getElderById(inputElderId);
@@ -254,10 +271,9 @@ public class MainActivity extends AppCompatActivity {
         if (scanResult != null ) {
             inputElderId = scanResult.getContents();
             if (inputElderId != null && !inputElderId.equals("")) {
-                if (elderIdExists(Integer.parseInt(inputElderId))) {
+                if (elderIdIfExists(Integer.parseInt(inputElderId))) {
                     editText_inputElderId_main.setText(inputElderId);
                     Log.d(TAG, "onActivityResult: "+inputElderId);
-                    //Toast.makeText(MainActivity.this,"Successful decoding："+inputElderId,Toast.LENGTH_LONG).show();
                 }else {
 
                     AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this);
@@ -301,15 +317,21 @@ public class MainActivity extends AppCompatActivity {
                 intent = new Intent(this, RetrieveLocalTemperatureActivity.class);
                 startActivity(intent);
                 return true;
+
 //            case R.id.action_readServerData:
 //                intent = new Intent(this, ServerDataActivity.class);
 //                startActivity(intent);
 //                return true;
+
             case R.id.action_DataSync:
 
-                //make handler to prevent user from clicking frequently
-                //showing the last time synchonised with server
-                //check connection
+                if(!NetworkChecker.checkNetWorkStatus(this)){
+                    return true;
+            }
+
+                //**make handler to prevent user from clicking frequently???
+                //**showing the last time synchonised with server???
+
                 if(!TextUtils.isEmpty(ipInput)){
                 SyncUtils.CreateSyncAccount(MainActivity.this); //place this into oncreate method if would like to do auto-sync when start the app
                 SyncUtils.forceRefreshAll(MainActivity.this, ipInput);

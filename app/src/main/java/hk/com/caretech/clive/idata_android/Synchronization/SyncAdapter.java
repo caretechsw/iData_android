@@ -235,6 +235,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
                                 .build();
 
                         Call call = httpClient.newCall(request);
+
                         call.enqueue(new Callback() {
 
                             @Override
@@ -263,6 +264,12 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
             broadcastSender();
         }
 
+
+        //*Receiver in MainActivity
+        //
+        //the Broadcast passes two values
+        //1. "requestOthersSync" notifies if new data is available
+        //2. "thisDeviceID" compares to other device IDs from receiver.
         public void broadcastSender(){
             String thisDeviceID = Settings.System.getString(context.getContentResolver(),
                     Settings.Secure.ANDROID_ID);

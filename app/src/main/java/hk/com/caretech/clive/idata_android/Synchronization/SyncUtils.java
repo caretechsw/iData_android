@@ -14,7 +14,8 @@ import androidx.annotation.Nullable;
 
 import static android.content.Context.ACCOUNT_SERVICE;
 
-public class SyncUtils {
+public class
+SyncUtils {
     // The authority for the sync adapter's content provider
     public static final String AUTHORITY = "hk.com.caretech.clive.idata_android";
     // An account type, in the form of a domain name

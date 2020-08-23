@@ -25,6 +25,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 
+import hk.com.caretech.clive.idata_android.Utils.NetworkChecker;
 import hk.com.caretech.clive.idata_android.Utils.ServerUtils;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -64,6 +65,9 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
+
+        NetworkChecker.checkNetWorkStatus(this);
+
         previous_activitySetting = findViewById(R.id.previous_activitySetting);
         textView_currentIp_activitySetting = findViewById(R.id.textView_currentIp_activitySetting);
         editText_inputIp_activitySetting = findViewById(R.id.editText_inputIp_activitySetting);
@@ -107,8 +111,14 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                 ipInput3 = editText3_inputIp_activitySetting.getText().toString();
                 ipInput4 = editText4_inputIp_activitySetting.getText().toString();
 
+
+
                 if(!TextUtils.isEmpty(ipInput1) && !TextUtils.isEmpty(ipInput2)
                 && !TextUtils.isEmpty(ipInput3) && !TextUtils.isEmpty(ipInput4)){
+                    if(!NetworkChecker.checkNetWorkStatus(this)){
+                        break;
+                    }
+
                     fullIpInput = ipInput1+"."+ipInput2+"."+ipInput3+"."+ipInput4;
 
 
