@@ -8,7 +8,7 @@ import android.widget.Toast;
 
 public class NetworkChecker {
 
-    public static boolean checkNetWorkStatus(Context context) {
+    public static void checkNetWorkStatus(Context context) {
         {
             ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
             Network activeNetwork = connMgr.getActiveNetwork();
@@ -16,10 +16,8 @@ public class NetworkChecker {
             //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (activeNetwork == null) {
                 Toast.makeText(context, "沒有網絡", Toast.LENGTH_LONG).show();
-                return false;
             }
         }
-        return  false;
     }
     static String TAG = NetworkChecker.class.getName();
 }

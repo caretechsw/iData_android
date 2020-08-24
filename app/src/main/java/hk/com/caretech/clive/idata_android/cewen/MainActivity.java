@@ -229,26 +229,6 @@ public class MainActivity extends AppCompatActivity {
         return super.onKeyDown(keyCode, event);
     }
 
-
-    //This method will check the id if exists over the elder and temp tables
-    /**
-     *
-     * @param inputElderId
-     * @return default value=false, true if exists
-     */
-    public boolean elderIdIfExists(int inputElderId){
-        sqlDb = new SQLiteDBHelper(this);
-        Cursor cursor_temp = sqlDb.getTempById(inputElderId);
-        Cursor cursor_elder = sqlDb.getElderById(inputElderId);
-        Log.i(TAG, "cursor_temp size"+cursor_temp.getCount()+ "cursor_elder size"+cursor_elder.getCount());
-        if(cursor_temp.getCount() > 0 || cursor_elder.getCount()>0){
-            return true;
-        }
-        Log.i(TAG, "isIdExist (at return) " + isIdExist);
-        sqlDb.close();
-        return false;
-    }
-
     @Override
     protected void onStop() {
         super.onStop();
@@ -325,14 +305,13 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.action_DataSync:
 
-                if(!NetworkChecker.checkNetWorkStatus(this)){
-                    return true;
-            }
+                NetworkChecker.checkNetWorkStatus(this);
 
                 //**make handler to prevent user from clicking frequently???
                 //**showing the last time synchonised with server???
 
                 if(!TextUtils.isEmpty(ipInput)){
+                    Log.i(TAG, "inInput : "+ ipInput);
                 SyncUtils.CreateSyncAccount(MainActivity.this); //place this into oncreate method if would like to do auto-sync when start the app
                 SyncUtils.forceRefreshAll(MainActivity.this, ipInput);
                 textview_broadcast.setText("");}
@@ -345,6 +324,25 @@ public class MainActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    //This method will check the id if exists over the elder and temp tables
+    /**
+     *
+     * @param inputElderId
+     * @return default value=false, true if exists
+     */
+    public boolean elderIdIfExists(int inputElderId){
+        sqlDb = new SQLiteDBHelper(this);
+        Cursor cursor_temp = sqlDb.getTempById(inputElderId);
+        Cursor cursor_elder = sqlDb.getElderById(inputElderId);
+        Log.i(TAG, "cursor_temp size"+cursor_temp.getCount()+ "cursor_elder size"+cursor_elder.getCount());
+        if(cursor_temp.getCount() > 0 || cursor_elder.getCount()>0){
+            return true;
+        }
+        Log.i(TAG, "isIdExist (at return) " + isIdExist);
+        sqlDb.close();
+        return false;
     }
 
 

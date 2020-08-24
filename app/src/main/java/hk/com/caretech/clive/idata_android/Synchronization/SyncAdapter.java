@@ -70,6 +70,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
     public void onPerformSync(Account account, Bundle bundle, String s, ContentProviderClient contentProviderClient, SyncResult syncResult) {
 
         ip = bundle.getString("ip");
+        Log.i(TAG, "ip : "+ip);
 
             sqldb = new SQLiteDBHelper(context);
             httpClient = new OkHttpClient();

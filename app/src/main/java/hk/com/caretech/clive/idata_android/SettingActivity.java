@@ -93,7 +93,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
     protected void onStart() {
         super.onStart();
         prefs = this.getSharedPreferences(ipPrefs, MODE_PRIVATE);
-        fullIpInput = prefs.getString(ip, "localhost");
+        fullIpInput = prefs.getString(ip, "沒有IP地址");
         if(!TextUtils.isEmpty(fullIpInput)){
         textView_currentIp_activitySetting.setText(fullIpInput);
         }
@@ -106,6 +106,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                 onBackPressed();
                 break;
             case R.id.button_confirm_activitySetting:
+                NetworkChecker.checkNetWorkStatus(this);
                 ipInput1 = editText_inputIp_activitySetting.getText().toString();
                 ipInput2 = editText2_inputIp_activitySetting.getText().toString();
                 ipInput3 = editText3_inputIp_activitySetting.getText().toString();
@@ -115,9 +116,9 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
 
                 if(!TextUtils.isEmpty(ipInput1) && !TextUtils.isEmpty(ipInput2)
                 && !TextUtils.isEmpty(ipInput3) && !TextUtils.isEmpty(ipInput4)){
-                    if(!NetworkChecker.checkNetWorkStatus(this)){
-                        break;
-                    }
+//                    if(!NetworkChecker.checkNetWorkStatus(this)){
+//                        break;
+//                    }
 
                     fullIpInput = ipInput1+"."+ipInput2+"."+ipInput3+"."+ipInput4;
 
@@ -155,6 +156,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                                     @Override
                                     public void run() {
                                         Toast.makeText(SettingActivity.this, "地址驗證成功", Toast.LENGTH_SHORT).show();
+                                        textView_currentIp_activitySetting.setText(fullIpInput);
                                     }
                                 });
                         }
