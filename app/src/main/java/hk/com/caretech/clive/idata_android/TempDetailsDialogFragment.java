@@ -89,7 +89,7 @@ public class TempDetailsDialogFragment extends DialogFragment {
 
         int elder_id = tempList.getElder_id();
         String device_id = tempList.getDevice_id();
-        double temperature = tempList.getTemperature();
+        float temperature = tempList.getTemperature();
         long unixTimestamp = tempList.getTimestamp();
         int status = tempList.getStatus();
 

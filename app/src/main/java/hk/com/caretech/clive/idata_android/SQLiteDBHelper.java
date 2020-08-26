@@ -42,7 +42,7 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
         final String sql_temp = " CREATE TABLE IF NOT EXISTS " + TABLE_TEMP
                 + "( "
                 + TEMP_COLUMN_ELDER_ID + " INTEGER NOT NULL, "
-                + TEMP_COLUMN_TEMP + " DOUBLE NOT NULL, "
+                + TEMP_COLUMN_TEMP + " FLOAT NOT NULL, "
                 + TEMP_COLUMN_DEVICE_ID + " VARCHAR NOT NULL, "
                 + TEMP_COLUMN_TIMESTAMP + " LONG NOT NULL, "
                 + TEMP_COLUMN_STATUS + " INTEGER NOT NULL, "
@@ -106,7 +106,7 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
      *      * 0 means the data is not synced with the server
      *      * Normally, 0 should be stored first
      */
-    public boolean addTemptoLocal(int elder_id, double temp, String device_id, long timestamp, int status) {
+    public boolean addTemptoLocal(int elder_id, float temp, String device_id, long timestamp, int status) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(TEMP_COLUMN_ELDER_ID, elder_id);

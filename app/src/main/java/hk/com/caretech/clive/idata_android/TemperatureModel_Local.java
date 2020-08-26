@@ -5,12 +5,12 @@ import java.sql.Timestamp;
 public class TemperatureModel_Local {
 
     private int elder_id;
-    private double temperature;
+    private float temperature;
     private String device_id;
     private long timestamp;
     private int status;
 
-    public TemperatureModel_Local(int elder_id, double temperature, String device_id, long timestamp, int status) {
+    public TemperatureModel_Local(int elder_id, float temperature, String device_id, long timestamp, int status) {
         this.elder_id = elder_id;
         this.temperature = temperature;
         this.device_id = device_id;
@@ -27,11 +27,11 @@ public class TemperatureModel_Local {
         this.elder_id = elder_id;
     }
 
-    public double getTemperature() {
+    public float getTemperature() {
         return temperature;
     }
 
-    public void setTemperature(long temperature) {
+    public void setTemperature(float temperature) {
         this.temperature = temperature;
     }
 

@@ -65,7 +65,7 @@ class RecyclerviewAdapter_retrieveTemperature extends RecyclerView.Adapter<Recyc
                 textView_deviceID.setText("量度器");
                 textView_timestamp.setText("時間");
             }else if(position>0){
-                textView_temperature.setText(Double.toString(tempList[position-1].getTemperature()));
+                textView_temperature.setText(Float.toString(tempList[position-1].getTemperature()));
                 textView_deviceID.setText((tempList[position-1].getDevice_id()));
                 textView_timestamp.setText(df.format(tempList[position-1].getTimestamp()));
             }

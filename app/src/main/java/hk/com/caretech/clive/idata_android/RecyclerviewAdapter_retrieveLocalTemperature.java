@@ -94,7 +94,7 @@ class RecyclerviewAdapter_retrieveLocalTemperature extends RecyclerView.Adapter<
                 textView_name.setText("沒有資料");
             }
             //textView_elderID.setText(Integer.toString(tempList.get(position).getElder_id()));
-            textView_temperature.setText(Double.toString(tempList.get(position).getTemperature()));
+            textView_temperature.setText(Float.toString(tempList.get(position).getTemperature()));
             //textView_timestamp.setText(simplifiedDF.format(tempList.get(position).getTimestamp()));
 
             if (tempList.get(position).getStatus() == SyncStatus.SYNCHONISED) {

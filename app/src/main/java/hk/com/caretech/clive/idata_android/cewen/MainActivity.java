@@ -194,7 +194,9 @@ public class MainActivity extends AppCompatActivity {
                                     public void run() {
                                         int elder_id_int = Integer.valueOf(inputElderId);
 
-                                        sqlDb.addTemptoLocal(elder_id_int, temp, android_id, System.currentTimeMillis(), SyncStatus.UNSYNCHONISED);
+                                        float floatTemp = (float)temp;
+
+                                        sqlDb.addTemptoLocal(elder_id_int, floatTemp, android_id, System.currentTimeMillis(), SyncStatus.UNSYNCHONISED);
 
                                         Toast.makeText(MainActivity.this, "Temperature：" + temp, Toast.LENGTH_SHORT).show();
                                         Log.d(TAG, "success: " + temp);

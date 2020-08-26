@@ -65,7 +65,7 @@ public class RetrieveLocalTemperatureActivity extends AppCompatActivity {
             do {
                 TemperatureModel_Local temp = new TemperatureModel_Local(
                         tempCursor.getInt(tempCursor.getColumnIndex(SQLiteDBHelper.TEMP_COLUMN_ELDER_ID)),
-                        tempCursor.getDouble(tempCursor.getColumnIndex(SQLiteDBHelper.TEMP_COLUMN_TEMP)),
+                        tempCursor.getFloat(tempCursor.getColumnIndex(SQLiteDBHelper.TEMP_COLUMN_TEMP)),
                         tempCursor.getString(tempCursor.getColumnIndex(SQLiteDBHelper.TEMP_COLUMN_DEVICE_ID)),
                         tempCursor.getLong(tempCursor.getColumnIndex(SQLiteDBHelper.TEMP_COLUMN_TIMESTAMP)),
                         tempCursor.getInt(tempCursor.getColumnIndex(SQLiteDBHelper.TEMP_COLUMN_STATUS)));
