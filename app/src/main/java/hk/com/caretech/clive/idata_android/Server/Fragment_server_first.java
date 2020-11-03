@@ -43,6 +43,7 @@ public class Fragment_server_first extends Fragment {
         return inflater.inflate(R.layout.fragment_serverdata_first, container, false);
     }
 
+    @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         editText_ip = view.findViewById(R.id.edittext_ipAddress_server_data);
