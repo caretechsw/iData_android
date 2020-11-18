@@ -197,7 +197,9 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
                             .add("device_id", device_id)
                             .build();// dynamically add more parameter like this:
 
+
                     if (cursor2.getCount()>0) {
+                        Log.i(TAG, "normal");
                         // if (status == SyncStatus.UNSYNCHONISED) {
                         Request request = new Request.Builder()
                                 .url(ServerUtils.addTempUrl(ip))
@@ -229,6 +231,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
                         });
                     }
                     else {
+                        Log.i(TAG, "adnormal");
                         Request request = new Request.Builder()
                                 //add data to temperature_adnormal table
                                 .url(ServerUtils.addTemp_abnormalUrl(ip))
@@ -243,7 +246,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
                             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                                 if (response.isSuccessful()) {
                                     if (response.code() == 200 || response.code() == 201) {
-                                        //Note! Even the foreign key -elder_id is not exist in a database, the status
+                                        //Note! Even the foreign key "elder_id" is not exist in the database of Elder table, the status
                                         //won't update but the the status code will be still fallen in 2xx
                                         sqldb.updateDataStatusToSync(device_id, timestamp_primaryKey);
                                         Log.i(TAG, "added to temp_abnormal table");

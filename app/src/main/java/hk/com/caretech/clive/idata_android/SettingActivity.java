@@ -45,12 +45,9 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
     private EditText editText2_inputIp_activitySetting;
     private EditText editText3_inputIp_activitySetting;
     private EditText editText4_inputIp_activitySetting;
+    private EditText editText_inputPort_activitySetting;
     private Button button_confirm_activitySetting;
     private String fullIpInput;
-    private String ipInput1;
-    private String ipInput2;
-    private String ipInput3;
-    private String ipInput4;
 
     private OkHttpClient httpClient;
     private SharedPreferences prefs;
@@ -75,10 +72,12 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         editText3_inputIp_activitySetting = findViewById(R.id.editText3_inputIp_activitySetting);
         editText4_inputIp_activitySetting = findViewById(R.id.editText4_inputIp_activitySetting);
         button_confirm_activitySetting = findViewById(R.id.button_confirm_activitySetting);
+        editText_inputPort_activitySetting = findViewById(R.id.editText_inputPort_activitySetting);
 
         editText_inputIp_activitySetting.setOnKeyListener(this);
         editText2_inputIp_activitySetting.setOnKeyListener(this);
         editText3_inputIp_activitySetting.setOnKeyListener(this);
+        editText4_inputIp_activitySetting.setOnKeyListener(this);
 
         previous_activitySetting.setOnClickListener(this);
         button_confirm_activitySetting.setOnClickListener(this);
@@ -106,16 +105,23 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                 onBackPressed();
                 break;
             case R.id.button_confirm_activitySetting:
+                 String ipInput1;
+                String ipInput2;
+                 String ipInput3;
+                 String ipInput4;
+                 String portInput;
                 NetworkChecker.checkNetWorkStatus(this);
                 ipInput1 = editText_inputIp_activitySetting.getText().toString();
                 ipInput2 = editText2_inputIp_activitySetting.getText().toString();
                 ipInput3 = editText3_inputIp_activitySetting.getText().toString();
                 ipInput4 = editText4_inputIp_activitySetting.getText().toString();
+                portInput = editText_inputPort_activitySetting.getText().toString();
+
 
 
 
                 if(!TextUtils.isEmpty(ipInput1) && !TextUtils.isEmpty(ipInput2)
-                && !TextUtils.isEmpty(ipInput3) && !TextUtils.isEmpty(ipInput4)){
+                && !TextUtils.isEmpty(ipInput3) && !TextUtils.isEmpty(ipInput4) && !TextUtils.isEmpty(portInput)){
 //                    if(!NetworkChecker.checkNetWorkStatus(this)){
 //                        break;
 //                    }
@@ -123,7 +129,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                     fullIpInput = ipInput1+"."+ipInput2+"."+ipInput3+"."+ipInput4;
 
 
-                    String baseUrl = ServerUtils.getBaseUrl(fullIpInput);
+                    String baseUrl = ServerUtils.getBaseUrl(fullIpInput, portInput);
 
                     httpClient = new OkHttpClient();
                     final Request request = new Request.Builder().url(baseUrl).build();
@@ -150,13 +156,13 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                         @Override
                         public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                             if(response.isSuccessful()){
-                                editor.putString(ip, fullIpInput);
+                                editor.putString(ip, fullIpInput+":"+portInput);
                                 editor.apply();
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
                                         Toast.makeText(SettingActivity.this, "地址驗證成功", Toast.LENGTH_SHORT).show();
-                                        textView_currentIp_activitySetting.setText(fullIpInput);
+                                        textView_currentIp_activitySetting.setText(fullIpInput+":"+portInput);
                                     }
                                 });
                         }
@@ -188,6 +194,12 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                 if(keyEvent.getKeyCode()==KEYCODE_DEL){break;}
                 if (editText3_inputIp_activitySetting.length() == 3) {
                     editText4_inputIp_activitySetting.requestFocus();
+                }
+                break;
+            case R.id.editText4_inputIp_activitySetting:
+                if(keyEvent.getKeyCode()==KEYCODE_DEL){break;}
+                if (editText4_inputIp_activitySetting.length() == 3) {
+                   editText_inputPort_activitySetting.requestFocus();
                 }
                 break;
         }

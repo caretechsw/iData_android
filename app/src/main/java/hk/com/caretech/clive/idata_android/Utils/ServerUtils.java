@@ -12,9 +12,14 @@ import okhttp3.OkHttpClient;
 
 public class ServerUtils  {
 
-    public static String getBaseUrl(String ip){
-        return "http://"+ ip +":8080/";
+
+
+
+    public static String getBaseUrl(String ip, String port){
+        return "http://"+ ip +":"+port+"/";
     }
+
+
 
 
 
@@ -32,27 +37,27 @@ public class ServerUtils  {
 
 
  public static String retrieveElderUrl(String ip){
-        return "http://"+ip+":8080/elder";
+        return "http://"+ip+"/elder";
     }
 
     public static String  retrieveTempUrl(String ip){
-        return "http://"+ip+":8080/temp";
+        return "http://"+ip+"/temp";
     }
 
     public static String addElderUrl(String ip){
-        return "http://"+ip+":8080/elder/add";
+        return "http://"+ip+"/elder/add";
     }
 
     public static String addTempUrl(String ip){
-        return "http://"+ip+":8080/temp/add";
+        return "http://"+ip+"/temp/add";
     }
 
     public static String addTemp_abnormalUrl(String ip){
-        return "http://"+ip+":8080/temp_abnormal/add";
+        return "http://"+ip+"/tempab/add";
     }
 
     public static String retrieveIdUrl(String ip){
-        return "http://"+ ip +":8080/elder/id";
+        return "http://"+ ip +"/elder/id";
     }
 
     static final String TAG = ServerUtils.class.getName();
